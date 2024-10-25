@@ -7,8 +7,8 @@ author:
         orcid: "0000-0003-0122-5300"
         affiliation: "Chercheur indépendant"
 date: "2024-10-22"
-license: "CC-BY-NC-SA 4.0"
-abstract: "Mon projet consiste à réaliser une analyse historique et bibliométrique des publications de type articles évalués par des pairs et de type chapitres de livres. Cette analyse permettra de mettre en évidence les variations observées au fil des années, dans diverses disciplines, pour différents sujets de recherche, ainsi que les enjeux entourant la publication (notamment les prépublications, les revues systématiques, les publications potentiellement prédatrices, les rétractions, etc.). Je montrerai, par exemple, comment les premières publications des années 1980 visaient à expliquer la montée en popularité de cette passion et à répondre aux paniques morales de l'époque. De même, j'illustrerai comment les publications récentes se concentrent davantage sur des thématiques telles que le genre, les actual play et les aspects psychothérapeutiques liés à la pratique du jeu de rôle. Je mettrai également en évidence la grande diversité des domaines académiques abordant l'étude du jeu de rôle, allant des disciplines traditionnelles telles que la sociologie, la psychologie et les humanités, jusqu'à des domaines plus atypiques tels que la musique, la neurosciences et la philosophie. Cette présentation s'étend également à l'échelle internationale, englobant l'Europe, l'Amérique du Nord, ainsi que d'autres régions d'Amérique latine et d'Asie. Je soulignerai la prédominance du jeu Dungeons & Dragons, tout en identifiant d'autres jeux étudiés ou mentionnés en marge de cette prépondérance. Pour enrichir cette analyse, je discuterai de la réflexion théorique et pratique de la communauté des joueurs sur leur loisir en parallèle du milieu universitaire. Je passerai également en revue les conférences, congrès et colloques consacrés au jeu de rôle, ainsi que les mémoires et thèses abordant ce sujet. Enfin, je discuterai des pratiques de citation dans le jeu de rôle sur table, dans son étude et dans ses communautés de pratiquants."
+license: "CC-BY 4.0"
+abstract: "Cette étude propose une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
 keywords: "Jeu de rôle sur table ; publication universitaire ; analyse historique ; analyse bibliométrique ; conversation scientifique"
 bibliography: academicTTRPG.bib
 csl: chicago-fullnote-bibliography-fr.csl
@@ -72,17 +72,9 @@ library(tidyr)
 library(stringr)
 library(tidyverse)
 library(lubridate)
-#library(plotly)
 
-# Let's load the Zotero references file into R
-
-# If needed replace "My library.csv" with the actual file name (or URL) of your CSV file
 file_name <- "My library.csv"
-
-# Read the CSV file into a variable (here a data_frame) with specific options
 ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
-
-# Now all the references are loaded into this big data frame named ZOTEROLIB
 ```
 
 ```{r}
@@ -90,10 +82,6 @@ ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
 subset3_ZOTEROLIB <- subset(ZOTEROLIB,
                             Item.Type == "conferencePaper" &
                               grepl("_TTRPG", Manual.Tags))
-
-
-## ANALYSIS : conference papers distributed by year
-
 
 # Assuming your data frame is named DF with a column Publication.Year
 DF <- subset3_ZOTEROLIB
@@ -152,8 +140,6 @@ Comme mentionné précédemment, les références de monographies (livres) souff
 Malgré cela, on remarque là aussi une augmentation nette du nombre de monographies avec un angle universitaire sur le jeu de rôle sur table dès les années 2000.
 
 ```{r}
-# ANALYSIS : Listing the top publishers of books and book sections
-
 # Create an another subset based on the criteria (Journal article OR book OR book section, AND TTRPG)
 subset3_ZOTEROLIB <- subset(ZOTEROLIB,
                             (  Item.Type == "book" |
@@ -335,11 +321,11 @@ average_num_pages_master <- mean(filtered_df_master$Num.Pages, na.rm = TRUE)
 gg_plot <- ggplot() +
   geom_point(data = filtered_df_phd, aes(x = jitter(rep(2, nrow(filtered_df_phd)), amount = 0.1), y = Num.Pages), color = "red") +
   geom_text(data = filtered_df_master, aes(x = 1, y = average_num_pages_master,
-                                           label = sprintf("Avg (Master): %.2f", average_num_pages_master)),
+                                           label = sprintf("Moy. (Maîtrise): %.2f", average_num_pages_master)),
             vjust = -0.5, hjust = -0.5, color = "darkgreen", size = 6) +
   geom_point(data = filtered_df_master, aes(x = jitter(rep(1, nrow(filtered_df_master)), amount = 0.1), y = Num.Pages), color = "green") +
   geom_text(data = filtered_df_phd, aes(x = 2, y = average_num_pages_phd,
-                                        label = sprintf("Avg (PhD): %.2f", average_num_pages_phd)),
+                                        label = sprintf("Moy. (Doctorat): %.2f", average_num_pages_phd)),
             vjust = -0.5, hjust = 1.3, color = "darkred", size = 6) +
   labs(title = "Nombre de pages moyens de mémoires et de thèses",
        x = " ",
@@ -400,7 +386,6 @@ gg_plot <- ggplot(count_data, aes(x = reorder(Country.y, count, sum), y = count,
   coord_flip()
 
 print(gg_plot)
-
 ```
 
 # Articles de revues universitaires
@@ -724,8 +709,6 @@ ZOTEROLIB$PubAfterInception[!is.na(ZOTEROLIB$Publication.Inception)] <-
   ZOTEROLIB$Publication.Year[!is.na(ZOTEROLIB$Publication.Inception)] -
   ZOTEROLIB$Publication.Inception[!is.na(ZOTEROLIB$Publication.Inception)]
 
-
-
 # Rebuilt a new subset1 (because we changed the ZOTEROLIB data frame)
 
 # Creating a subset of the dataframe to match certain documents only
@@ -863,7 +846,7 @@ print(gg_plot)
 
 Il est intéressant de remarquer deux langues émergentes : l’espagnol et le portugais. Cela révèle une recherche de plus en plus dynamique en Amérique du sud.
 
-Le japonais, l’allemand et le russe ont aussi été relevé. Comme mentionné au début de cette étude, j’admets un biais linguistique qui invisibilise probablement des articles savants que je n’ai pas identifié.
+Le japonais, l’allemand et le russe ont aussi été relevé. Comme mentionné au début de cette étude, j’admets un biais linguistique qui invisibilise probablement quelques articles savants que je n’ai pas identifié.
 
 ## Sujets de recherche
 
@@ -875,7 +858,7 @@ Si une référence est indexée avec un mot-clé spécifique et si ce mot-clé e
 
 ### Niveau générique
 
-Avec la distribution des mots-clés génériques selon les années, on remarque la stabilité ou la croissance progressive de plusieurs disciplines dans le temps : psychologie, sociologie, histoire, éducation.
+Avec la distribution des mots-clés génériques selon les années, on remarque la stabilité ou la croissance progressive de plusieurs disciplines dans le temps : psychologie, sociologie, éducation, histoire, etc.
 
 On retrouve ces quatre catégories en tête du dénombrement général des disciplines. Suivent ensuite un ensemble de catégories liées à la communication et au jeu (émotion, larp, média, gameplay, design).
 
@@ -992,7 +975,9 @@ print(gg_plot)
 
 Il existe des ensembles de quelques articles dans plusieurs disciplines très atypiques pour le jeu de rôle sur table comme la musique, la neuroscience, le droit ou la philosophie. On peut les repérer dans les niveaux spécifiques.
 
-Outre palier au défaut des choix ontologiques du thésaurus, le niveau spécifique permet aussi de repérer plus finement des sujets : la psychothérapie, les communautés de joueurs, les paniques morales, les minorités, etc. Il est possible d’isoler des groupes de mots-clés pour repérer des tendances transversales à plusieurs sujets, par exemple avec les mots-clés (anxiété, désordre mental, thérapie et bien-être).
+Outre palier au défaut des choix ontologiques du thésaurus, le niveau spécifique permet aussi de repérer plus finement des disciplines et des sujets. Pour les disciplines, ce niveau spécifique permet de repérer qu'outre les grandes disciplines des sciences humaines et sociales, il existe des intérêts de niche dans les domaines du droit, de la musique, de la philosophie ou des neurosciences.
+
+Pour les sujets de recherche, plusieurs sélections ci-dessous montrent que certains sujets sont associés à des moments particuliers (les paniques morales par exemple), ou bien font l'objet d'un intérêt récent plutôt (la psychothérapie par exemple).
 
 ```{r}
 #ANALYSIS : Treemaping only the tags that are NOT capitalized (2nd rank subject-headings)
@@ -1024,7 +1009,7 @@ print(gg_plot)
 
 #### Jeux cités
 
-Ce niveau permet aussi de repérer les jeux mentionnés dans les études. On remarque par exemple que *Dungeons & Dragons* est le jeu le plus cité, de très loin (plus de 200 études). Les autres jeux sont loin derrières avec les jeux du Monde des Ténèbres (15 études) et *Call of Cthulhu* (8).
+Ce niveau permet aussi de repérer les jeux mentionnés dans les études. On remarque par exemple que *Dungeons & Dragons* est le jeu le plus cité, de très loin (plus de 200 études). Les autres jeux sont loin derrières avec les jeux du Monde des Ténèbres (15 études), *Call of Cthulhu* (8) et d'autres.
 
 ```{r}
 # ANALYSIS : most cited games
@@ -1058,7 +1043,7 @@ game_data_combined <- aggregate(count ~ name, data = game_data, sum)
 game_data_combined <- game_data_combined[order(-game_data_combined$count), ]
 
 gg_plot <- ggplot(game_data_combined, aes(x=reorder(name, count), y=count)) +
-  geom_bar(stat="identity", fill="steelblue") +
+  geom_bar(stat="identity", fill="skyblue") +
   coord_flip() +  # This makes it horizontal
   theme_minimal() +
   labs(title="Jeux les plus mentionnés dans les articles",
@@ -1121,7 +1106,7 @@ game_distro <- DDFF %>%
 # Plot the bar chart
 gg_plot <- ggplot(game_distro, aes(x = Publication.Year, y = Count, fill = Tags)) +
   geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Distribution des sujets sur les jeux",
+  labs(title = "Distribution des jeux mentionnés",
        x = "Années",
        y = "Nombre") +
   theme_minimal()
@@ -1132,8 +1117,6 @@ print(gg_plot)
 #### Psychothérapies
 
 ```{r}
-# ANALYSIS : the distribution of 4 tags only
-
 # Create a first subset based on your criteria
 subset1_ZOTEROLIB <- subset(ZOTEROLIB,
                             Item.Type == "journalArticle" &
@@ -1182,7 +1165,7 @@ rownames(DDFF) <- NULL
 # Plot the bar chart
 gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
   geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Distribution de 4 sujets de psychothérapie",
+  labs(title = "Distribution de 4 sujets en psychothérapie",
        x = "Années",
        y = "Nombre") +
   theme_minimal()
@@ -1192,11 +1175,9 @@ print(gg_plot)
 
 #### Paniques morales
 
-Les premières publications scientifiques visaient à expliquer la montée en popularité de ce hobbyet à répondre aux paniques moralesdes année 1980-1990 aux États-Unis.
+Les premières publications scientifiques visaient à expliquer la montée en popularité de ce hobby et à répondre aux paniques morales des année 1980-1990 aux États-Unis. On ne le voit pas sur le graphique suivant mais les articles les plus anciens sont des articles de debunking de psychologie pour expliquer que le loisir du jeu de rôle n'est pas négatif pour la santé mentale. Tandis que les articles les plus récents sont des articles d'histoire ou de sociologie expliquant le phénomène des paniques morales autour du jeu de rôle.
 
 ```{r}
-# ANALYSIS : the distribution of 1 tag ; Moral panics
-
 # Create a first subset based on your criteria
 subset1_ZOTEROLIB <- subset(ZOTEROLIB,
                             Item.Type == "journalArticle" &
@@ -1242,7 +1223,7 @@ rownames(DDFF) <- NULL
 # Plot the bar chart
 gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
   geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Distribution du sujet _moral panic",
+  labs(title = "Distribution du sujet des paniques morales",
        x = "Années",
        y = "Nombre") +
   theme_minimal()
@@ -1251,6 +1232,8 @@ print(gg_plot)
 ```
 
 #### Quelques sujets en éducation
+
+Plusieurs sujets de recherche en éducation suscite un intérêt particulier : l'aspect motivationnel de la pratique du jeu sur l'apprenant, la possibilité d'une émotion de auto-efficacité (l'impression positive que l'on est en train d'accomplir une tâche de la bonne manière), l'apprentissage d'une langue seconde ou la pratique de compétences sociales de communication, de négociation ou d'animation.
 
 ```{r}
 # ANALYSIS : the distribution of 4 tags only
@@ -1310,6 +1293,8 @@ print(gg_plot)
 
 #### Genre, minorité, inclusion
 
+Ces dix dernières années, on peut remarquer un fort intérêt pour la recherche sur les genres et les minorités, avec un accent sur l'aspect d'inclusion (hospitalité, appartenance, etc.) ou d'exclusion (racisme, jugement, etc.).
+
 ```{r}
 # ANALYSIS : the distribution of 4 tags only
 
@@ -1368,9 +1353,9 @@ print(gg_plot)
 
 #### Quelques sujets autour de l'immersion
 
-```{r}
-# ANALYSIS : the distribution of 4 tags only
+Enfin, une sélection de sujets autour de l'immersion en cours de jeu montrent là aussi des intérêts de recherche pour l'évasion (*escapism*), la distantiation ou l'osmose émotionnelle (*bleed*) et la personnification (*embodiment*) de l'expérience de jeu.
 
+```{r}
 # Create a first subset based on your criteria
 subset1_ZOTEROLIB <- subset(ZOTEROLIB,
                             Item.Type == "journalArticle" &
@@ -1428,13 +1413,15 @@ print(gg_plot)
 
 ### Reproductibilité
 
-Depuis les années 2020, on peut remarquer quelques chercheurs qui diffusent leurs résultats préliminaires dans des dépôts de prépublications (arXiv, PsyArXiv, OSF, etc). De plus, ils diffusent aussi leurs jeux de données, leurs méthodes, leurs codes source (GitHub, Kaggle, OSF, Zenodo, etc.). Ces moyens de diffusion sont principalements utilisés dans le domaine de la psychologie et de la sociologie et de l’ingénierie logicielle. Pour les chercheurs qui choisissent ces médias, il s’agit souvent de rendre les résultats de recherche plus robustes et reproductibles, de susciter des collaborations ou des révisions supplémentaires ou de signaler l’objet de leur recherche.
+Depuis les années 2020, on peut remarquer quelques chercheurs qui diffusent leurs résultats préliminaires dans des dépôts de prépublications (arXiv, PsyArXiv, OSF, etc). De plus, ils diffusent aussi leurs jeux de données, leurs méthodes, leurs codes source (GitHub, Kaggle, OSF, Zenodo, etc.). Ces moyens de diffusion sont principalements utilisés dans le domaine de la psychologie et de la sociologie et de l’ingénierie logicielle. Pour les chercheurs qui choisissent ces médias, il s’agit souvent de rendre les résultats de recherche plus robustes et reproductibles, de susciter des collaborations ou des révisions supplémentaires, ou de signaler l’objet de leur recherche.
 
 ### Revues de littérature
 
-Récemment, plusieurs études sont des synthèses d’autres études. Cela peut être considéré comme un signe de maturité du champ de recherche des jeux de rôle. Ces synthèses peuvent suivre des méthodes plus ou moins exigeantes selon les objectifs, les études et les moyens utilisés. Le terme classique de «revue de littérature» décrit une étude peu structurée sur un objet de recherche générique pour faire le point sur ce qui a été fait dans un domaine. J’en ai repéré cinq en éducation, un en sociologie et un en psychologie. Ensuite, il existe des synthèses plus structurées comme les études rapides ou les études de la portée. J’en ai repéré une de chaque en psychologie.
+Récemment, plusieurs études sont des synthèses d’autres études. Ce phénomène de publication peut être considéré comme un signe de maturité du champ de recherche des jeux de rôle. Ces synthèses suivent des méthodes plus ou moins exigeantes selon les objectifs, les études et les moyens utilisés. Le terme classique de « revue de littérature » décrit une étude peu structurée sur un objet de recherche générique pour faire le point sur ce qui a été fait dans un domaine. J’en ai repéré deux en psychologie, trois en éducation et une en sociologie. Ensuite, j'ai repéré des synthèses plus structurées comme une étude rapide (*rapid review*)[@henrich_let_2021] en psychologie et deux études de la portée (*scoping review*) en psychologie[@yuliawati_scoping_2024; @arenas_therapeutic_2022].
 
-Enfin, il existe des synthèses très structurées et ambitieuses (certaines disent même « prestigieuses») qui se nomment les revues systématiques ou les méta-analyses. J’ai repéré un article en éducation qui se définit comme une revue systématique mais qui est en fait une simple revue de littérature. J’ai aussi repéré une méta-analyse intéressante qui discutait du jeu de rôle en éducation de manière large (c’est-à-dire « pas sur table »). Je l’ai conservé car je trouvais qu’une de ses conclusions était intéressante, à savoir que XXX.
+Enfin, il existe des synthèses très structurées et ambitieuses (certaines disent même « prestigieuses») qui se nomment les revues systématiques ou les méta-analyses. J’ai repéré un article en éducation qui se définit comme une revue systématique mais qui est une simple revue de littérature.
+
+Il existe une méta-analyse intéressante qui discute du jeu de rôle en éducation de manière large (c’est-à-dire « de jeu de rôle mais pas sur table »). Je l’ai conservé car je trouvais qu’une de ses conclusions était intéressante, à savoir que « le jeu de rôle était de loin le meilleur type d'activité d'apprentissage pour promouvoir la pensée critique. » [@mao_effects_2022]
 
 ### Identifiants de chercheurs
 
@@ -1448,17 +1435,15 @@ Les articles et les bibliographies de ces articles sur le jeu de rôles sont peu
 
 [^9]: Par exemple, si on utilise l’outil Citationtree.org avec l’article <https://www.citationtree.org/tree?id=10.1016/j.tsc.2012.06.002> alors on peut voir un graphe de citations plutôt complet.
 
-Pour tenter de valoriser les citations des articles de jeux de rôles entre eux, j’ai tenté de reproduire le graphe en versant des données dans Wikidata et en les visualisant de diverses manières[^10]. Bien évidement, cette preuve de concept n’était qu’exploratoire et très partielle.
+Pour tenter de valoriser les citations des articles de jeux de rôles entre eux, j’ai tenté de reproduire le graphe en versant des données dans Wikidata et en les visualisant de diverses manières[^10]. Bien évidement, cette preuve de concept n’était qu’exploratoire et partielle.
 
 [^10]: <https://observablehq.com/d/86ffefce528e707c>
 
 ### Maisons d’édition douteuses
 
-Le phénomène de « *Publish or perish* » a aussi été associé à l’apparition depuis les années 2010 à un ensemble varié et gradué de maisons d’édition douteuses. Certains utilisent le terme «prédateur».
+Le phénomène de « *Publish or perish* » a aussi été associé à l’apparition depuis les années 2010 à un ensemble varié et gradué de maisons d’édition douteuses. Certains utilisent le terme « prédateur ».
 
-En me basant sur des listes d’exclusion ou d’avertissement créées par des chercheurs ou des anonymes, j’ai remarqué qu’une poignée de chapitres ont été publiés dans des livres issus de maisons d’édition aux pratiques éditoriales douteuses. De même, en suivant ces listes, une dizaine d’articles auraient été publiés en prétendant une révision par les pairs mais sans une réelle révision par les pairs avec un arbitrage juste d’un éditeur.
-
-Cela illustre le fait que le sujet de niche du jeu de rôle sur table n’est pas à l’abri de comportements préjudiciables à la construction d’un édifice scientifique durable.
+En me basant sur des listes d’exclusion ou d’avertissement créées par des chercheurs ou des anonymes, j’ai remarqué qu’une poignée de chapitres ont été publiés dans des livres issus de maisons d’édition aux pratiques éditoriales douteuses. De même, en suivant ces listes, une dizaine d’articles auraient été publiés en prétendant une révision par les pairs mais sans une réelle révision par les pairs avec une sélection et un arbitrage juste d’un éditeur. Cela illustre le fait que le sujet de niche du jeu de rôle sur table n’est pas à l’abri de ces comportements préjudiciables qui sont présents dans d'autres disciplines.
 
 ### Rétractions
 
@@ -1466,21 +1451,21 @@ En 2024, je n’ai pas repéré de rétraction, c’est-à-dire d’articles ret
 
 [^11]: Recherche avec Retraction Watch en XXX
 
-Cependant, il est possible qu’une première rétraction survienne dans un cas que j’ai signalé aux auteurs d’un article dont la copie exacte a été publiée avec d’autres auteurs dans une revue plus récente. Si la revue est sérieuse, elle le rétractera. Si la revue est prédatrice, c’est une autre histoire.
+Cependant, il est possible qu’une première rétraction survienne dans un cas que j’ai signalé aux auteurs originaux. En effet, la copie exacte d'un article a été publiée avec d’autres auteurs dans une revue récente.
 
 # Discours para-universitaire
 
 ## Hors des circuits savants traditionnels
 
-Cette étude exploratoire ne portait que sur la conversation scientifique à travers ses canaux de diffusion traditionnels : articles révisés par les pairs, mémoires et thèses, monographies ou présentations dans des colloques, etc. Cependant, l’étude savante du jeu de rôle sur table a toujours été une composante importante de ce passe-temps et elle a essentiellement lieu hors des canaux de diffusion traditionnels de la recherche universitaire[@torner_rpg_2018]. Très tôt, des typologies et des théories ont émergés dans des articles dédiés diffusés dans des périodiques spécialisés sur le jeu de rôle : fanzines, magazines, etc.
+Cette étude exploratoire ne portait que sur la conversation scientifique à travers ses canaux de diffusion traditionnels : articles révisés par les pairs, mémoires et thèses, monographies ou présentations dans des colloques, etc. Cependant, la réflexion sur le jeu de rôle sur table a toujours été une composante importante de ce loisir. Or cette réflexion a lieu essentiellement hors des canaux de diffusion traditionnels de la recherche universitaire[@torner_rpg_2018].
 
-Par exemple, dans *Alarums & Excursions* dès 1975, le premier numéro contient un article de Lee Gold, sa rédactrice en chef et fondatrice, dans lequel elle définit *D&D* comme n’étant pas un jeu a somme nulle tandis que *Dungeons & Beaver*, un pastiche, est un jeu à somme nulle[@gold_taintivy_1975]. De même, en 1979 plusieurs concepteurs de jeu racontent quels sont leurs rapports personnels avec le jeu de rôle dans le premier numéro de *Different Worlds*[@kanterman_my_1979]. D’autres articles théoriques et d’analyse seront diffusés dans ce magazine. Nous voyons donc que bien avant 1981, date du premier article révisé par les pairs dans la revue universitaire Simulation & Gaming par le professeur de sociologie Gary Alan Fine[@fine_fantasy_1981], la réflexion et l’analyse du jeu de rôle sur table est en conversation dans les médias de la communauté des joueurs.
+Ainsi, des typologies et des théories ont rapidement émergé dans des articles dédiés diffusés dans des périodiques spécialisés sur le jeu de rôle : fanzines, magazines, etc. Par exemple, dans *Alarums & Excursions* dès 1975, le premier numéro contient un article de Lee Gold, sa rédactrice en chef et fondatrice, dans lequel elle définit *Dungeons & Dragons* comme n’étant pas un jeu à somme nulle tandis que *Dungeons & Beaver*, un pastiche, est un jeu à somme nulle[@gold_taintivy_1975]. De même, en 1979 plusieurs concepteurs de jeu expliquent quels sont leurs rapports personnels avec le jeu de rôle dans le premier numéro de *Different Worlds*[@kanterman_my_1979]. D’autres articles d’analyse seront diffusés dans ce magazine. Nous voyons donc que bien avant 1981, date du premier article révisé par les pairs dans la revue universitaire *Simulation & Gaming* par le professeur de sociologie Gary Alan Fine[@fine_fantasy_1981], la réflexion sur le jeu de rôle sur table est en diffusée dans les médias de la communauté des joueurs.
 
 Dans les années 1990, cette réflexion s’intensifie avec l’arrivée d’internet et des plateformes en ligne : lettres de diffusion, forums, blogues, wiki, podcasts, chaînes vidéos de streaming, etc. En 1994 et 1995, notons la publication brève en quatre numéros d’un périodique hybride de réflexions de fond sur le jeu de rôle : *Interactive Fantasy: The Journal of Role-Playing and Story-Making Systems*[^12].
 
 [^12]: <https://rpggeek.com/rpgperiodical/8965/> et <https://en.wikipedia.org/wiki/Interactive_Fantasy>
 
-Enfin, vers les années 2000, notons la constitution progressive et durable de bases de données indexant de gros corpus de références de jeux de rôles (*The Acaeum*[^13], etc.), avec des ontologies complexes qui n’ont rien à envier aux outils de gestion de bibliothèques universitaires (Le Grog[^14], *RPGGeek*[^15], etc.).
+Enfin, vers les années 2000, notons la constitution progressive et durable de bases de données indexant des références de jeux de rôles (*The Acaeum*[^13] par exemple) et parfois avec des ontologies complexes qui n’ont rien à envier aux outils de gestion de bibliothèques universitaires (Le Grog[^14] et *RPGGeek*[^15] par exemple).
 
 [^13]: The Acaeum, depuis 1999 à [/](https://www.acaeum.com/frontdesk/intro.html) références érudites pour les collectionneurs des premières éditions de *Dungeons & Dragons*.
 
@@ -1522,7 +1507,7 @@ Plus largement, la production des participants de jeu de rôle permet de constit
 
 Outre l’intellectualisme ou le goût pour l’abstraction et l’érudition, on peut retrouver d’autres valeurs des participants du jeu de rôle qui sont semblables avec celles des chercheurs universitaires.
 
-Tout d’abord, la collégialité est un point important faisant écho à la dimension intrinsèquement collaborative du jeu de rôle. Les lieux de diffusion des idées sont souvent des lieux de débats. Par exemple, les forums (*The Forge*, Les Courants alternatifs, etc.) ou les wikis sont des plateformes invitant naturellement aux échanges entre pairs mus par un intérêt commun. Dans les podcasts, il y a souvent des invités qui font une présentation poussée et argumentées de leurs idées, comme les chercheurs s’invitant les uns les autres sur les campus. Enfin, pour concevoir et maintenir les bases de données mentionnées plus haut, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
+Tout d’abord, la collégialité est un point important faisant écho à la dimension intrinsèquement collaborative du jeu de rôle. Les lieux de diffusion des idées sont souvent des lieux de débats. Par exemple, les forums (*The Forge*, Les Courants alternatifs, etc.) ou les wikis sont des plateformes invitant naturellement aux échanges entre pairs. Dans les podcasts, il y a souvent des invités qui font une présentation poussée et argumentées de leurs idées, comme les chercheurs s’invitant les uns les autres sur les campus. Enfin, pour concevoir et maintenir les bases de données mentionnées plus haut, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
 
 Ensuite, notons le goût de la vulgarisation. Par exemple, la théorie GNS a été clarifiée, simplifiée, reformulée via de nombreux canaux de diffusion. Même si certaines théories semblent trop abstraites ou distantes, le goût d’une application pratique pousse de nombreux participants à s’engager avec elles et à se les approprier de différentes manières. Notons danc ce registre l’important travail de conception de jeu « scientifique » de Johan Scipion avec ses jeux d’horreur qu’il teste plusieurs cinquantaine de fois dans différents milieux pour affiner les mécanismes de jeu. Une démarche expérimentale, basée sur la formulation et la vérification d’hypothèses de design, très proche des méthodes empiriques de la science.
 
@@ -1530,7 +1515,7 @@ Enfin l’accès libre, c’est-à-dire le partage au coût le plus faible pour 
 
 ## Pratiques de citation dans les jeux de rôle sur table
 
-Selon moi, l’exemple le plus frappant de la similiarité de la culture de la recherche scientifique et du jeu de rôle est dans les pratiques de citation. Cette notion m’est venu en écoutant le podcast de La Cellule[@briand_podcast_2018-1] qui faisait un parallèle… En murissant ces notions, j’ai eu le goût à mon tour d’explorer les pratiques de citations dans les jeux de rôle sur table de manière amateur en tant que chercheur indépendant. Ne jouant quasiment plus au jeu de rôle sur table depuis plusieurs années, cela me permettait d’exprimer une dimension importante de ma vie professionnelle (la citation) et de renouer avec un passe-temps que je considère toujours significatif dans mon identité.
+Selon moi, l’exemple le plus frappant de la similiarité de la culture de la recherche scientifique et du jeu de rôle est dans les pratiques de citation. Cette notion m’est venu en écoutant une émission de podcast de La Cellule[@briand_podcast_2018-1] qui faisait un parallèle entre la citation dans l'édifice scientifique et dans les publications de jeu de rôle. En murissant ces notions, j’ai exploré les pratiques de citations dans les jeux de rôle sur table de manière amateur en tant que chercheur indépendant. Ne jouant quasiment plus, cela me permettait d’exprimer une dimension importante de ma vie professionnelle (la citation) et de renouer avec un loisir que je considère toujours significatif dans mon identité.
 
 Une étude exploratoire détaillée sera diffusée sur ce sujet de recherche dans les prochaines années. En attendant, il est possible de suivre l’avancée des travaux via un blogue[^20] et des micro-publications de données de recherche[^21].
 
@@ -1540,14 +1525,16 @@ Une étude exploratoire détaillée sera diffusée sur ce sujet de recherche dan
 
 ### Quelques résultats préliminaires
 
-La forme de publication des règles de jeu de rôle sur table s’apparente plus à celle de monographie que celles de jeux. Les wargames semblent jouer un rôle intermédiaire dans cette identité. Selon moi, l’un des aspects le plus significatif de cette forme sont les pratiques de citation, qui s’apparentent à celles des essais et autres études littéraires.
+Les règles de jeu de rôle sur table, dans leurs formes textuelles diversifiées, s’apparentent plus à celles des monographies que celles des jeux. Les règles de wargames semblent se positionner de manière intermédiaire entre ces deux identités. Selon moi, l’un des aspects les plus significatifs est la pratique de citation.
 
-Le nombre de citations est souvent surprenament élevé. Cette intensité de citations peut avoir plusieurs intentions.
+Le nombre de citations est souvent surprenament élevé.
 
-Les intentions de citations sont nombreuses et diversifiées. On cite pour rendre hommage, reconnaître le travail ou l’innovation. On cite aussi pour montrer la multitude de ses sources d’inspiration (voire nier une filiation unique et encombrante). On peut aussi choisir de mal citer (ne plus citer, citer de manière biaisée, etc.). On peut citer pour faire communauté avec un groupe auquel on aspire à une certaine appartenance ou une certaine fraternité. On peut aussi citer par érudition (nombreuses sources savantes), par esthétique (épigraphes), par obligation légale (OGL, GSL et autres), etc.
+Les intentions de citations sont nombreuses et diversifiées. On cite pour rendre hommage ou pour reconnaître le travail ou l’innovation. On cite aussi pour montrer la multitude de ses sources d’inspiration (voire nier une filiation unique). On peut aussi choisir de mal citer (ne plus citer, citer de manière biaisée, etc.). On peut citer pour faire communauté avec un groupe auquel on aspire à une certaine appartenance ou une certaine fraternité. On peut aussi citer par érudition de nombreuses sources savantes, ou par esthétique avec moults épigraphes, ou par obligation légale (OGL, GSL et autres), etc.
 
-Enfin, tel que mentionné dans l’émission de La Cellule[@briand_podcast_2018-1], on peut citer pour montrer d’où et de qui proviennent les mécaniques de jeu réutilisées. Avec ce type d‘attribution, les formes peuvent être multiple : depuis la simple mention d’un auteur, ou d’un auteur et son jeu, ou de tout cela avec la mécanique spécifique qui a été réutilisée, comment elle l’a été et pourquoi. Cette intention de citation est celle qui se rapproche le plus de la référence en science. En effet, dans la publication scientifique la principale raison d’être de la citation est la tracabilité de l’information pour aller plus loin ou pour vérifier. Selon moi, une telle manière de faire illustre une maturité et une robustesse de la culture…??? Spécialement pour faire ressortir toute la diversité etc.[@siew_one_2022]
+Enfin, tel que mentionné dans l’émission de La Cellule[@briand_podcast_2018-1], on peut citer pour montrer d’où et de qui proviennent les mécaniques de jeu réutilisées. Là aussi, avec ce type d‘attribution les formes peuvent être multiples. Cela va de la simple mention d’un auteur, ou d’un auteur et son jeu, jusqu'au détail de la mécanique spécifique qui a été réutilisée, comment elle l’a été et pourquoi. Cette intention de citation est celle qui se rapproche le plus de la référence en science. En effet, dans la publication scientifique la principale raison d’être de la citation est la traçabilité de l’information pour aller plus loin ou pour vérifier.
+
+Selon moi, des pratiques de citation saines sont un signe de maturité et de robustesse d'une culture. Outre les liens avec le passé, elles permettent de reconnaître toute la diversité du tissu social qui la constitue, spécialement en valorisant les voix minoritaires mais significatives[@siew_one_2022]. Bref, comme je dis souvent à mes étudiant.es : « Citez-vous les uns les autres ! ».
 
 # Conclusion
 
-La publication universitaire a accompagné la pratique du jeu de rôle sur table dès ses débuts avec une nette augmentation depuis les années 2010. Cette publication est très diversifiée et étudiées dans de nombreuses disciplines : sociologie, psychologie, histoire, etc. Ces études démontrent une certaine validation sociale externe de ce loisir. De plus, un goût de la réflexion a toujours été présent parmi certains participants. Peut être est-ce une manière de stimuler une forme de *libido sciendi*, c'est-à-direde plaisir de la curiosité et de l'exploration, et ainsi de prolonger l'expérience de jeu au-delà de la table ?
+Le jeu de rôle sur table a suscité l'intérêt du monde universitaire dès son émergence, avec une intensification notable de la recherche depuis 2010. La diversité des disciplines qui s'y intéressent témoigne de sa richesse comme objet d'étude, conférant ainsi au médium une légitimité académique croissante. Cette reconnaissance institutionnelle fait écho à une culture réflexive déjà présente au sein de la communauté rôliste, qui s'exprime à travers différents supports et discussions. N'est-ce pas justement cette soif de connaissance et d'exploration intellectuelle - cette *libido sciendi* - qui permet d'étendre l'expérience ludique au-delà des parties elles-mêmes, enrichissant ainsi la pratique de ce loisir ?
