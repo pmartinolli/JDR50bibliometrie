@@ -1,0 +1,21 @@
+project:
+  type: website
+
+lang: fr
+
+website:
+  title: "Presque 50 ans de recherche universitaire du jeu de rôle sur table : évolution historique et analyse bibliométrique"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
