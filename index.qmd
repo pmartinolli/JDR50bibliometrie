@@ -8,6 +8,7 @@ author:
         affiliation: "Chercheur indépendant"
 date: "2024-10-22"
 license: "CC-BY 4.0"
+repo-url: https://github.com/pmartinolli/JDR50bibliometrie
 abstract: "Cette étude propose une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
 keywords: "Jeu de rôle sur table ; publication universitaire ; analyse historique ; analyse bibliométrique ; conversation scientifique"
 bibliography: academicTTRPG.bib
@@ -18,6 +19,10 @@ format:
     toc: true
     number-sections: true
     css: styles.css
+  pdf:
+    documentclass: article
+  epub:
+    fig-format: png
 execute:
   echo: false 
   results: hide
@@ -652,6 +657,18 @@ all_titles <- sort(title_counts, decreasing = TRUE)
 top_titles_df <- data.frame(Publication.Title = names(top_titles), Count = as.numeric(top_titles))
 all_titles_df <- data.frame(Publication.Title = names(all_titles), Count = as.numeric(all_titles))
 
+# Renaming two titles because they are too long or with Chinese characters
+top_titles_df$Publication.Title <- gsub(
+  pattern = ".*Convergence.*",
+  replacement = "Convergence",
+  x = top_titles_df$Publication.Title
+)
+top_titles_df$Publication.Title <- gsub(
+  pattern = ".*Japanese Journal of Analog.*",
+  replacement = "Japanese Journal of Analog Role-Playing Studies",
+  x = top_titles_df$Publication.Title
+)
+
 # Assuming top_titles_df is your data frame with columns 'Publication.Title' and 'Count'
 gg_plot <- ggplot(top_titles_df, aes(x = reorder(`Publication.Title`, Count), y = Count)) +
   geom_col(fill = "skyblue") +
@@ -666,18 +683,27 @@ Bien que la recherche soit internationale et que la nationalité des éditeurs s
 
 ### Ancienneté des revues
 
-En soustrayant la date de création de la revue avec la date de publication de l’article dans cette revue, on remarque que la plupart des articles sont publiés dans les revues jeunes de moins de quinze ans. Cela est principalement dû au fait que les quatre revues spécialisées sont jeunes. On observe ensuite une phénomène de longue traine qui illustre le fait que des articles sur le jeu de rôle peuvent être publiés par des revues plus anciennes, voire très anciennes (121 ans pour le plus grand écart).
+En soustrayant la date de création de la revue avec la date de publication de l’article dans cette revue, on remarque que la plupart des articles sont publiés dans les revues jeunes de moins de quinze ans. Cela est principalement dû au fait que les quatre revues spécialisées sont jeunes. On observe ensuite une phénomène de longue traine qui illustre le fait que des articles sur le jeu de rôle peuvent être publiés par des revues plus anciennes, voire très anciennes (166 ans pour le plus grand écart).
 
 ```{r}
+# Read the reconciled Journal list with date of inception of the journals and countries
+journal_titles_reconciled <- read.csv("journals-reconciled.csv", 
+                                      header = TRUE, 
+                                      encoding = "UTF-8",
+                                      quote = "\"",  # Spécifie le caractère guillemet
+                                      fill = TRUE,   # Remplit les colonnes manquantes
+                                      check.names = FALSE)
 
-journal_titles_reconciled <- read.table("journals-reconciled.csv", header = TRUE, sep = ",", encoding = "UTF-8")
-
-# Turn the date in this format "2014-08-01T00:00:00Z" into "YYYY"
-# Convert the 'Inception' column to a datetime object
-journal_titles_reconciled$Inception <- ymd_hms(journal_titles_reconciled$Inception)
-
-# Extract the year and create a new column 'Year'
-journal_titles_reconciled$Year <- year(journal_titles_reconciled$Inception)
+# Convertir les dates en format YYYY à partir de YYYY ou "YYYY-01-01T00:00:00Z" dans Inception
+journal_titles_reconciled$Year <- sapply(journal_titles_reconciled$Inception, function(x) {
+  # Vérifier si c'est juste une année (4 chiffres)
+  if (grepl("^\\d{4}$", x)) {
+    x
+  } else {
+    # Pour les autres formats, utiliser ymd_hms
+    year(ymd_hms(x))
+  }
+})
 
 # Add a new field in the data frame corresponding to the year the Journal was created (Publication.Inception)
 # and adding also a calculated field :
@@ -722,15 +748,15 @@ subset1_ZOTEROLIB <- subset(ZOTEROLIB,
                               grepl("_peer reviewed", Manual.Tags) &
                               grepl("_TTRPG", Manual.Tags))
 
-# Remove rows with NA values in PubAfterInception using complete.cases
-subset1_ZOTEROLIB <- subset1_ZOTEROLIB[complete.cases(subset1_ZOTEROLIB$PubAfterInception), ]
+# Remove incomplete cases and negative values
+subset1_ZOTEROLIB <- subset1_ZOTEROLIB[complete.cases(subset1_ZOTEROLIB$PubAfterInception) & subset1_ZOTEROLIB$PubAfterInception >= 0, ]
 
 # Create a ggplot bar plot for the distribution of PubAfterInception in the subset
 gg_plot <- ggplot(subset1_ZOTEROLIB, aes(x = factor(PubAfterInception))) +
   geom_bar() +
-  labs(title = "Article's publication year following the establishment of the journal",
-       x = "Years after creation",
-       y = "Count") +
+  labs(title = "Nombre d'années entre l'année de publication d'un article et la date de création de la revue",
+       x = "Années après création",
+       y = "Nombre") +
   theme_minimal()
 
 print(gg_plot)
@@ -1457,9 +1483,9 @@ Cependant, il est possible qu’une première rétraction survienne dans un cas 
 
 ## Hors des circuits savants traditionnels
 
-Cette étude exploratoire ne portait que sur la conversation scientifique à travers ses canaux de diffusion traditionnels : articles révisés par les pairs, mémoires et thèses, monographies ou présentations dans des colloques, etc. Cependant, la réflexion sur le jeu de rôle sur table a toujours été une composante importante de ce loisir. Or cette réflexion a lieu essentiellement hors des canaux de diffusion traditionnels de la recherche universitaire[@torner_rpg_2018].
+Cette étude exploratoire s’est concentrée sur la conversation scientifique au sein de ses canaux de diffusion traditionnels : articles revus par des pairs, mémoires, thèses, monographies, présentations en colloques, etc. Pourtant, la réflexion autour du jeu de rôle sur table a toujours été une composante essentielle de ce loisir, bien que celle-ci se déroule principalement en dehors des canaux de diffusion classiques de la recherche universitaire[@torner_rpg_2018].
 
-Ainsi, des typologies et des théories ont rapidement émergé dans des articles dédiés diffusés dans des périodiques spécialisés sur le jeu de rôle : fanzines, magazines, etc. Par exemple, dans *Alarums & Excursions* dès 1975, le premier numéro contient un article de Lee Gold, sa rédactrice en chef et fondatrice, dans lequel elle définit *Dungeons & Dragons* comme n’étant pas un jeu à somme nulle tandis que *Dungeons & Beaver*, un pastiche, est un jeu à somme nulle[@gold_taintivy_1975]. De même, en 1979 plusieurs concepteurs de jeu expliquent quels sont leurs rapports personnels avec le jeu de rôle dans le premier numéro de *Different Worlds*[@kanterman_my_1979]. D’autres articles d’analyse seront diffusés dans ce magazine. Nous voyons donc que bien avant 1981, date du premier article révisé par les pairs dans la revue universitaire *Simulation & Gaming* par le professeur de sociologie Gary Alan Fine[@fine_fantasy_1981], la réflexion sur le jeu de rôle sur table est en diffusée dans les médias de la communauté des joueurs.
+Ainsi, des typologies et théories ont rapidement émergé dans des articles publiés dans des périodiques spécialisés sur le jeu de rôle, tels que les fanzines et magazines. Par exemple, dans le premier numéro de *Alarums & Excursions* en 1975, un article de Lee Gold, fondatrice et rédactrice en chef, présente une analyse de *Dungeons & Dragons* en le qualifiant de jeu un jeu à somme non nulle, contrairement à *Dungeons & Beaver*, un pastiche, qu’elle considère comme un jeu à somme nulle[@gold_taintivy_1975]. De même, en 1979 plusieurs concepteurs de jeu expliquent quels sont leurs rapports personnels avec le jeu de rôle dans le premier numéro de *Different Worlds*[@kanterman_my_1979]. D’autres articles d’analyse seront diffusés dans ce magazine. Ainsi, bien avant 1981—année où le premier article sur le jeu de rôle, révisé par les pairs, est publié dans la revue universitaire *Simulation & Gaming* par le sociologue Gary Alan Fine[@fine_fantasy_1981]—la réflexion sur le jeu de rôle sur table se diffusait déjà largement dans les médias de la communauté des joueurs.
 
 Dans les années 1990, cette réflexion s’intensifie avec l’arrivée d’internet et des plateformes en ligne : lettres de diffusion, forums, blogues, wiki, podcasts, chaînes vidéos de streaming, etc. En 1994 et 1995, notons la publication brève en quatre numéros d’un périodique hybride de réflexions de fond sur le jeu de rôle : *Interactive Fantasy: The Journal of Role-Playing and Story-Making Systems*[^12].
 
@@ -1495,46 +1521,46 @@ Sans doute en raison de la sociologie des joueurs de jeu de rôle sur table, de 
 
 [^18]: L'étude que vous êtes en train de lire serait alors « le méta du méta du méta du jeu de rôle ». Étonnant non ?
 
-Portée par un désir d’améliorer l’expérience de jeu, la réflexion sur le design and le gameplay a été très tôt le sujet principal de l’analyse et de la théorisation de la pratique du jeu de rôle. Des courants de pensée, des écoles et des mouvements, des penseurs et leurs lecteurs, ont de tout temps accompagné la pratique du jeu.
+Animée par le désir d’améliorer l’expérience de jeu, la réflexion sur le design et le gameplay a très tôt occupé une place centrale dans l’analyse et la théorisation de la pratique du jeu de rôle. Des courants de pensée, des écoles et des mouvements, des penseurs et leurs lecteurs ont toujours accompagné et enrichi cette pratique.
 
-Par exemple, il est intéressant de noter que la reconnaissance historique de l’innovation de gameplay inventée par David Wesely et Dave Arneson a d’abord été mentionnée dans des forums[@fisher_dave_2004; @castiglione_evolution_2008], puis des billets de blogue[@robbins_braunstein_2008], puis des monographies[@peterson_playing_2012], puis des documentaires indépendants[@graves_secrets_2019], puis Wikipédia[^19] avant d’être reconnus de manière plus large. Ainsi, progressivement cette reconnaissance amateur, érudite et documentée a pu faire émerger une historiographie sur la naissance du jeu de rôle qui a pu concurrencer le discours qui a longtemps été uniquement centrée sur la figure de Gary Gygax.
+Par exemple, il est intéressant de constater que la reconnaissance historique de l’innovation en matière de gameplay inventée par David Wesely et Dave Arneson a d’abord émergé dans des forums[@fisher_dave_2004; @castiglione_evolution_2008], puis des billets de blogue[@robbins_braunstein_2008], avant d'être relayée dans des monographies[@peterson_playing_2012], des documentaires indépendants[@graves_secrets_2019] et finalement sur Wikipédia[^19], pour finalement atteindre une reconnaissance plus large. Cette reconnaissance amateur, érudite et documentée a ainsi progressivement permis l'émergence d'une historiographie de la naissance du jeu de rôle, qui est venue nuancer un discours longtemps centré uniquement sur la figure de Gary Gygax.
 
 [^19]: <https://en.wikipedia.org/w/index.php?title=Braunstein_(game)&oldid=1248489284>
 
-Plus largement, la production des participants de jeu de rôle permet de constituer un important corpus de témoignages et d’analyses sur la pratique du jeu et ainsi de documenter et préserver une histoire orale de ce passe-temps.
+De manière plus générale, la production des participants au jeu de rôle contribue à constituer un vaste corpus de témoignages et d’analyses sur la pratique du jeu, permettant ainsi de documenter et de préserver une histoire orale de ce loisir.
 
 ## Alignement de valeurs avec la science
 
-Outre l’intellectualisme ou le goût pour l’abstraction et l’érudition, on peut retrouver d’autres valeurs des participants du jeu de rôle qui sont semblables avec celles des chercheurs universitaires.
+En plus de l’intellectualisme et du goût pour l’abstraction et l’érudition, d’autres valeurs des participants au jeu de rôle se rapprochent de celles des chercheurs universitaires.
 
-Tout d’abord, la collégialité est un point important faisant écho à la dimension intrinsèquement collaborative du jeu de rôle. Les lieux de diffusion des idées sont souvent des lieux de débats. Par exemple, les forums (*The Forge*, Les Courants alternatifs, etc.) ou les wikis sont des plateformes invitant naturellement aux échanges entre pairs. Dans les podcasts, il y a souvent des invités qui font une présentation poussée et argumentées de leurs idées, comme les chercheurs s’invitant les uns les autres sur les campus. Enfin, pour concevoir et maintenir les bases de données mentionnées plus haut, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
+Tout d’abord, la collégialité est un point important rappelant la nature fondamentalement collaborative du jeu de rôle. Les espaces de diffusion des idées sont souvent aussi des lieux de débats. Par exemple, les forums (tels que *The Forge* ou Les Courants alternatifs) et les wikis favorisent naturellement les échanges entre pairs. Dans les podcasts, des invités présentent fréquemment leurs idées de manière approfondie et argumentée, à l'image des chercheurs qui interviennent les uns chez les autres sur les campus. Enfin, pour concevoir et maintenir les bases de donnéesmentionnées précédemment, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
 
-Ensuite, notons le goût de la vulgarisation. Par exemple, la théorie GNS a été clarifiée, simplifiée, reformulée via de nombreux canaux de diffusion. Même si certaines théories semblent trop abstraites ou distantes, le goût d’une application pratique pousse de nombreux participants à s’engager avec elles et à se les approprier de différentes manières. Notons danc ce registre l’important travail de conception de jeu « scientifique » de Johan Scipion avec ses jeux d’horreur qu’il teste plusieurs cinquantaine de fois dans différents milieux pour affiner les mécanismes de jeu. Une démarche expérimentale, basée sur la formulation et la vérification d’hypothèses de design, très proche des méthodes empiriques de la science.
+La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins. 
 
-Enfin l’accès libre, c’est-à-dire le partage au coût le plus faible pour les autres participants. ???
+Dans cette perspective, le travail de Johan Scipion illustre particulièrement bien l'approche scientifique dans la conception de jeux. Sa méthode de développement de jeux d'horreur, qui implique des tests répétés auprès de différents publics -- souvent plus d'une cinquantaine de fois -- reflète une véritable démarche expérimentale. Son processus, fondé sur la formulation et la vérification d'hypothèses de design, s'apparente étroitement aux méthodes empiriques utilisées en sciences.
+
+Enfin, un autre aspect similaire avec la science est l'engagement envers l'accès libre, qui se traduit par une volonté de partager les contenus en minimisant les barrières financières pour les autres participants. Cette approche vise à rendre le savoir ou les créations aussi accessibles que possible.
 
 ## Pratiques de citation dans les jeux de rôle sur table
 
-Selon moi, l’exemple le plus frappant de la similiarité de la culture de la recherche scientifique et du jeu de rôle est dans les pratiques de citation. Cette notion m’est venu en écoutant une émission de podcast de La Cellule[@briand_podcast_2018-1] qui faisait un parallèle entre la citation dans l'édifice scientifique et dans les publications de jeu de rôle. En murissant ces notions, j’ai exploré les pratiques de citations dans les jeux de rôle sur table de manière amateur en tant que chercheur indépendant. Ne jouant quasiment plus, cela me permettait d’exprimer une dimension importante de ma vie professionnelle (la citation) et de renouer avec un loisir que je considère toujours significatif dans mon identité.
-
-Une étude exploratoire détaillée sera diffusée sur ce sujet de recherche dans les prochaines années. En attendant, il est possible de suivre l’avancée des travaux via un blogue[^20] et des micro-publications de données de recherche[^21].
+Selon moi, la pratique des citations illustre bien la parenté entre la recherche scientifique et le jeu de rôle. Cette réflexion a émergé suite à mon écoute du podcast La Cellule[@briand_podcast_2018-1], qui mettait en lumière les similitudes entre les citations dans le monde académique et dans l'univers du jeu de rôle. Cette observation initiale m'a conduit à entreprendre une étude amateur des pratiques de citation dans les jeux de rôle sur table, en tant que chercheur indépendant. Bien qu'une analyse approfondie soit prévue pour publication dans les années à venir, les développements de cette recherche sont d'ores et déjà accessibles via un blogue[^20] et des micro-publications de données de recherche[^21].
 
 [^20]: <https://jdr.hypotheses.org/>
 
-[^21]: <https://github.com/pmartinolli/OtSoCG> et <https://observablehq.com/>@pascaliensis/on-the-shoulders-of-cloud-giants
+[^21]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
 
 ### Quelques résultats préliminaires
 
-Les règles de jeu de rôle sur table, dans leurs formes textuelles diversifiées, s’apparentent plus à celles des monographies que celles des jeux. Les règles de wargames semblent se positionner de manière intermédiaire entre ces deux identités. Selon moi, l’un des aspects les plus significatifs est la pratique de citation.
+Les règles des jeux de rôle sur table, avec leurs formats textuels variés, s'apparentent davantage aux monographies académiques qu'aux règles de jeux traditionnels. Dans ce spectre, les wargames occupent une position intermédiaire, empruntant aux deux traditions. La pratique des citations constitue l'une des manifestations les plus révélatrices de cette filiation avec le monde académique.
 
-Le nombre de citations est souvent surprenament élevé.
+Dans les manuels de jeux de rôle sur table, le volume de citations est parfois remarquablement important, dépassant ce qu'on pourrait attendre d'un simple jeu. Cette abondance de références s'apparente davantage aux pratiques des ouvrages académiques, où chaque emprunt et influence sont soigneusement documentés.
 
-Les intentions de citations sont nombreuses et diversifiées. On cite pour rendre hommage ou pour reconnaître le travail ou l’innovation. On cite aussi pour montrer la multitude de ses sources d’inspiration (voire nier une filiation unique). On peut aussi choisir de mal citer (ne plus citer, citer de manière biaisée, etc.). On peut citer pour faire communauté avec un groupe auquel on aspire à une certaine appartenance ou une certaine fraternité. On peut aussi citer par érudition de nombreuses sources savantes, ou par esthétique avec moults épigraphes, ou par obligation légale (OGL, GSL et autres), etc.
+Les pratiques de citation dans les jeux de rôle s'articulent autour de motivations diversifiées et complexes. Au niveau éthique et professionnel, elles servent à reconnaître le travail d'autrui, à rendre hommage aux innovations marquantes et à respecter les cadres légaux comme l'OGL ou la GSL. Sur le plan stratégique, les citations permettent aux créateurs de démontrer la multiplicité de leurs influences, évitant ainsi l'association à une source unique, ou bien elles font l'objet d'omissions délibérées ou de citations biaisées. Elles constituent également un moyen de tisser des liens avec une communauté, d'affirmer son appartenance ou sa fraternité avec d'autres créateurs du milieu. Enfin, les citations répondent à des objectifs stylistiques et intellectuels. Par exemple, elles peuvent prendre la forme d'épigraphes soignés ou témoigner d'une érudition à travers de nombreuses références choisies.  
 
-Enfin, tel que mentionné dans l’émission de La Cellule[@briand_podcast_2018-1], on peut citer pour montrer d’où et de qui proviennent les mécaniques de jeu réutilisées. Là aussi, avec ce type d‘attribution les formes peuvent être multiples. Cela va de la simple mention d’un auteur, ou d’un auteur et son jeu, jusqu'au détail de la mécanique spécifique qui a été réutilisée, comment elle l’a été et pourquoi. Cette intention de citation est celle qui se rapproche le plus de la référence en science. En effet, dans la publication scientifique la principale raison d’être de la citation est la traçabilité de l’information pour aller plus loin ou pour vérifier.
+Comme l'a souligné l'émission de La Cellule[@briand_podcast_2018-1], une fonction essentielle de la citation dans les jeux de rôle est d'identifier l'origine des mécaniques de jeu réemployées. Cette pratique se manifeste selon différents niveaux de précision : de la simple mention d'un auteur ou d'un jeu, jusqu'à une analyse détaillée explicitant la mécanique empruntée, son adaptation et sa justification. Cette démarche d'attribution des mécaniques présente une analogie particulièrement forte avec les pratiques de citation scientifique. Dans les deux cas, l'objectif principal est d'assurer la traçabilité des idées et des innovations, permettant au lecteur soit d'approfondir sa compréhension, soit de vérifier les sources utilisées.
 
-Selon moi, des pratiques de citation saines sont un signe de maturité et de robustesse d'une culture. Outre les liens avec le passé, elles permettent de reconnaître toute la diversité du tissu social qui la constitue, spécialement en valorisant les voix minoritaires mais significatives[@siew_one_2022]. Bref, comme je dis souvent à mes étudiant.es : « Citez-vous les uns les autres ! ».
+Les pratiques de citation témoignent de la maturité et de la solidité d'une culture. Au-delà de la simple préservation des liens historiques, elles jouent un rôle crucial dans la reconnaissance de la diversité sociale qui façonne cette culture, notamment en mettant en lumière les contributions essentielles des voix minoritaires[@siew_one_2022]. Cette pratique vertueuse peut se résumer par cette simple exhortation que j'adresse régulièrement à mes étudiants : « Citez-vous les uns les autres ! ».
 
 # Conclusion
 
-Le jeu de rôle sur table a suscité l'intérêt du monde universitaire dès son émergence, avec une intensification notable de la recherche depuis 2010. La diversité des disciplines qui s'y intéressent témoigne de sa richesse comme objet d'étude, conférant ainsi au médium une légitimité académique croissante. Cette reconnaissance institutionnelle fait écho à une culture réflexive déjà présente au sein de la communauté rôliste, qui s'exprime à travers différents supports et discussions. N'est-ce pas justement cette soif de connaissance et d'exploration intellectuelle - cette *libido sciendi* - qui permet d'étendre l'expérience ludique au-delà des parties elles-mêmes, enrichissant ainsi la pratique de ce loisir ?
+Le jeu de rôle sur table a suscité l'intérêt du monde universitaire dès son émergence, avec une intensification notable de la recherche depuis 2010. La diversité des disciplines qui s'y intéressent témoigne de sa richesse comme objet d'étude, conférant ainsi au médium une légitimité académique croissante. Cette reconnaissance institutionnelle fait écho à une culture réflexive déjà présente au sein de la communauté rôliste, qui s'exprime à travers différents supports et discussions. N'est-ce pas justement cette soif de connaissance et d'exploration intellectuelle - cette *libido sciendi* - qui permet d'étendre l'expérience ludique au-delà de la table et des parties de jeu elles-mêmes, enrichissant ainsi la pratique de ce loisir ?

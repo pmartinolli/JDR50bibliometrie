@@ -2,13 +2,13 @@
 title: "À propos"
 ---
 
-# À propos
-
 Cette page web est le compte-rendu de la présentation de Pascal Martinolli, chercheur indépendant, dans le colloque “Vous êtes dans une taverne…” Retour sur cinquante ans de jeux de rôle, 27-28 mars 2024, Metz. Université de Lorraine.
 
 -   [Présentation](https://hal.science/hal-04575274) sous la forme de diapositives
 
 -   [Captation vidéo](https://ultv.univ-lorraine.fr/video/17578-50-ans-de-jeux-de-role-10-evolution-et-analyse-de-la-recherche-academique-sur-le-jeu-de-role-sur-table/) de la présentation
+
+Ce compte-rendu est créé avec Quarto et il est déposé à <https://github.com/pmartinolli/JDR50bibliometrie>
 
 Après relecture, ce compte-rendu sera diffusé dans une monographie ou dans des actes de colloque auprès d'une maison d'édition et à une date non précisées.
 
