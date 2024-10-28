@@ -1,0 +1,17 @@
+# Search queries
+
+"tabletop role-playing game*" OR TTRPG
+
+TRPG OR TTRPG OR "Tabletop role-playing game*" OR "Tabletop roleplaying game*"
+
+"dungeons & dragons" OR "dungeons and dragons" OR "D&D"
+
+"Vampire the Masquerade" OR "World of Darkness" 
+
+"Call of Cthulhu" OR "Appel de Cthulhu" 
+
+"jeu de rôle" OR "jeux de rôle" 
+
+LARP OR "grandeur nature"
+
+"roleplaying games" OR "role playing games" OR "roleplaying game" OR "role playing game" NOT Titre = (video\* OR MMORPG OR virtual OR online OR computer OR digital OR warcraft)

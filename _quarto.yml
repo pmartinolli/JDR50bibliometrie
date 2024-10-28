@@ -11,12 +11,12 @@ website:
       - href: index.qmd
         text: fr
       - href: about.qmd
-        text: À propos
+        text: info
 
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css: annexes/styles.css
     toc: true
 
 editor: visual

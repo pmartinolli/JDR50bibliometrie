@@ -1,0 +1,30 @@
+# Databases used for the research 
+
+(/@ = alert created and currently ongoing)
+
+## Bibliographic databases
+
+- Web of Science : ALL : Core collection + Current contents + Dissertations & Thesis + SciELO + MEDLINE  "tabletop role-playing game*" OR TTRPG  /@
+- PubMed /@
+- Scopus /@
+- Platform EBSCOhost : "tabletop role-playing game*" OR TTRPG   /@
+- Platform ProQuest : "tabletop role-playing game*" OR TTRPG 
+
+## Catalogs
+
+- Sofia (PBUQ) 
+- BAnQ 
+- BNF 
+- Library of Congress 
+
+## Web engine
+
+- Google Scholar /@
+
+
+## Serendipity 
+
+- Various blogs subscribed through RSS /@ 
+- Social networks /@ 
+- Various national thesis databases 
+

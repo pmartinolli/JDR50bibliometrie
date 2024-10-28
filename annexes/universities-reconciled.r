@@ -1,5 +1,5 @@
 
-setwd("C:/Users/martinop/OneDrive - Universite de Montreal/perso/en_cours/JDR50bibliometrie/JDR50bibliometrie")
+setwd("C:/Users/martinop/OneDrive - Universite de Montreal/perso/en_cours/JDR50bibliometrie/JDR50bibliometrie/annexes")
 
 library(dplyr)
 

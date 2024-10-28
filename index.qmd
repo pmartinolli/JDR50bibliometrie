@@ -12,13 +12,13 @@ repo-url: https://github.com/pmartinolli/JDR50bibliometrie
 abstract: "Cette étude propose une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
 keywords: "Jeu de rôle sur table ; publication universitaire ; analyse historique ; analyse bibliométrique ; conversation scientifique"
 bibliography: academicTTRPG.bib
-csl: chicago-fullnote-bibliography-fr.csl
+csl: annexes/chicago-fullnote-bibliography-fr.csl
 format: 
   html:
     code-fold: false
     toc: true
     number-sections: true
-    css: styles.css
+    css: annexes/styles.css
   pdf:
     documentclass: article
   epub:
@@ -46,7 +46,7 @@ Les références sont collectionnées avec le logiciel bibliographique Zotero da
 
 [^3]: Voir <https://www.zotero.org/groups/446523>
 
-[^4]: Voir
+[^4]: Voir <https://github.com/pmartinolli/MyThesaurus>
 
 Je remercie Michael Freudenthal qui m’a rejoint en 2019 pour gérer cette base de données en ligne. Je remercie aussi Thomas Munier et Sébastien Delphino qui m’ont aidé à concevoir le thésaurus en 2018.
 
@@ -348,7 +348,7 @@ Les pays de soutenance les plus représentés[^5] sont ceux d’Amérique du Nor
 # it's a file build with universities-reconciled.r and reconciled with two important columns : Universities and Country
 
 # Read the data
-universities_reconciled <- read.csv("universities-reconciled.csv", 
+universities_reconciled <- read.csv("annexes/universities-reconciled.csv", 
                                   header = FALSE, 
                                   col.names = c("Universities", "UniversitiesWD", "Country", "UniversitiesWD.QID", "Country.QID"))
 
@@ -525,7 +525,7 @@ subset1_ZOTEROLIB <- subset(ZOTEROLIB,
 DF <- subset1_ZOTEROLIB
 
 # Read the gender reference data
-gender_data <- read.csv("gender-name-reconciled.csv",
+gender_data <- read.csv("annexes/gender-name-reconciled.csv",
                         stringsAsFactors = FALSE)
 
 # Function to extract given names from author string
@@ -687,7 +687,7 @@ En soustrayant la date de création de la revue avec la date de publication de l
 
 ```{r}
 # Read the reconciled Journal list with date of inception of the journals and countries
-journal_titles_reconciled <- read.csv("journals-reconciled.csv", 
+journal_titles_reconciled <- read.csv("annexes/journals-reconciled.csv", 
                                       header = TRUE, 
                                       encoding = "UTF-8",
                                       quote = "\"",  # Spécifie le caractère guillemet
@@ -1475,9 +1475,9 @@ En me basant sur des listes d’exclusion ou d’avertissement créées par des 
 
 En 2024, je n’ai pas repéré de rétraction, c’est-à-dire d’articles retirés[^11]. En règle générale, un article est retiré pour faute ou erreur scientifique grave : modification des données de recherche, erreur dans l’expérimentation ou l’analyse, plagiat, double soumission, etc.
 
-[^11]: Recherche avec Retraction Watch en XXX
+[^11]: Recherche avec *Retraction Watch*.
 
-Cependant, il est possible qu’une première rétraction survienne dans un cas que j’ai signalé aux auteurs originaux. En effet, la copie exacte d'un article a été publiée avec d’autres auteurs dans une revue récente.
+Cependant, il est possible qu’une première rétraction survienne prochainement dans un cas que j’ai signalé aux auteurs originaux. En effet, la copie exacte d'un article a été publiée avec d’autres auteurs dans une revue récente.
 
 # Discours para-universitaire
 
