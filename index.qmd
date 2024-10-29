@@ -9,7 +9,7 @@ author:
 date: "2024-10-22"
 license: "CC-BY 4.0"
 repo-url: https://github.com/pmartinolli/JDR50bibliometrie
-abstract: "Cette étude propose une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
+abstract: "Cette étude descriptive est une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
 keywords: "Jeu de rôle sur table ; publication universitaire ; analyse historique ; analyse bibliométrique ; conversation scientifique"
 bibliography: academicTTRPG.bib
 csl: annexes/chicago-fullnote-bibliography-fr.csl
@@ -30,41 +30,43 @@ execute:
 
 # Introduction
 
-Depuis 2014, j'ai entrepris de rassembler des références universitaires se rapportant à l'étude du jeu de rôle sur table. Cette démarche a abouti à la création d'une base de données librement accessible via Zotero, comprenant un total de 3000 références issues d’études universitaires ou para-universitaires.
+Depuis 2014, j'ai entrepris de rassembler des références universitaires se rapportant à l'étude du jeu de rôle sur table. Cette démarche a abouti à la création d'une base de données librement accessible via Zotero, comprenant plus de 3000 références issues d’études universitaires ou para-universitaires.
 
 ## Quelques points saillants
 
-Parmi les références indexées, on dénombre 571 articles soumis à une évaluation par des pairs, 180 monographies, 406 mémoires ou thèses, et bien d'autres types de documents : présentations de conférence, billets de blogue, jeux de données, etc.
+Parmi les références indexées, on dénombre environ 570 articles soumis à une évaluation par des pairs, 180 monographies, 410 mémoires ou thèses, et bien d'autres types de documents : présentations de conférence, billets de blogue, jeux de données, etc.
 
 Le corpus de base a été constitué de références issues de recherches bibliographiques dans des bases de données bibliographiques universitaires, de catalogues de bibliothèques, d’index de citations, de dépôts institutionnels et autres. Les références correspondaient à une ou plusieurs équations de recherche selon des termes libres ou contrôlés[^1]. Après la constitution de ce corpus de base, des alertes ont été programmées dans les outils qui le permettaient pour repérer automatiquement les nouvelles références correspondantes aux critères de recherche[^2].
 
-[^1]: Voir fichier search-queries.txt à
+[^1]: Voir https://github.com/pmartinolli/JDR50bibliometrie/blob/master/annexes/search-queries.txt
 
-[^2]: Voir fichier database-list.txt à
+[^2]: Voir https://github.com/pmartinolli/JDR50bibliometrie/blob/master/annexes/database-list.txt
 
-Les références sont collectionnées avec le logiciel bibliographique Zotero dans une bibliothèque de groupe partagée et ouverte à tous[^3]. Les références sont corrigées et indexées avec des termes issus d’un thésaurus documentaire de mots-clés contrôlés en deux niveaux[^4].
+Les références sont collectionnées et corrigées avec le logiciel bibliographique Zotero dans une bibliothèque de groupe partagée et ouverte à tous[^3]. Ensuite, les références sont indexées avec des termes issus d’un thésaurus documentaire de mots-clés contrôlés en deux niveaux[^4]. Je remercie Michael Freudenthal qui m’a rejoint en 2019 pour gérer cette base de données en ligne. Je remercie aussi Thomas Munier et Sébastien Delphino qui m’ont aidé à concevoir le thésaurus en 2018.
 
 [^3]: Voir <https://www.zotero.org/groups/446523>
 
 [^4]: Voir <https://github.com/pmartinolli/MyThesaurus>
 
-Je remercie Michael Freudenthal qui m’a rejoint en 2019 pour gérer cette base de données en ligne. Je remercie aussi Thomas Munier et Sébastien Delphino qui m’ont aidé à concevoir le thésaurus en 2018.
+
 
 ## Biais
 
-Cette collection de références bibliographiques souffre de plusieurs biais. Les principaux biais sont les biais linguistiques et géographiques car l’essentiel des références actuelles sont en anglais et en français. Bien que de la littérature hispanophone, lusophone, italienne et autres soient en train d’émerger, il y a encore des angles morts non couverts ou peu couverts (langues nordiques, allemandes et chinoises par exemple).
+Cette collection présente plusieurs biais importants :
 
-Il y a aussi des biais de disponibilité : des thèses et mémoires soutenues avant les années 2000 sont en général peu indexé dans des bases de données par exemple.
+1. Biais linguistiques et géographiques : La majorité des références sont en anglais et en français, bien que la littérature dans d'autres langues comme l'espagnol, le portugais, l'italien, etc. soit de plus en plus présente. Certaines langues comme les langues nordiques, l'allemand et le chinois restent sous-représentées.
+2. Biais de disponibilité : Les thèses et mémoires soutenus avant les années 2000 sont souvent peu indexés dans les bases de données, ce qui limite leur accessibilité.
+3. Biais d'indexation : Certaines références n'indexent que la monographie, tandis que d'autres indexent à la fois la monographie et ses chapitres. Cela crée des incohérences dans la façon dont le contenu est référencé.
 
-Il y a enfin des biais d’indexation. Par exemple, certaines références indexent la monographie seulement et d’autres références indexent à la fois la monographie et les chapitres de celle-ci.
+En résumé, cette collection souffre d'un manque de diversité linguistique et géographique, d'un accès limité aux anciennes publications, ainsi que d'un manque d'uniformité dans l'indexation des références. Cela peut entraîner des angles morts et des lacunes dans la couverture du champ de recherche concerné.
 
-Le type de document pour lequel j’estime qu’il y a le moins de biais est l’article de revue savante dont la publication a été précédée par une révision par les pairs (*peer-reviewed*) arbitrée par un éditeur (*editor*). En effet, ce type de littérature bénéficie d’une indexation plus systématique dans des bases de données disciplinaires. Donc, des recherches exhaustives dans un grand nombre et une grande diversité de bases de données bibliographiques permet de justifier que l’ensemble des articles qui y ont été repérés constitue un corpus représentatif de toute la production scientifique. Comme ce corpus est représentatif, il est raisonnable de généraliser les analyses qui en sont faites.
+Selon moi, les articles de revues savantes ayant fait l'objet d'une révision par les pairs (*peer-reviewed*) arbitrée par un éditeur (*editor*) sont le type de document le moins biaisé dans cette collection bibliographique. En effet, ce type de littérature bénéficie d'une indexation plus systématique dans les bases de données disciplinaires, permettant ainsi d'en faire un recensement plus exhaustif. Dès lors, des recherches approfondies dans un grand nombre et une grande diversité de bases de données conduisent à considérer l'ensemble des articles repérés comme un corpus représentatif de la production scientifique dans ce domaine. Étant donné cette représentativité du corpus, il est alors raisonnable de pouvoir généraliser les analyses effectuées sur ces articles de revues révisés par les pairs.
 
 # Présentations dans des conférences
 
-Malgré l’existence de biais de disponibilité (toutes les conférences ne se trouvent pas indexées en ligne) et de sélection (je suis très loin d’avoir indexé toutes les conférences sur le jeu de rôle qui se sont données), la figure ci-dessous illustre une forte augmentation du nombre de présentations de conférences à partir des années 2000 avec une accélération autour de 2013-2015. Avant 2000, les présentations de conférence sont extrêmement sporadiques et rares.
+Malgré l’existence de biais de disponibilité mentionnés précédemment et de biais de sélection (je suis très loin d’avoir indexé toutes les conférences sur le jeu de rôle), la figure ci-dessous illustre une forte augmentation du nombre de présentations de conférences à partir des années 2000 avec une accélération autour de 2013-2015. Avant 2000, les présentations de conférence sont sporadiques et rares.
 
-Outre l’organisation de colloques complets avec une série de conférences dans un cadre universitaire, on assiste aussi à un engouement pour les présentations ponctuelles dans des événements comme des conventions ou des expositions.
+Outre l’organisation de colloques complets avec une série de conférences dans un cadre universitaire, on remarque aussi un engouement pour les présentations ponctuelles dans des événements comme des conventions ou des expositions.
 
 ```{r}
 #| warning: false
@@ -142,7 +144,7 @@ print(gg_plot)
 
 Comme mentionné précédemment, les références de monographies (livres) souffrent d’une indexation inégale de leurs chapitres. En effet, certains livres n’ont qu’une seule référence pour l’ouvrage et d’autres livres bénéficient d’une référence générale et d’une référence pour chacun des chapitres.
 
-Malgré cela, on remarque là aussi une augmentation nette du nombre de monographies avec un angle universitaire sur le jeu de rôle sur table dès les années 2000.
+Malgré cela, dès les années 2000, on remarque aussi une augmentation nette du nombre de monographies avec un angle universitaire sur le jeu de rôle sur table.
 
 ```{r}
 # Create an another subset based on the criteria (Journal article OR book OR book section, AND TTRPG)
@@ -189,7 +191,7 @@ if(sum(!is.na(DF$Publication.Year)) > 0)
     gg_plot <- ggplot(merged_data, aes(x = Year, y = Count, fill = Type)) +
       geom_bar(stat = "identity", position = "stack", width = 0.7) +
       scale_fill_manual(values = c("book" = "skyblue", "bookSection" = "darkblue")) +
-      labs(title = "Distribution annuelle du nombre de livres et de chapitres de livre",
+      labs(title = "Distribution du nombre de livres et de chapitres de livres",
            x = "Années",
            y = "Nombre",
            fill = "Type") +
@@ -202,7 +204,7 @@ if(sum(!is.na(DF$Publication.Year)) > 0)
   }
 ```
 
-Parmi les principales maisons d’édition, on remarque des acteurs traditionnels de la publication scientifique (Springer, Routledge, Wiley, MIT Press, Peter Lang, etc.), ainsiq que des maisons d’édition spécialisées dans les études du jeu (McFarland, ETC Press, Pinkerton Press, etc.) et des organisations professionnelles ou semi-professionnelles de jeu (Ropecon ry, Evil Hat Production, Knutepunkt, etc.).
+Parmi les principales maisons d’édition, on remarque des acteurs traditionnels de la publication scientifique (Springer, Routledge, Wiley, MIT Press, Peter Lang, etc.), ainsi que des maisons d’édition spécialisées dans les études du jeu (McFarland, ETC Press, Pinkerton Press, etc.) et des organisations professionnelles ou semi-professionnelles de jeu (Ropecon ry, Evil Hat Production, Knutepunkt, etc.).
 
 ```{r}
 # Create an another subset based on the criteria (Journal article OR book OR book section, AND TTRPG)
@@ -265,13 +267,13 @@ print(gg_plot)
 
 # Mémoires et thèses
 
-La représentativité des mémoires et thèses souffrent de nombreux biais.
+La représentativité des mémoires et des thèses présente de nombreux biais.
 
-Tout d’abord, les mémoires, des travaux universitaires de second cycle sont très difficiles à repérer en ligne. Pour des raisons légales (peu d’obligation de diffusion) et techniques (peu de diffusion électronique), les mémoires soutenus et acceptés sont très rarement visibles en ligne. Parfois, c’est une institution qui a une politique de diffusion qui facilite cet accès. Parfois, c’est l’étudiant qui diffuse le travail sur son site web ou qui le dépose dans des plateformes de manière individuelle et volontaire. Il en va de même pour les travaux de premier cycle, encore moins diffusés.
+D'une part, les mémoires, en tant que travaux universitaires de second cycle, sont difficiles à repérer en ligne. En raison d'exigences légales limitées (peu d'obligations de diffusion) et de contraintes techniques (faible accessibilité numérique), les mémoires soutenus et acceptés sont rarement visibles en ligne. Parfois, l'accès est facilité par la politique de diffusion d'une institution, ou par des initiatives individuelles d'étudiants qui publient leur travail sur leur propre site web ou le déposent volontairement sur des plateformes. Cela s'applique aussi aux travaux de premier cycle, encore moins diffusés.
 
-Pour les thèses de doctorat, le repérage est plus facile. En effet, dans la plupart des pays, une thèse de doctorat a une dimesion publique, donc l’institution où la thèse est soutenue a une obligation *a minima* de diffuser une référence bibliographique et de conserver une copie (au moins imprimée) de la thèse soutenue et acceptée. Parfois, la référence bibliographique peut être repérée dans le dépôt institutionnel de l’institution, parfois dans le dépôt légal du pays, parfois dans des bases de données spécialisées. Malgré cela, il y a une sur-représentation des thèses diffusées en ligne au détriment de thèses qui n’existent qu’au format imprimé.
+En revanche, le repérage des thèses de doctorat est plus aisé. Dans la plupart des pays, les thèses ont une dimension publique, et l'institution qui les accueille est obligée, au minimum, de diffuser une référence bibliographique et de conserver une copie, au moins imprimée, de la thèse soutenue et acceptée. La référence bibliographique peut être consultable dans les dépôts institutionnels, les dépôts légaux nationaux ou dans des bases de données spécialisées. Cependant, les thèses diffusées en ligne sont souvent sur-représentées au détriment de celles qui ne sont accessibles qu'en version imprimée.
 
-Avec ces biais en tête, on peut remarquer qu’il y a de plus en plus de mémoires et de thèses sur le jeu de rôle sur table à partir des années 2005-2010. Il y a une forte augmentation depuis 2013 qui pourrait correspondre au moment où les universités nord-américaines et européennes ont diffusé de plus en plus systématiquement les mémoires et thèses de leurs étudiant.es.
+Avec ces biais en tête, on peut remarquer qu’il y a de plus en plus de mémoires et de thèses sur le jeu de rôle sur table à partir des années 2005-2010. Il y a une forte augmentation depuis 2013 qui pourrait correspondre au moment où les universités nord-américaines et européennes ont commencé à diffuser plus systématiquement les mémoires et thèses de leurs étudiant.es. dans des dépôts institutionnels.
 
 ```{r}
 subset2_ZOTEROLIB <- subset(ZOTEROLIB,
@@ -339,7 +341,7 @@ gg_plot <- ggplot() +
 print(gg_plot)
 ```
 
-Les pays de soutenance les plus représentés[^5] sont ceux d’Amérique du Nord avec un poid énorme pour les États-Unis et moindre pour le Canada. Enuite, viennent les pays d’Europe avec une avance de la France suivie des pays d’Europe du nord. Des pays émergents sont à noter (Brésil, Afrique du sud, Pérou, Chine, etc.).
+Les pays de soutenance les plus représentés[^5] sont majoritairement situés en Amérique du Nord, avec une forte prédominance des États-Unis, suivis par le Canada. Viennent ensuite les pays européens, où la France se distingue en tête, suivie du Brésil et de pays d’Europe du Nord. 
 
 [^5]: Les noms des universités ont été exportés et ils ont été alignés (ou « réconciliés ») avec les données de Wikidata. La réconciliation est automatisée avec avec le logiciel OpenRefine. Pour chaque réconciliation réussie, le nom du pays associé à l’université est récupéré.
 
@@ -395,7 +397,7 @@ print(gg_plot)
 
 # Articles de revues universitaires
 
-Comme mentionné précédemment, je pense avoir collecté un ensemble représentatif des articles de revues savantes dont le contenu a été révisé par des pairs et dont le processus de sélection et de publication a été arbitré par un éditeur.
+Comme mentionné précédemment, je pense avoir collecté un ensemble représentatif des articles de revues savantes dont le contenu a été révisé par des pairs et dont le processus de sélection et de révision a été arbitré par un éditeur.
 
 ## Critères d'inclusion
 
@@ -464,11 +466,11 @@ print(gg_plot)
 
 Plusieurs raisons peuvent être avancées pour expliquer cette augmentation. Tout d’abord, la publication scientifique en général, toutes disciplines universitaires confondues, a fortement augmenté durant la même période. En effet, la pression à la publication (le fameux « publish or perish ») incite les chercheurs à publier quantitativement plus qu’auparavant.
 
-De plus, il est possible qu’un effet générationnel soit en jeu d’une manière double. Premièrement, les chercheurs ou les cadres de la recherche (directeurs de laboratoire, chef de projets de recherche, éditeurs de revues, membre de comités de financements, etc.) ont joué dans leur jeunesse et ils apprécient positivement toute recherche mettant en valeur un passe-temps pour lesquel ils ont un attachement. Deuxièment, une nouvelle mode de la pratique du jeu de rôle sur table est apparue après les années 2010. En effet, de nombreux rôlistes sont devenus parents et ils ont initié leurs enfants ou bien ils ont reconnecté avec la pratique du jeu eux-même. De nouveaux joueurs ont découvert ce passe-temps à travers des fictions de la culture populaire (Stranger Things, Big Bang Theory, etc.) ou à travers de parties enregistrées et diffusées en ligne (actual play).
+De plus, il est possible qu’un effet générationnel soit en jeu d’une manière double. Premièrement, les chercheurs ou les cadres de la recherche (directeurs de laboratoire, chef de projets de recherche, éditeurs de revues, membre de comités de financements, etc.) ont joué aux jeux de rôle dans leur jeunesse et ils apprécient positivement toute recherche mettant en valeur un loisir pour lequel ils ont un attachement. Deuxièment, une nouvelle vague de pratiquant.es du jeu de rôle sur table est apparue après les années 2010. En effet, de nombreux rôlistes sont devenus parents et ils ont initié leurs enfants ou bien ils ont reconnecté avec la pratique du jeu eux-même. De plus nouveaux joueur.ses ont découvert ce loisir à travers des fictions de la culture populaire (*Stranger Things*, *The Big Bang Theory*) ou à travers de parties enregistrées et diffusées en ligne (*actual play*).
 
 Enfin, des angles de recherche intéressants ont suscité un fort engouement et de nombreuses recherches : utilisation du jeu de rôle ludique comme outil psychothérapeutique ou comme outil pédagogique, etc.
 
-## Nombre d’auteurs par articles
+## Nombre d’auteurs par article
 
 En observant la figure suivante, on observe que l’auteur typique d’un article sur le jeu de rôle est un auteur unique. Le nombre d’auteurs dépasse rarement le nombre de quatre. Cependant, depuis les années 2010, on remarque de plus en plus de grosses équipes de chercheurs (de 4 à 15) autour d’un projet de recherche, dans le domaine de la psychologie principalement.
 
@@ -510,9 +512,9 @@ print(gg_plot)
 
 ## Genre des prénoms des autrices et des auteurs
 
-En attribuant automatiquement un genre aux prénoms des auteurs[^6] , il est possible de remarquer que les chercheuses sont de plus en plus présentes et leur nombre approche de la parité.
+En attribuant automatiquement un genre aux prénoms des autrices et aux auteurs[^6], on remarque que les chercheuses sont de plus en plus présentes.
 
-[^6]: Les prénoms des auteur.trices ont été extraits et ils ont été alignés (ou « réconciliés ») avec les données de Wikidata. La réconciliation est automatisée avec avec le logiciel OpenRefine dans un premier temps. Pour chaque réconciliation réussie, le genre associé au prénom est récupéré : Male, Female ou Unisex. Une deuxième passe manuelle a eu lieu dans un deuxième temps.
+[^6]: Les prénoms des auteur.trices ont été extraits et ils ont été alignés (ou « réconciliés ») avec les données de Wikidata. La réconciliation est automatisée avec avec le logiciel OpenRefine dans un premier temps. Pour chaque réconciliation réussie, le genre associé au prénom est récupéré : Male, Female ou Unisex. Une seconde passe manuelle a eu lieu dans un deuxième temps.
 
 ```{r}
 # Create a first subset based on your criteria
@@ -638,7 +640,7 @@ print(gg_plot)
 
 ## Revues
 
-Parmi les revues savantes par lesquelles les articles sont publiées, nous remarquons que les quatre premières sont quatre revues spécialisées sur le sujet : *Analog Game Studies*, *The International Journal of Role-Playing*, *The Japanese Journal of Analog Role-Playing Game Studies* et *Journal of Roleplaying Studies and STEAM*. Suivent ensuite des revues savantes dans le domaine des études du jeu en général et en psychologie.
+Parmi les revues savantes par lesquelles les articles sont publiées, nous remarquons que les quatre premières sont quatre revues spécialisées sur le sujet : *Analog Game Studies*, *The International Journal of Role-Playing*, *The Japanese Journal of Analog Role-Playing Game Studies* et *Journal of Roleplaying Studies and STEAM*. Viennent ensuite des revues académiques spécialisées, couvrant le domaine des études sur le jeu en général ainsi que le domaine de la psychologie.
 
 ```{r}
 # ANALYSIS : Journal titles most frequently utilized for peer-reviewed articles
@@ -764,7 +766,7 @@ print(gg_plot)
 
 ## Langues des articles
 
-La langue principale et largement majoritaire de la recherche sur le jeu de rôle est l’anglais. D’une part, l’anglais est devenue la lingua franca de la science ce qui peut expliquer pourquoi des chercheurs de langues minoritaires peuvent utiliser l’anglais pour être lu le plus largement possible. D’autre part, l’anglais est la langue de la plupart des jeux de rôle sur table.
+La langue principale et dominante dans la recherche sur le jeu de rôle est l'anglais. D'une part, l'anglais est devenu la *lingua franca* de la science, ce qui explique pourquoi des chercheurs de langues minoritaires choisissent souvent cette langue pour atteindre un public plus large. D'autre part, la majorité des jeux de rôle sur table sont également publiés en anglais.
 
 ```{r}
 # ANALYSIS : Language used in the journal articles
@@ -817,9 +819,9 @@ print(gg_plot)
 
 ### Francophonie
 
-Ce qui est plus surprenant est de remarquer que la seconde langue de la recherche sur le jeu de rôle est le français. Cela peut s’expliquer d’une part par le dynamisme des chercheurs de la francophonie, par le succès du jeu de rôle en français depuis les années 1980 avec une production et un nombre de joueurs soutenus dans cette langue. Enfin, il est possible que le nombre de revues scientifiques francophones offrent des opportunités de publications plus facilitées que pour des langues possédant moins de publications scientifiques.
+Il est intéressant de noter que la seconde langue de la recherche sur le jeu de rôle, après l'anglais, est le français. Cela peut s'expliquer par le dynamisme des chercheurs francophones, par le succès du jeu de rôle en français depuis les années 1980, qui a vu une production prolifique et un nombre élevé de joueurs dans cette langue. De plus, le nombre de revues scientifiques francophones pourrait offrir davantage de possibilités de publication comparé aux langues disposant de moins de revues spécialisées.
 
-Cela est confirmé lorsqu’on extrait les auteurs des articles et que l’on dénombre leurs publications, il est intéressant de noter une présence remarquable des chercheuses et des chercheurs francophones (9 sur 30).
+Cette tendance est confirmée lorsqu’on examine les auteurs des articles et que l’on comptabilise leurs publications : la présence des chercheurs francophones est notable, représentant 9 auteurs sur les 30 les plus prolifiques.
 
 ```{r}
 # ANALYSIS : Most mentioned authors in journal articles
@@ -872,21 +874,21 @@ print(gg_plot)
 
 Il est intéressant de remarquer deux langues émergentes : l’espagnol et le portugais. Cela révèle une recherche de plus en plus dynamique en Amérique du sud.
 
-Le japonais, l’allemand et le russe ont aussi été relevé. Comme mentionné au début de cette étude, j’admets un biais linguistique qui invisibilise probablement quelques articles savants que je n’ai pas identifié.
+Le japonais, l’allemand, le russe et le polonais ont aussi été relevé. Comme mentionné au début de cette étude, j’admets un biais linguistique qui invisibilise probablement quelques articles savants que je n’ai pas identifié.
 
 ## Sujets de recherche
 
 Chaque référence ajoutée au corpus bibliographique bénéficie d’un double traitement : une validation et un enrichissement des métadonnées présentes (titres, auteurs, résumés, etc.) mais surtout une indexation des sujets du document à l’aide d’un thésaurus. Ce thésaurus est une liste contrôlée de mots-clés[^7] . Il est organisé en deux niveaux : un niveau générique qui correspond à une discipline ou un concept large; et un niveau spécifique qui correspond à un sous-sujet, une spécialité ou un angle.
 
-[^7]: Voir...
+[^7]: Voir <https://github.com/pmartinolli/MyThesaurus>
 
-Si une référence est indexée avec un mot-clé spécifique et si ce mot-clé est rattaché à un mot-clé générique dans le thésaurus, alors ce mot-clé générique est aussi ajouté à la référence. Une référence peut recevoir plusieurs mots-clés. Le traitement des articles révisés par les pairs bénéficie d’une attention un peu plus soutenue que les autres types de références. Dans Zotero, le type de document « Article de revue » ne suffit pas car certaines références de ce type ne sont pas révisées par les pairs donc un mot-clé «\_*peer reviewed* » (révisé par les pairs) a été créé.
+Lorsqu'une référence est indexée avec un mot-clé spécifique, et que ce mot-clé est lié à un terme générique dans le thésaurus, le mot-clé générique est également ajouté à la référence. Une référence peut ainsi recevoir plusieurs mots-clés. Les articles révisés par les pairs bénéficient par ailleurs d'une attention particulière par rapport aux autres types de références lors du traitement. Dans Zotero, le type de document « Article de revue » ne suffit pas car certaines références de ce type ne sont pas révisées par les pairs. Pour cela, un mot-clé «\_*peer reviewed* » (révisé par les pairs) a été créé.
 
 ### Niveau générique
 
 Avec la distribution des mots-clés génériques selon les années, on remarque la stabilité ou la croissance progressive de plusieurs disciplines dans le temps : psychologie, sociologie, éducation, histoire, etc.
 
-On retrouve ces quatre catégories en tête du dénombrement général des disciplines. Suivent ensuite un ensemble de catégories liées à la communication et au jeu (émotion, larp, média, gameplay, design).
+On retrouve ces quatre catégories en tête du dénombrement général des disciplines. Suivent ensuite un ensemble de catégories liées à la communication et au jeu (émotion, LARP, média, *gameplay*, *design*).
 
 ```{r}
 # ANALYSIS : All your tags in journal articles
@@ -999,11 +1001,9 @@ print(gg_plot)
 
 ### Niveaux spécifiques
 
-Il existe des ensembles de quelques articles dans plusieurs disciplines très atypiques pour le jeu de rôle sur table comme la musique, la neuroscience, le droit ou la philosophie. On peut les repérer dans les niveaux spécifiques.
+Le niveau spécifique permet de repérer plus finement des disciplines et des sujets. Pour les disciplines, ce niveau spécifique permet de repérer qu'outre les grandes disciplines des sciences humaines et sociales, il existe des intérêts de niche dans les domaines du droit, de la musique, de la philosophie ou des neurosciences.
 
-Outre palier au défaut des choix ontologiques du thésaurus, le niveau spécifique permet aussi de repérer plus finement des disciplines et des sujets. Pour les disciplines, ce niveau spécifique permet de repérer qu'outre les grandes disciplines des sciences humaines et sociales, il existe des intérêts de niche dans les domaines du droit, de la musique, de la philosophie ou des neurosciences.
-
-Pour les sujets de recherche, plusieurs sélections ci-dessous montrent que certains sujets sont associés à des moments particuliers (les paniques morales par exemple), ou bien font l'objet d'un intérêt récent plutôt (la psychothérapie par exemple).
+En ce qui concerne les sujets de recherche, plusieurs sélections ci-dessous révèlent que certains thèmes sont associés à des périodes spécifiques, comme les paniques morales, tandis que d'autres, tels que la psychothérapie, suscitent un intérêt plus récent.
 
 ```{r}
 #ANALYSIS : Treemaping only the tags that are NOT capitalized (2nd rank subject-headings)
@@ -1142,6 +1142,8 @@ print(gg_plot)
 
 #### Psychothérapies
 
+La recherche sur les applications psychothérapeutiques du jeu de rôle sur table est un domaine qui a le vent en poupe depuis plusieurs années. 
+
 ```{r}
 # Create a first subset based on your criteria
 subset1_ZOTEROLIB <- subset(ZOTEROLIB,
@@ -1201,7 +1203,7 @@ print(gg_plot)
 
 #### Paniques morales
 
-Les premières publications scientifiques visaient à expliquer la montée en popularité de ce hobby et à répondre aux paniques morales des année 1980-1990 aux États-Unis. On ne le voit pas sur le graphique suivant mais les articles les plus anciens sont des articles de debunking de psychologie pour expliquer que le loisir du jeu de rôle n'est pas négatif pour la santé mentale. Tandis que les articles les plus récents sont des articles d'histoire ou de sociologie expliquant le phénomène des paniques morales autour du jeu de rôle.
+Les premières publications scientifiques cherchaient à expliquer la popularité croissante de ce loisir et à répondre aux paniques morales qui ont marqué les années 1980 et 1990 aux États-Unis. Bien que cela ne soit pas visible sur le graphique suivant, les articles les plus anciens sont des travaux de *debunking* en psychologie, visant à démontrer que le jeu de rôle n’a pas d'impact négatif sur la santé mentale. En revanche, les publications plus récentes relèvent de l’histoire ou de la sociologie, et analysent le phénomène des paniques morales autour du jeu de rôle.
 
 ```{r}
 # Create a first subset based on your criteria
@@ -1259,7 +1261,7 @@ print(gg_plot)
 
 #### Quelques sujets en éducation
 
-Plusieurs sujets de recherche en éducation suscite un intérêt particulier : l'aspect motivationnel de la pratique du jeu sur l'apprenant, la possibilité d'une émotion de auto-efficacité (l'impression positive que l'on est en train d'accomplir une tâche de la bonne manière), l'apprentissage d'une langue seconde ou la pratique de compétences sociales de communication, de négociation ou d'animation.
+Plusieurs thèmes de recherche en éducation suscitent un intérêt particulier : l’effet motivant du jeu pour l’apprenant, la possibilité de développer un sentiment d’auto-efficacité (la perception positive de bien accomplir une tâche), l'apprentissage d'une langue seconde, ainsi que la pratique de compétences sociales, telles que la communication, la négociation ou l'animation.
 
 ```{r}
 # ANALYSIS : the distribution of 4 tags only
@@ -1319,7 +1321,7 @@ print(gg_plot)
 
 #### Genre, minorité, inclusion
 
-Ces dix dernières années, on peut remarquer un fort intérêt pour la recherche sur les genres et les minorités, avec un accent sur l'aspect d'inclusion (hospitalité, appartenance, etc.) ou d'exclusion (racisme, jugement, etc.).
+Au cours des dix dernières années, la recherche s'est intéressée aux questions de genre et aux minorités, en mettant l'accent sur les aspects d'inclusion (hospitalité, appartenance, etc.) et d'exclusion (racisme, stigmatisation, etc.).
 
 ```{r}
 # ANALYSIS : the distribution of 4 tags only
