@@ -23,6 +23,8 @@ format:
     documentclass: article
   epub:
     fig-format: png
+  docx:
+    reference-doc: annexes/custom-reference.docx
 execute:
   echo: false 
   results: hide
