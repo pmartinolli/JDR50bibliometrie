@@ -6,7 +6,7 @@ author:
       - name: "Pascal Martinolli"
         orcid: "0000-0003-0122-5300"
         affiliation: "Chercheur indépendant"
-date: "2024-10-22"
+date: "2024-10-29"
 license: "CC-BY 4.0"
 repo-url: https://github.com/pmartinolli/JDR50bibliometrie
 abstract: "Cette étude descriptive est une analyse historique et bibliométrique approfondie de la recherche universitaire sur le jeu de rôle sur table. Elle examine l'évolution des publications à travers différents formats académiques (conférences, monographies, thèses, articles évalués par les pairs) et explore les nouvelles tendances de diffusion scientifique, incluant les prépublications et les revues de littérature. L'analyse révèle une croissance marquée de la production scientifique depuis les origines du jeu de rôle, avec une accélération notable durant la dernière décennie. Si la recherche reste principalement ancrée en Amérique du Nord et en Europe, de nouveaux pôles émergent en Amérique latine et en Asie. Plusieurs thématiques majeures sont explorées : la prépondérance de Dungeons & Dragons, les controverses morales des années 1980-1990, les applications thérapeutiques, les enjeux de diversité et de représentation, ainsi que le phénomène des actual plays. L'étude s'enrichit également d'une analyse des réflexions théoriques développées par la communauté des joueurs en dehors du cadre universitaire traditionnel. Elle examine comment ces contributions para-académiques de qualité peuvent être intégrées et validées par les institutions savantes. Enfin, elle met en lumière l'influence des pratiques académiques, notamment en matière de citation, sur la culture du jeu de rôle."
@@ -613,7 +613,7 @@ gg_plot <- ggplot(yearly_gender_dist,
            fill = Gender)) +
   geom_bar(stat = "identity", position = "stack") +
   # Add appropriate labels
-  labs(title = "Distribution des genres par année",
+  labs(title = "Distribution du genre des prénoms des auteurs.trices",
        x = "Année",
        y = "Nombre de publications",
        fill = "Genre") +
@@ -672,7 +672,7 @@ top_titles_df$Publication.Title <- gsub(
 # Assuming top_titles_df is your data frame with columns 'Publication.Title' and 'Count'
 gg_plot <- ggplot(top_titles_df, aes(x = reorder(`Publication.Title`, Count), y = Count)) +
   geom_col(fill = "skyblue") +
-  labs(title = "Top 15 revues universitaires", x = "Noms des revues", y = "Nombre") +
+  labs(title = "Top 15 des revues universitaires", x = "Noms des revues", y = "Nombre") +
   theme_minimal() +
   coord_flip()
 
@@ -754,8 +754,8 @@ subset1_ZOTEROLIB <- subset1_ZOTEROLIB[complete.cases(subset1_ZOTEROLIB$PubAfter
 # Create a ggplot bar plot for the distribution of PubAfterInception in the subset
 gg_plot <- ggplot(subset1_ZOTEROLIB, aes(x = factor(PubAfterInception))) +
   geom_bar() +
-  labs(title = "Nombre d'années entre l'année de publication d'un article et la date de création de la revue",
-       x = "Années après création",
+  labs(title = "Différence année de publication (article) et date de création (revue)",
+       x = "Années de différence",
        y = "Nombre") +
   theme_minimal()
 
@@ -819,7 +819,7 @@ print(gg_plot)
 
 Il est intéressant de noter que la seconde langue de la recherche sur le jeu de rôle, après l'anglais, est le français. Cela peut s'expliquer par le dynamisme des chercheurs francophones, par le succès du jeu de rôle en français depuis les années 1980, qui a vu une production prolifique et un nombre élevé de joueurs dans cette langue. De plus, le nombre de revues scientifiques francophones pourrait offrir davantage de possibilités de publication comparé aux langues disposant de moins de revues spécialisées.
 
-Cette tendance est confirmée lorsqu’on examine les auteurs des articles et que l’on comptabilise leurs publications : la présence des chercheurs francophones est notable, représentant 9 auteurs sur les 30 les plus prolifiques.
+Cette tendance est confirmée lorsqu’on examine les auteurs des articles et que l’on comptabilise leurs publications : la présence des chercheurs francophones est notable, représentant 8 autrices et auteurs sur les 30 les plus prolifiques.
 
 ```{r}
 # ANALYSIS : Most mentioned authors in journal articles
