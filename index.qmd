@@ -48,15 +48,13 @@ Les références sont collectionnées et corrigées avec le logiciel bibliograph
 
 [^4]: Voir <https://github.com/pmartinolli/MyThesaurus>
 
-
-
 ## Biais
 
 Cette collection présente plusieurs biais importants :
 
-1. Biais linguistiques et géographiques : La majorité des références sont en anglais et en français, bien que la littérature dans d'autres langues comme l'espagnol, le portugais, l'italien, etc. soit de plus en plus présente. Certaines langues comme les langues nordiques, l'allemand et le chinois restent sous-représentées.
-2. Biais de disponibilité : Les thèses et mémoires soutenus avant les années 2000 sont souvent peu indexés dans les bases de données, ce qui limite leur accessibilité.
-3. Biais d'indexation : Certaines références n'indexent que la monographie, tandis que d'autres indexent à la fois la monographie et ses chapitres. Cela crée des incohérences dans la façon dont le contenu est référencé.
+1.  Biais linguistiques et géographiques : La majorité des références sont en anglais et en français, bien que la littérature dans d'autres langues comme l'espagnol, le portugais, l'italien, etc. soit de plus en plus présente. Certaines langues comme les langues nordiques, l'allemand et le chinois restent sous-représentées.
+2.  Biais de disponibilité : Les thèses et mémoires soutenus avant les années 2000 sont souvent peu indexés dans les bases de données, ce qui limite leur accessibilité.
+3.  Biais d'indexation : Certaines références n'indexent que la monographie, tandis que d'autres indexent à la fois la monographie et ses chapitres. Cela crée des incohérences dans la façon dont le contenu est référencé.
 
 En résumé, cette collection souffre d'un manque de diversité linguistique et géographique, d'un accès limité aux anciennes publications, ainsi que d'un manque d'uniformité dans l'indexation des références. Cela peut entraîner des angles morts et des lacunes dans la couverture du champ de recherche concerné.
 
@@ -341,7 +339,7 @@ gg_plot <- ggplot() +
 print(gg_plot)
 ```
 
-Les pays de soutenance les plus représentés[^5] sont majoritairement situés en Amérique du Nord, avec une forte prédominance des États-Unis, suivis par le Canada. Viennent ensuite les pays européens, où la France se distingue en tête, suivie du Brésil et de pays d’Europe du Nord. 
+Les pays de soutenance les plus représentés[^5] sont majoritairement situés en Amérique du Nord, avec une forte prédominance des États-Unis, suivis par le Canada. Viennent ensuite les pays européens, où la France se distingue en tête, suivie du Brésil et de pays d’Europe du Nord.
 
 [^5]: Les noms des universités ont été exportés et ils ont été alignés (ou « réconciliés ») avec les données de Wikidata. La réconciliation est automatisée avec avec le logiciel OpenRefine. Pour chaque réconciliation réussie, le nom du pays associé à l’université est récupéré.
 
@@ -1142,7 +1140,7 @@ print(gg_plot)
 
 #### Psychothérapies
 
-La recherche sur les applications psychothérapeutiques du jeu de rôle sur table est un domaine qui a le vent en poupe depuis plusieurs années. 
+La recherche sur les applications psychothérapeutiques du jeu de rôle sur table est un domaine qui a le vent en poupe depuis plusieurs années.
 
 ```{r}
 # Create a first subset based on your criteria
@@ -1463,9 +1461,7 @@ Les articles et les bibliographies de ces articles sur le jeu de rôles sont peu
 
 [^9]: Par exemple, si on utilise l’outil Citationtree.org avec l’article <https://www.citationtree.org/tree?id=10.1016/j.tsc.2012.06.002> alors on peut voir un graphe de citations plutôt complet.
 
-Pour tenter de valoriser les citations des articles de jeux de rôles entre eux, j’ai tenté de reproduire le graphe en versant des données dans Wikidata et en les visualisant de diverses manières[^10]. Bien évidement, cette preuve de concept n’était qu’exploratoire et partielle.
-
-[^10]: <https://observablehq.com/d/86ffefce528e707c>
+Pour tenter de valoriser les citations des articles de jeux de rôles entre eux, j’ai tenté de reproduire le graphe en versant des données dans Wikidata et en les visualisant de diverses manières.
 
 ### Maisons d’édition douteuses
 
@@ -1475,9 +1471,9 @@ En me basant sur des listes d’exclusion ou d’avertissement créées par des 
 
 ### Rétractions
 
-En 2024, je n’ai pas repéré de rétraction, c’est-à-dire d’articles retirés[^11]. En règle générale, un article est retiré pour faute ou erreur scientifique grave : modification des données de recherche, erreur dans l’expérimentation ou l’analyse, plagiat, double soumission, etc.
+En 2024, je n’ai pas repéré de rétraction, c’est-à-dire d’articles retirés[^10]. En règle générale, un article est retiré pour faute ou erreur scientifique grave : modification des données de recherche, erreur dans l’expérimentation ou l’analyse, plagiat, double soumission, etc.
 
-[^11]: Recherche avec *Retraction Watch*.
+[^10]: Recherche avec *Retraction Watch*.
 
 Cependant, il est possible qu’une première rétraction survienne prochainement dans un cas que j’ai signalé aux auteurs originaux. En effet, la copie exacte d'un article a été publiée avec d’autres auteurs dans une revue récente.
 
@@ -1489,29 +1485,29 @@ Cette étude exploratoire s’est concentrée sur la conversation scientifique a
 
 Ainsi, des typologies et théories ont rapidement émergé dans des articles publiés dans des périodiques spécialisés sur le jeu de rôle, tels que les fanzines et magazines. Par exemple, dans le premier numéro de *Alarums & Excursions* en 1975, un article de Lee Gold, fondatrice et rédactrice en chef, présente une analyse de *Dungeons & Dragons* en le qualifiant de jeu un jeu à somme non nulle, contrairement à *Dungeons & Beaver*, un pastiche, qu’elle considère comme un jeu à somme nulle[@gold_taintivy_1975]. De même, en 1979 plusieurs concepteurs de jeu expliquent quels sont leurs rapports personnels avec le jeu de rôle dans le premier numéro de *Different Worlds*[@kanterman_my_1979]. D’autres articles d’analyse seront diffusés dans ce magazine. Ainsi, bien avant 1981—année où le premier article sur le jeu de rôle, révisé par les pairs, est publié dans la revue universitaire *Simulation & Gaming* par le sociologue Gary Alan Fine[@fine_fantasy_1981]—la réflexion sur le jeu de rôle sur table se diffusait déjà largement dans les médias de la communauté des joueurs.
 
-Dans les années 1990, cette réflexion s’intensifie avec l’arrivée d’internet et des plateformes en ligne : lettres de diffusion, forums, blogues, wiki, podcasts, chaînes vidéos de streaming, etc. En 1994 et 1995, notons la publication brève en quatre numéros d’un périodique hybride de réflexions de fond sur le jeu de rôle : *Interactive Fantasy: The Journal of Role-Playing and Story-Making Systems*[^12].
+Dans les années 1990, cette réflexion s’intensifie avec l’arrivée d’internet et des plateformes en ligne : lettres de diffusion, forums, blogues, wiki, podcasts, chaînes vidéos de streaming, etc. En 1994 et 1995, notons la publication brève en quatre numéros d’un périodique hybride de réflexions de fond sur le jeu de rôle : *Interactive Fantasy: The Journal of Role-Playing and Story-Making Systems*[^11].
 
-[^12]: <https://rpggeek.com/rpgperiodical/8965/> et <https://en.wikipedia.org/wiki/Interactive_Fantasy>
+[^11]: <https://rpggeek.com/rpgperiodical/8965/> et <https://en.wikipedia.org/wiki/Interactive_Fantasy>
 
-Enfin, vers les années 2000, notons la constitution progressive et durable de bases de données indexant des références de jeux de rôles (*The Acaeum*[^13] par exemple) et parfois avec des ontologies complexes qui n’ont rien à envier aux outils de gestion de bibliothèques universitaires (Le Grog[^14] et *RPGGeek*[^15] par exemple).
+Enfin, vers les années 2000, notons la constitution progressive et durable de bases de données indexant des références de jeux de rôles (*The Acaeum*[^12] par exemple) et parfois avec des ontologies complexes qui n’ont rien à envier aux outils de gestion de bibliothèques universitaires (Le Grog[^13] et *RPGGeek*[^14] par exemple).
 
-[^13]: The Acaeum, depuis 1999 à [/](https://www.acaeum.com/frontdesk/intro.html) références érudites pour les collectionneurs des premières éditions de *Dungeons & Dragons*.
+[^12]: The Acaeum, depuis 1999 à [/](https://www.acaeum.com/frontdesk/intro.html) références érudites pour les collectionneurs des premières éditions de *Dungeons & Dragons*.
 
-[^14]: Guide du Rôliste Galactique, depuis 2000 à <https://www.legrog.org/>
+[^13]: Guide du Rôliste Galactique, depuis 2000 à <https://www.legrog.org/>
 
-[^15]: RPGGeek, depuis 2000 à [https://rpggeek.com/](https://rpggeek.com/wiki/page/RPG_Geek)
+[^14]: RPGGeek, depuis 2000 à [https://rpggeek.com/](https://rpggeek.com/wiki/page/RPG_Geek)
 
 ## Validation institutionnelle
 
-Parfois, des travaux savants publiés pour la communauté des joueurs se sont retrouvés récupérés par des maisons d’édition universtaires prestigieuses. Par exemple, la monographie *Playing at the World* de Jon Peterson, d’abord publiée de manière indépendante[@peterson_playing_2012], ou bien la somme *Monsters, Aliens, and Holes in the Ground* de Stu Horvath, publiée épisodiquement sous la forme d’articles de blogue[^16] ont été transformé dans une édition comme un livre universitaire par The MIT Press[@peterson_playing_2024; @horvath_monsters_2023].
+Parfois, des travaux savants publiés pour la communauté des joueurs se sont retrouvés récupérés par des maisons d’édition universtaires prestigieuses. Par exemple, la monographie *Playing at the World* de Jon Peterson, d’abord publiée de manière indépendante[@peterson_playing_2012], ou bien la somme *Monsters, Aliens, and Holes in the Ground* de Stu Horvath, publiée épisodiquement sous la forme d’articles de blogue[^15] ont été transformé dans une édition comme un livre universitaire par The MIT Press[@peterson_playing_2024; @horvath_monsters_2023].
 
-[^16]: Blogue *Unwinnable* <https://unwinnable.com/> (2010-)
+[^15]: Blogue *Unwinnable* <https://unwinnable.com/> (2010-)
 
 De nombreux chercheurs sont affiliés à des départements universitaires en lien avec les études sur le jeu (*game studies*) ou les études sur le cinéma et les médias. Les conférences, colloques ou journées d’études organisées par ces chercheurs bénéficient souvent de financements institutionnels des universités d’affiliation.
 
-Des discussions théoriques, comme la théorie GNS qui ont débuté sur le forum *The Forge*[^17] sont reprises et commentées dans la publication scientifique[@beattie_voicing_2007; @white_tabletop_2020].
+Des discussions théoriques, comme la théorie GNS qui ont débuté sur le forum *The Forge*[^16] sont reprises et commentées dans la publication scientifique[@beattie_voicing_2007; @white_tabletop_2020].
 
-[^17]: *The Forge*, depuis 1999 jusqu’en 2012.
+[^16]: *The Forge*, depuis 1999 jusqu’en 2012.
 
 Des fonds de collections spéciales contenant un gros volume de jeux de rôle sur table sont gérés par des institutions universitaires. Il y a par exemple la *Edwin and Terry Murray collection of role-playing games*[@murray_edwin_2011] à Duke University aux États-Unis et le Fonds patrimonial du jeu de société à l’Université Sorbonne Paris Nord en France[@experice_fonds_2019].
 
@@ -1519,15 +1515,15 @@ Des fonds de collections spéciales contenant un gros volume de jeux de rôle su
 
 ## Réflexions de haut-niveau des pratiquants
 
-Sans doute en raison de la sociologie des joueurs de jeu de rôle sur table, de leurs habitus, de leurs goûts pour l’intellectualisation, l’érudition, la théorisation, ont peut remarquer des réflexions de haut-niveaux. Si « le jeu de rôle est le loisir du méta » selon la formule de Vivien Féasson[@feasson_jeu_2017] alors l’étude du jeu de rôle serait une couche supplémentaire : le méta du méta en quelque sorte[^18].
+Sans doute en raison de la sociologie des joueurs de jeu de rôle sur table, de leurs habitus, de leurs goûts pour l’intellectualisation, l’érudition, la théorisation, ont peut remarquer des réflexions de haut-niveaux. Si « le jeu de rôle est le loisir du méta » selon la formule de Vivien Féasson[@feasson_jeu_2017] alors l’étude du jeu de rôle serait une couche supplémentaire : le méta du méta en quelque sorte[^17].
 
-[^18]: L'étude que vous êtes en train de lire serait alors « le méta du méta du méta du jeu de rôle ». Étonnant non ?
+[^17]: L'étude que vous êtes en train de lire serait alors « le méta du méta du méta du jeu de rôle ». Étonnant non ?
 
 Animée par le désir d’améliorer l’expérience de jeu, la réflexion sur le design et le gameplay a très tôt occupé une place centrale dans l’analyse et la théorisation de la pratique du jeu de rôle. Des courants de pensée, des écoles et des mouvements, des penseurs et leurs lecteurs ont toujours accompagné et enrichi cette pratique.
 
-Par exemple, il est intéressant de constater que la reconnaissance historique de l’innovation en matière de gameplay inventée par David Wesely et Dave Arneson a d’abord émergé dans des forums[@fisher_dave_2004; @castiglione_evolution_2008], puis des billets de blogue[@robbins_braunstein_2008], avant d'être relayée dans des monographies[@peterson_playing_2012], des documentaires indépendants[@graves_secrets_2019] et finalement sur Wikipédia[^19], pour finalement atteindre une reconnaissance plus large. Cette reconnaissance amateur, érudite et documentée a ainsi progressivement permis l'émergence d'une historiographie de la naissance du jeu de rôle, qui est venue nuancer un discours longtemps centré uniquement sur la figure de Gary Gygax.
+Par exemple, il est intéressant de constater que la reconnaissance historique de l’innovation en matière de gameplay inventée par David Wesely et Dave Arneson a d’abord émergé dans des forums[@fisher_dave_2004; @castiglione_evolution_2008], puis des billets de blogue[@robbins_braunstein_2008], avant d'être relayée dans des monographies[@peterson_playing_2012], des documentaires indépendants[@graves_secrets_2019] et finalement sur Wikipédia[^18], pour finalement atteindre une reconnaissance plus large. Cette reconnaissance amateur, érudite et documentée a ainsi progressivement permis l'émergence d'une historiographie de la naissance du jeu de rôle, qui est venue nuancer un discours longtemps centré uniquement sur la figure de Gary Gygax.
 
-[^19]: <https://en.wikipedia.org/w/index.php?title=Braunstein_(game)&oldid=1248489284>
+[^18]: <https://en.wikipedia.org/w/index.php?title=Braunstein_(game)&oldid=1248489284>
 
 De manière plus générale, la production des participants au jeu de rôle contribue à constituer un vaste corpus de témoignages et d’analyses sur la pratique du jeu, permettant ainsi de documenter et de préserver une histoire orale de ce loisir.
 
@@ -1537,7 +1533,7 @@ En plus de l’intellectualisme et du goût pour l’abstraction et l’éruditi
 
 Tout d’abord, la collégialité est un point important rappelant la nature fondamentalement collaborative du jeu de rôle. Les espaces de diffusion des idées sont souvent aussi des lieux de débats. Par exemple, les forums (tels que *The Forge* ou Les Courants alternatifs) et les wikis favorisent naturellement les échanges entre pairs. Dans les podcasts, des invités présentent fréquemment leurs idées de manière approfondie et argumentée, à l'image des chercheurs qui interviennent les uns chez les autres sur les campus. Enfin, pour concevoir et maintenir les bases de donnéesmentionnées précédemment, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
 
-La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins. 
+La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins.
 
 Dans cette perspective, le travail de Johan Scipion illustre particulièrement bien l'approche scientifique dans la conception de jeux. Sa méthode de développement de jeux d'horreur, qui implique des tests répétés auprès de différents publics -- souvent plus d'une cinquantaine de fois -- reflète une véritable démarche expérimentale. Son processus, fondé sur la formulation et la vérification d'hypothèses de design, s'apparente étroitement aux méthodes empiriques utilisées en sciences.
 
@@ -1545,11 +1541,11 @@ Enfin, un autre aspect similaire avec la science est l'engagement envers l'accè
 
 ## Pratiques de citation dans les jeux de rôle sur table
 
-Selon moi, la pratique des citations illustre bien la parenté entre la recherche scientifique et le jeu de rôle. Cette réflexion a émergé suite à mon écoute du podcast La Cellule[@briand_podcast_2018-1], qui mettait en lumière les similitudes entre les citations dans le monde académique et dans l'univers du jeu de rôle. Cette observation initiale m'a conduit à entreprendre une étude amateur des pratiques de citation dans les jeux de rôle sur table, en tant que chercheur indépendant. Bien qu'une analyse approfondie soit prévue pour publication dans les années à venir, les développements de cette recherche sont d'ores et déjà accessibles via un blogue[^20] et des micro-publications de données de recherche[^21].
+Selon moi, la pratique des citations illustre bien la parenté entre la recherche scientifique et le jeu de rôle. Cette réflexion a émergé suite à mon écoute du podcast La Cellule[@briand_podcast_2018-1], qui mettait en lumière les similitudes entre les citations dans le monde académique et dans l'univers du jeu de rôle. Cette observation initiale m'a conduit à entreprendre une étude amateur des pratiques de citation dans les jeux de rôle sur table, en tant que chercheur indépendant. Bien qu'une analyse approfondie soit prévue pour publication dans les années à venir, les développements de cette recherche sont d'ores et déjà accessibles via un blogue[^19] et des micro-publications de données de recherche[^20].
 
-[^20]: <https://jdr.hypotheses.org/>
+[^19]: <https://jdr.hypotheses.org/>
 
-[^21]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
+[^20]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
 
 ### Quelques résultats préliminaires
 
@@ -1557,7 +1553,7 @@ Les règles des jeux de rôle sur table, avec leurs formats textuels variés, s'
 
 Dans les manuels de jeux de rôle sur table, le volume de citations est parfois remarquablement important, dépassant ce qu'on pourrait attendre d'un simple jeu. Cette abondance de références s'apparente davantage aux pratiques des ouvrages académiques, où chaque emprunt et influence sont soigneusement documentés.
 
-Les pratiques de citation dans les jeux de rôle s'articulent autour de motivations diversifiées et complexes. Au niveau éthique et professionnel, elles servent à reconnaître le travail d'autrui, à rendre hommage aux innovations marquantes et à respecter les cadres légaux comme l'OGL ou la GSL. Sur le plan stratégique, les citations permettent aux créateurs de démontrer la multiplicité de leurs influences, évitant ainsi l'association à une source unique, ou bien elles font l'objet d'omissions délibérées ou de citations biaisées. Elles constituent également un moyen de tisser des liens avec une communauté, d'affirmer son appartenance ou sa fraternité avec d'autres créateurs du milieu. Enfin, les citations répondent à des objectifs stylistiques et intellectuels. Par exemple, elles peuvent prendre la forme d'épigraphes soignés ou témoigner d'une érudition à travers de nombreuses références choisies.  
+Les pratiques de citation dans les jeux de rôle s'articulent autour de motivations diversifiées et complexes. Au niveau éthique et professionnel, elles servent à reconnaître le travail d'autrui, à rendre hommage aux innovations marquantes et à respecter les cadres légaux comme l'OGL ou la GSL. Sur le plan stratégique, les citations permettent aux créateurs de démontrer la multiplicité de leurs influences, évitant ainsi l'association à une source unique, ou bien elles font l'objet d'omissions délibérées ou de citations biaisées. Elles constituent également un moyen de tisser des liens avec une communauté, d'affirmer son appartenance ou sa fraternité avec d'autres créateurs du milieu. Enfin, les citations répondent à des objectifs stylistiques et intellectuels. Par exemple, elles peuvent prendre la forme d'épigraphes soignés ou témoigner d'une érudition à travers de nombreuses références choisies.
 
 Comme l'a souligné l'émission de La Cellule[@briand_podcast_2018-1], une fonction essentielle de la citation dans les jeux de rôle est d'identifier l'origine des mécaniques de jeu réemployées. Cette pratique se manifeste selon différents niveaux de précision : de la simple mention d'un auteur ou d'un jeu, jusqu'à une analyse détaillée explicitant la mécanique empruntée, son adaptation et sa justification. Cette démarche d'attribution des mécaniques présente une analogie particulièrement forte avec les pratiques de citation scientifique. Dans les deux cas, l'objectif principal est d'assurer la traçabilité des idées et des innovations, permettant au lecteur soit d'approfondir sa compréhension, soit de vérifier les sources utilisées.
 
