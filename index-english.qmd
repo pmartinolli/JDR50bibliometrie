@@ -1,0 +1,1569 @@
+---
+title: "Almost 50 Years of Academic Research on Tabletop Role-Playing Games"
+subtitle: "Historical Evolution and Bibliometric Analysis"
+lang: en
+author:
+      - name: "Pascal Martinolli"
+        orcid: "0000-0003-0122-5300"
+        affiliation: "Independent researcher"
+date: "2024-10-29"
+license: "CC-BY 4.0"
+repo-url: https://github.com/pmartinolli/JDR50bibliometrie
+abstract: "This descriptive study offers an in-depth historical and bibliometric analysis of academic research on tabletop role-playing games. It examines the evolution of publications across various academic formats (conferences, monographs, theses, peer-reviewed articles) and explores new trends in scientific dissemination, including preprints and literature reviews. The analysis reveals a marked growth in scientific output since the origins of role-playing games, with a notable acceleration over the past decade. While research remains primarily based in North America and Europe, new hubs are emerging in Latin America and Asia. Several major themes are explored: the dominance of Dungeons & Dragons, the moral panics of the 1980s and 1990s, therapeutic applications, issues of diversity and representation, as well as the phenomenon of actual plays. The study also includes an analysis of theoretical reflections developed by the gaming community outside of traditional academic publications. It examines how these high-quality, para-academic contributions might be integrated and validated by scholarly institutions. Finally, it highlights the influence of academic practices and values, particularly in terms of citation, on role-playing game culture."
+keywords: "Tabletop role-playing games ; academic publications ; historical study ; bibliometrical analysis ; scholarly conversation"
+bibliography: academicTTRPG.bib
+csl: annexes/chicago-fullnote-bibliography.csl
+format: 
+  html:
+    code-fold: false
+    toc: true
+    number-sections: true
+    css: annexes/styles.css
+  pdf:
+    documentclass: article
+  epub:
+    fig-format: png
+  docx:
+    reference-doc: annexes/custom-reference.docx
+execute:
+  echo: false 
+  results: hide
+---
+
+This translation is to be submitted to a journal. It is a translation of the presentation in French made in the colloquia *“Vous êtes dans une taverne…” Retour sur cinquante ans de jeux de rôle* (27-28 mars 2024, Metz, Université de Lorraine) that will be published as a chapter in a monograph. The translation relies heavily on Claude 3 Haiku by Anthropic and ChatGPT 4o by OpenAI.
+
+# Introduction
+
+Since 2014, I have been gathering academic references related to the study of tabletop role-playing games. This endeavor led to the creation of a freely accessible database on Zotero, containing over 3,000 references from academic or para-academic studies.
+
+## Key Highlights
+
+Among the indexed references, there are approximately 570 peer-reviewed articles, 180 monographs, 410 dissertations or theses, and various other types of documents: conference presentations, blog posts, datasets, and more.
+
+The core corpus was built from references obtained through bibliographic research in academic bibliographic databases, library catalogs, citation indexes, institutional repositories, and others. The references matched one or more search equations based on free or controlled terms[^1]. After building the initial corpus, alerts were set up in to automatically detect new references meeting the search criteria[^2].
+
+[^1]: see https://github.com/pmartinolli/JDR50bibliometrie/blob/master/annexes/search-queries.txt
+
+[^2]: see https://github.com/pmartinolli/JDR50bibliometrie/blob/master/annexes/database-list.txt
+
+The references are collected and edited using the bibliographic software Zotero in a shared, publicly accessible group library[^3]. They are then indexed with subject headings from a two-level controlled keyword thesaurus. I am grateful to Michael Freudenthal, who joined in 2019 to help manage this online database, and to Thomas Munier and Sébastien Delphino, who assisted in designing the thesaurus in 2018[^4].
+
+[^3]: see <https://www.zotero.org/groups/446523>
+
+[^4]: see <https://github.com/pmartinolli/MyThesaurus>
+
+## Biases
+
+This collection has several significant biases:
+
+1.  Linguistic and Geographic Biases: The majority of references are in English and French, though literature in other languages, such as Spanish, Portuguese, and Italian, is increasingly represented. However, some languages, such as Nordic languages, German, and Chinese, remain underrepresented.
+
+2.  Availability Bias: Theses and dissertations completed before the 2000s are often less indexed in databases, limiting their accessibility.
+
+3.  Indexing Bias: Some references only index the monograph as a whole, while others index both the monograph and its chapters. This creates inconsistencies in how content is referenced.
+
+In summary, this collection suffers from a lack of linguistic and geographic diversity, limited access to older publications, and inconsistent reference indexing. This can lead to blind spots and gaps in the coverage of the research field.
+
+In my view, peer-reviewed journal articles are the least biased document type in this bibliographic collection. This type of literature benefits from more systematic indexing in disciplinary databases, making it possible to conduct a more exhaustive survey. Therefore, comprehensive searches across a large and diverse array of databases lead to a representative corpus of scientific production in this field. Given this corpus's representativeness, it is reasonable to generalize analyses conducted on these peer-reviewed journal articles.
+
+# Conference papers
+
+Despite the availability biases mentioned previously and selection biases (I am far from having indexed all conferences on role-playing games), the figure below illustrates a significant increase in conference presentations starting in the 2000s, with an acceleration around 2013–2015. Before 2000, conference presentations are sporadic and rare.
+
+In addition to organizing full colloquia with a series of lectures in an academic setting, there is also notable enthusiasm for individual presentations at events such as conventions and exhibitions.
+
+```{r}
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(treemap)
+library(RColorBrewer)
+library(tidyr)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+
+file_name <- "My library.csv"
+ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
+```
+
+```{r}
+# Create a first subset based on your criteria
+subset3_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "conferencePaper" &
+                              grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Publication.Year
+DF <- subset3_ZOTEROLIB
+
+# Assuming Publication.Year is initially stored as character or factor
+# Convert it to character if it's factor
+if (is.factor(DF$Publication.Year)) {
+  DF$Publication.Year <- as.character(DF$Publication.Year)
+}
+
+# Remove any non-numeric characters and convert to numeric
+DF$Publication.Year <- as.numeric(gsub("[^0-9]", "", DF$Publication.Year))
+
+# Count the observations for each date
+date_counts <- table(DF$Publication.Year)
+
+# Create a sequence of years from the minimum to the maximum, excluding NA
+if(sum(!is.na(DF$Publication.Year)) > 0) {  # Check if we have any non-NA values
+  min_year <- min(DF$Publication.Year, na.rm = TRUE)
+  max_year <- max(DF$Publication.Year, na.rm = TRUE)
+
+  if(is.finite(min_year) && is.finite(max_year)) {  # Check if min and max are valid
+    all_years <- seq(min_year, max_year, by = 1)
+    #print(paste("Sequence created from", min_year, "to", max_year))
+  } else {
+    #print("Min or max year is not finite")
+  }
+} else {
+  #print("No valid years found in the dataset")
+}
+
+# Create a data frame with all years
+all_years_df <- data.frame(Year = all_years)
+
+# Merge the existing data with the data frame containing all years
+merged_data <- merge(all_years_df, data.frame(Year = names(date_counts), Count = as.numeric(date_counts)), by = "Year", all.x = TRUE)
+
+# Replace NAs with 0 for the count column
+merged_data$Count[is.na(merged_data$Count)] <- 0
+
+# Create a bar plot
+# Assuming merged_data is your data frame with columns 'Year' and 'Count'
+gg_plot <- ggplot(merged_data, aes(x = Year, y = Count)) +
+  geom_bar(stat = "identity", fill = "skyblue", width = 0.7) +
+  labs(title = "Conference Papers and Presentations Distribution", x = "Years", y = "Count") +
+  theme_minimal()
+
+# After runing the line under, a graphic is supposed to be displayed in the frame at the right of this one
+print(gg_plot)
+```
+
+# Books and Book Sections
+
+As mentioned earlier, references for monographs (books) suffer from inconsistent chapter indexing. Some books have a single reference for the entire work, while others have both a general reference and individual references for each chapter.
+
+Despite this, from the 2000s onward, there is also a clear increase in the number of monographs with an academic focus on tabletop role-playing games.
+
+```{r}
+# Create an another subset based on the criteria (Journal article OR book OR book section, AND TTRPG)
+subset3_ZOTEROLIB <- subset(ZOTEROLIB,
+                            (  Item.Type == "book" |
+                               Item.Type == "bookSection" ) &
+                              grepl("_TTRPG", Manual.Tags))
+
+DF <- subset3_ZOTEROLIB
+
+# First create separate counts for books and book sections
+DF$Item.Type <- as.factor(DF$Item.Type)  # Convert to factor if not already
+
+# Create counts by year and type
+counts_by_type <- aggregate(rep(1, nrow(DF)),
+                            by = list(Year = DF$Publication.Year,
+                                      Type = DF$Item.Type),
+                            FUN = sum)
+names(counts_by_type)[3] <- "Count"
+
+# Create a sequence of all years
+if(sum(!is.na(DF$Publication.Year)) > 0) 
+  {
+  min_year <- 1974  # as per your manual override
+  max_year <- max(DF$Publication.Year, na.rm = TRUE)
+
+  if(is.finite(min_year) && is.finite(max_year)) 
+    {
+    all_years <- seq(min_year, max_year, by = 1)
+    #print(paste("Sequence created from", min_year, "to", max_year))
+
+    # Create a complete dataset with all years and types
+    types <- unique(DF$Item.Type)
+    complete_grid <- expand.grid(Year = all_years, Type = types)
+
+    # Merge with actual counts
+    merged_data <- merge(complete_grid, counts_by_type,
+                         by = c("Year", "Type"), all.x = TRUE)
+
+    # Replace NAs with 0
+    merged_data$Count[is.na(merged_data$Count)] <- 0
+
+    # Create stacked bar plot
+    gg_plot <- ggplot(merged_data, aes(x = Year, y = Count, fill = Type)) +
+      geom_bar(stat = "identity", position = "stack", width = 0.7) +
+      scale_fill_manual(values = c("book" = "skyblue", "bookSection" = "darkblue")) +
+      labs(title = "Books and Book Sections Distribution",
+           x = "Years",
+           y = "Count",
+           fill = "Type") +
+      theme_minimal() +
+      theme(legend.position = "bottom")
+
+    # Print the plot
+    print(gg_plot)
+    }
+  }
+```
+
+Among the major publishers, traditional academic publishing houses are prominent (Springer, Routledge, Wiley, MIT Press, Peter Lang, etc.), along with publishers specializing in game studies (McFarland, ETC Press, Pinkerton Press, etc.) and professional or semi-professional gaming organizations (Ropecon ry, Evil Hat Production, Knutepunkt, etc.).
+
+```{r}
+subset3_ZOTEROLIB <- subset(ZOTEROLIB,
+                            (  Item.Type == "book" |
+                               Item.Type == "bookSection" ) &
+                              grepl("_TTRPG", Manual.Tags))
+
+DF <- subset3_ZOTEROLIB
+# Merge inconsistent publisher names
+DF <- DF %>%
+  filter(!grepl("Place to Go", Publisher)) %>%  # Remove "Place to Go" entries
+  mutate(Publisher = case_when(
+    grepl("Wiley", Publisher) ~ "Wiley",
+    grepl("McFarland", Publisher) ~ "McFarland",
+    grepl("MIT Press", Publisher) ~ "MIT Press",
+    grepl("ETC Press", Publisher) ~ "ETC Press",
+    grepl("Springer", Publisher) ~ "Springer",
+    TRUE ~ Publisher
+  ))
+
+# Create count by publisher and type
+publisher_type_counts <- DF %>%
+  filter(!is.na(Publisher) & nzchar(Publisher)) %>%
+  group_by(Publisher, Item.Type) %>%
+  summarise(Count = n(), .groups = 'drop') %>%
+  arrange(desc(Count))
+
+# Get top 15 publishers by total count
+top_publishers <- publisher_type_counts %>%
+  group_by(Publisher) %>%
+  summarise(Total = sum(Count)) %>%
+  arrange(desc(Total)) %>%
+  head(15) %>%
+  pull(Publisher)
+
+# Filter data for top publishers
+top_publisher_counts <- publisher_type_counts %>%
+  filter(Publisher %in% top_publishers)
+
+# Create the plot
+gg_plot <- ggplot(top_publisher_counts,
+                  aes(x = reorder(Publisher, Count),
+                      y = Count,
+                      fill = Item.Type)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(values = c("book" = "skyblue", "bookSection" = "darkblue")) +
+  labs(title = "Top 15 Publishers",
+       x = "Publishers",
+       y = "Count",
+       fill = "Type") +
+  theme_minimal() +
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom")
+
+# Print the plot
+print(gg_plot)
+```
+
+# Theses and Dissertations
+
+The representativeness of master’s theses and doctoral dissertations exhibits several biases.
+
+On the one hand, master’s theses, as graduate-level works, are difficult to locate online. Due to limited legal requirements (minimal dissemination obligations) and technical constraints (low digital accessibility), approved and accepted theses are rarely visible online. Sometimes, access is facilitated by an institution’s dissemination policy or individual student initiatives, with students publishing their work on personal websites or voluntarily depositing it on platforms. This also applies to undergraduate work, which is even less commonly shared.
+
+On the other hand, locating doctoral dissertations is generally easier. In most countries, dissertations are publicly accessible to some extent, with hosting institutions typically required, at a minimum, to provide a bibliographic reference and maintain at least a printed copy of the accepted dissertation. Bibliographic information may be searchable in institutional repositories, national legal deposits, or specialized databases. However, online-distributed dissertations are often overrepresented, overshadowing those only accessible in print.
+
+With these biases in mind, we can observe a growing number of theses and dissertations on tabletop role-playing games from around 2005–2010 onward. A marked increase since 2013 may correspond with the period when North American and European universities began more systematically disseminating their students' theses and dissertations in institutional repositories.
+
+```{r}
+subset2_ZOTEROLIB <- subset(ZOTEROLIB,
+                            (Item.Type == "thesis" &
+                              grepl("_TTRPG", Manual.Tags)))
+
+DF <- subset2_ZOTEROLIB
+
+# Remove all Type of thesis = Bachelor stuff (starts by B or R of D or H or I or C or S)
+DF <- DF %>%
+  filter(!grepl("^[BRDHCS]", Type))
+
+# Normalized Type field into TypeNormalized
+# if Type starts by T P or D, then its a PhD
+# if Type starts by M, then its a Master
+DF <- DF %>%
+  mutate(TypeNormalized = case_when(
+    grepl("^[TPD]", Type) ~ "PhD",
+    grepl("^M", Type) ~ "Master",
+    TRUE ~ Type
+  ))
+
+# Now select only the PhD and the Master
+DF <- DF %>%
+  filter(TypeNormalized %in% c("PhD", "Master"))
+
+# Create a bar plot
+# Assuming DF is your data frame with columns 'Year' and 'Count'
+gg_plot <- ggplot(DF, aes(x = Publication.Year, fill = TypeNormalized)) +
+  geom_bar(position = position_stack(reverse = TRUE), stat = "count") +
+  labs(title = "Master's Thesis and Doctoral Dissertations Distribution", x = "Years", y = "Count") +
+  theme_minimal()
+
+# After running the line under, a graphic is supposed to be displayed in the frame at the right of this one
+print(gg_plot)
+```
+
+Interestingly, two trends emerge regarding the page count expected of students. Across institutions, the average page count for master’s theses tends to be around 100 pages. In contrast, the length of doctoral dissertations varies significantly between institutions, ranging from about 100 pages to over 300 or even 500 pages, with an average of approximately 240 pages.
+
+```{r}
+# Filter rows where TypeNormalized is "PhD" and Num.Pages is not NA
+filtered_df_phd <- DF %>% filter(TypeNormalized == "PhD" & !is.na(Num.Pages))
+# Filter rows where TypeNormalized is "Master" and Num.Pages is not NA
+filtered_df_master <- DF %>% filter(TypeNormalized == "Master" & !is.na(Num.Pages))
+
+# Calculate the average of Num.Pages for PhD
+average_num_pages_phd <- mean(filtered_df_phd$Num.Pages, na.rm = TRUE)
+# Calculate the average of Num.Pages for Master
+average_num_pages_master <- mean(filtered_df_master$Num.Pages, na.rm = TRUE)
+
+# Create a scatter plot with averages displayed
+gg_plot <- ggplot() +
+  geom_point(data = filtered_df_phd, aes(x = jitter(rep(2, nrow(filtered_df_phd)), amount = 0.1), y = Num.Pages), color = "red") +
+  geom_text(data = filtered_df_master, aes(x = 1, y = average_num_pages_master,
+                                           label = sprintf("Avg (Master): %.2f", average_num_pages_master)),
+            vjust = -0.5, hjust = -0.5, color = "darkgreen", size = 6) +
+  geom_point(data = filtered_df_master, aes(x = jitter(rep(1, nrow(filtered_df_master)), amount = 0.1), y = Num.Pages), color = "green") +
+  geom_text(data = filtered_df_phd, aes(x = 2, y = average_num_pages_phd,
+                                        label = sprintf("Avg. (Ph.D.): %.2f", average_num_pages_phd)),
+            vjust = -0.5, hjust = 1.3, color = "darkred", size = 6) +
+  labs(title = "Page Count of Theses and Dissertations",
+       x = " ",
+       y = "Page Count")
+
+print(gg_plot)
+```
+
+The countries where defenses are most represented[^5] are predominantly in North America, with the United States leading, followed by Canada. Next are European countries, where France stands out, followed by Brazil and several Northern European countries.
+
+[^5]: University names were exported and aligned (or "reconciled") with data from Wikidata. This reconciliation is automated using OpenRefine software. For each successful reconciliation, the country associated with the university is retrieved.
+
+```{r}
+# Import data from universities-reconciled.csv 
+# it's a file build with universities-reconciled.r and reconciled with two important columns : Universities and Country
+
+# Read the data
+universities_reconciled <- read.csv("annexes/universities-reconciled.csv", 
+                                  header = FALSE, 
+                                  col.names = c("Universities", "UniversitiesWD", "Country", "UniversitiesWD.QID", "Country.QID"))
+
+# Print structure of universities_reconciled to verify columns
+#print("Universities reconciled columns:")
+#print(str(universities_reconciled))
+
+# Perform merge and store in new variable
+merged_DF <- merge(DF, universities_reconciled, 
+                  by.x = 'Publisher', 
+                  by.y = 'Universities', 
+                  all = FALSE)
+
+# Print structure after merge to verify columns
+#print("Merged DF columns:")
+#print(names(merged_DF))
+
+# Remove duplicates and handle NAs
+merged_DF <- merged_DF %>%
+  distinct(Key, .keep_all = TRUE) %>%
+  filter(!is.na(Country.y) & !is.na(TypeNormalized))  # Remove rows where Country.y or TypeNormalized is NA
+
+# Create count data - using proper column references
+count_data <- merged_DF %>%
+  group_by(Country.y, TypeNormalized) %>%  # Changed from Country to Country.y
+  summarise(count = n(), .groups = 'drop')  # Added .groups = 'drop' to avoid group_by warning
+
+# Calculate total count per country for ordering
+country_totals <- count_data %>%
+  group_by(Country.y) %>%
+  summarise(total = sum(count), .groups = 'drop')
+
+# Create the plot
+gg_plot <- ggplot(count_data, aes(x = reorder(Country.y, count, sum), y = count, fill = TypeNormalized)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = TRUE)) +
+  labs(title = "Defense Countries Distribution", 
+       x = "Countries", 
+       y = "Count") +
+  theme_minimal() +  # Added for better visualization
+  coord_flip()
+
+print(gg_plot)
+```
+
+# Peer-Reviewed Articles
+
+As mentioned earlier, I believe I have collected a representative set of peer-reviewed journal articles, where the content has undergone a selection and revision process overseen by an editor.
+
+## Inclusion Criteria
+
+The core subject or a significant portion of the articles must focus on tabletop role-playing games. Articles about live-action role-playing games are not included *a priori* (they may be included if they also discuss tabletop role-playing). Articles addressing electronic role-playing games are not included unless the central conversational process involves human interaction (thus, virtual tabletop role-playing or actual play topics are included). Therapeutic or sociodrama role-playing games are included only if the playful dimension is at least partially present. Therefore, short and individual interactions between a therapist and a patient are not included.
+
+Observing the figure below, we note that production was very sporadic in the 1980s. In the 1990s, there was modest production, never exceeding 10 articles per year. Starting in the 2010s, there has been a strong and consistent increase in the number of publications, peaking at 60 to 80 articles per year in the 2020s.
+
+```{r}
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Publication.Year
+DF <- subset1_ZOTEROLIB
+
+# Assuming Publication.Year is initially stored as character or factor
+# Convert it to character if it's factor
+if (is.factor(DF$Publication.Year)) {
+  DF$Publication.Year <- as.character(DF$Publication.Year)
+}
+
+# Remove any non-numeric characters and convert to numeric
+DF$Publication.Year <- as.numeric(gsub("[^0-9]", "", DF$Publication.Year))
+
+# Count the observations for each date
+date_counts <- table(DF$Publication.Year)
+
+# Create a sequence of years from the minimum to the maximum, excluding NA
+if(sum(!is.na(DF$Publication.Year)) > 0) {  # Check if we have any non-NA values
+  min_year <- min(DF$Publication.Year, na.rm = TRUE)
+  max_year <- max(DF$Publication.Year, na.rm = TRUE)
+
+  if(is.finite(min_year) && is.finite(max_year)) {  # Check if min and max are valid
+    all_years <- seq(min_year, max_year, by = 1)
+    #print(paste("Sequence created from", min_year, "to", max_year))
+  } else {
+    #print("Min or max year is not finite")
+  }
+} else {
+  #print("No valid years found in the dataset")
+}
+
+# Create a data frame with all years
+all_years_df <- data.frame(Year = all_years)
+
+# Merge the existing data with the data frame containing all years
+merged_data <- merge(all_years_df, data.frame(Year = names(date_counts), Count = as.numeric(date_counts)), by = "Year", all.x = TRUE)
+
+# Replace NAs with 0 for the count column
+merged_data$Count[is.na(merged_data$Count)] <- 0
+
+# Create a bar plot
+# Assuming merged_data is your data frame with columns 'Year' and 'Count'
+gg_plot <- ggplot(merged_data, aes(x = Year, y = Count)) +
+  geom_bar(stat = "identity", fill = "skyblue", width = 0.7) +
+  labs(title = "Peer-Reviewed Articles Distribution", x = "Years", y = "Count") +
+  theme_minimal()
+
+# After runing the line under, a graphic is supposed to be displayed in the frame at the right of this one
+print(gg_plot)
+```
+
+## Explanations
+
+Several reasons can be proposed to explain this increase. First, scientific publication across all academic disciplines has significantly risen during the same period. Indeed, the pressure to publish (the well-known "publish or perish") encourages researchers to publish quantitatively more than before.
+
+Additionally, a generational effect may be at play in two ways. Firstly, researchers and research leaders (lab directors, research project leaders, journal editors, funding committee members, etc.) may have played role-playing games in their youth and have a positive appreciation for any research that highlights a hobby to which they feel attached. Secondly, a new wave of tabletop role-playing practitioners emerged after 2010. Many role-players became parents and introduced their children to the hobby or reconnected with the practice themselves. Moreover, new players have discovered this leisure activity through popular culture fiction (*Stranger Things*, *The Big Bang Theory*) or through recorded and streamed sessions (*actual play*).
+
+Finally, interesting research angles have generated significant enthusiasm and numerous studies: the use of playful role-playing as a therapeutic tool or as an educational tool, among others.
+
+## Number of Authors per Article
+
+Observing the following figure, it becomes evident that the typical author of an article on role-playing games is often a single author. The number of authors rarely exceeds four. However, since the 2010s, there has been a noticeable increase in large research teams (ranging from 4 to 15 members) working on research projects, particularly in the field of psychology.
+
+```{r}
+#| warning: false
+#| echo: false
+# ANALYSIS : Number of authors per work
+
+# Function to count authors
+count_authors <- function(authors) {
+  # Use strsplit to split authors by ';'
+  author_list <- unlist(strsplit(authors, ';'))
+  # Return the length of the list
+  return(length(author_list))
+}
+
+DF <- subset1_ZOTEROLIB
+
+# Use mutate to create a new column 'AuthorCount'
+DF <- DF %>%
+  mutate(AuthorCount = sapply(Author, count_authors))
+
+# Group by 'Publication.Year' and 'AuthorCount' and count the number of items
+bubble_data <- DF %>%
+  group_by(Publication.Year, AuthorCount) %>%
+  summarize(Number_of_Items = n())
+
+# Create the bubble chart
+gg_plot <- ggplot(bubble_data, aes(x = Publication.Year, y = AuthorCount, size = Number_of_Items)) +
+  geom_point(alpha = 0.7) +
+  scale_size_continuous(range = c(3, 15)) +
+  labs(title = "Number of Authors per Article",
+       x = "Years",
+       y = "Number of Authors per Article",
+       size = "Articles Count")
+
+print(gg_plot)
+```
+
+## Gender of Authors' First Names
+
+By automatically assigning a gender to the first names of authors[^6], we observe that female researchers are increasingly represented.
+
+[^6]: The first names of authors were extracted and aligned (or "reconciled") with data from Wikidata. This reconciliation was initially automated using OpenRefine software. For each successful reconciliation, the gender associated with the first name is retrieved: Male, Female, or Unisex. A second manual pass was conducted afterward.
+
+```{r}
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                              grepl("_peer reviewed", Manual.Tags) &
+                              grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Publication.Year
+DF <- subset1_ZOTEROLIB
+
+# Read the gender reference data
+gender_data <- read.csv("annexes/gender-name-reconciled.csv",
+                        stringsAsFactors = FALSE)
+
+# Function to extract given names from author string
+extract_given_names <- function(author_string) {
+  # Split multiple authors
+  authors <- unlist(strsplit(author_string, " and |;"))
+
+  # Extract given names (text after comma)
+  given_names <- sapply(authors, function(x) {
+    # Check if there's a comma
+    if(grepl(",", x)) {
+      # Extract and trim the part after the comma
+      name <- trimws(str_extract(x, "(?<=,).*"))
+      return(name)
+    } else {
+      return(NA)
+    }
+  })
+
+  return(given_names[!is.na(given_names)])
+}
+
+# Create the new dataframe with given names and years
+DFG <- DF %>%
+  # Split the Author field into separate rows
+  mutate(given_names = lapply(Author, extract_given_names)) %>%
+  unnest(given_names) %>%
+  # Keep only the given names and publication year
+  select(given_names, Publication.Year) %>%
+  # Remove any empty names
+  filter(given_names != "") %>%
+  # Clean up given names (remove extra spaces, etc.)
+  mutate(given_names = trimws(given_names))
+
+# Clean and standardize the names in both dataframes
+DFG <- DFG %>%
+  mutate(given_names = trimws(given_names))  # Remove any leading/trailing whitespace
+gender_data <- gender_data %>%
+  mutate(givenname = trimws(givenname)) %>%
+  filter(!is.na(givenname) & !is.na(instance.of))  # Remove any rows with NA in key columns
+
+# Add gender information from the reference data
+#DFG <- DFG %>%
+#  left_join(gender_data, by = c("given_names" = "givenname"), relationship = "many-to-many") %>%
+#  rename(Gender = "instance.of") # Assuming the gender column in gender-name-reconciled.csv is called "instance.of"
+
+# Perform the join with cleaned data
+DFG_with_gender <- DFG %>%
+  left_join(gender_data,
+            by = c("given_names" = "givenname"),
+            relationship = "many-to-many") %>%
+  # Create a clean gender column
+  mutate(Gender = instance.of,
+         Gender = case_when(
+           is.na(Gender) ~ "Unknown",
+           Gender == "male given name" ~ "male",
+           Gender == "female given name" ~ "female",
+           Gender == "unisex given name" ~ "unisex",
+           TRUE ~ "other"
+         ))
+
+# Aggregate by counting rows instead of summing Count column
+DFG_aggregated <- DFG_with_gender %>%
+  group_by(given_names, Publication.Year, Gender) %>%
+  summarise(
+    Total_Count = n(),  # Count number of occurrences instead of summing
+    .groups = 'drop'
+  ) %>%
+  arrange(desc(Total_Count))  # Sort by total count in descending order
+
+# Reassign to DFG if you want to keep the same variable name
+DFG <- DFG_aggregated
+
+# Create summary data by year and gender using row counts instead of sum
+yearly_gender_dist <- DFG %>%
+  group_by(Publication.Year, Gender) %>%
+  summarise(Count = n(), .groups = 'drop') %>%  # Changed from sum(Count) to n()
+  # Replace NA in Gender with "Unknown"
+  mutate(Gender = ifelse(is.na(Gender), "Unknown", Gender))
+
+# Create the stacked bar plot
+gg_plot <- ggplot(yearly_gender_dist,
+       aes(x = Publication.Year,
+           y = Count,
+           fill = Gender)) +
+  geom_bar(stat = "identity", position = "stack") +
+  # Add appropriate labels
+  labs(title = "Distribution of Gender of Authors' First Names",
+       x = "Years",
+       y = "Number of Articles",
+       fill = "Gender") +
+  # Customize the theme
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  ) +
+  # Use a colorblind-friendly palette
+  scale_fill_brewer(palette = "Set2") +
+  # Format the y-axis to avoid scientific notation
+  scale_y_continuous(labels = scales::comma) +
+  # Ensure x-axis shows all years
+  scale_x_continuous(breaks = seq(min(DFG$Publication.Year),
+                                  max(DFG$Publication.Year),
+                                  by = 1))
+
+print(gg_plot)
+```
+
+## Journals
+
+Among the academic journals in which the articles are published, we note that the top four are specialized journals focused on the topic: *Analog Game Studies*, *The International Journal of Role-Playing*, *The Japanese Journal of Analog Role-Playing Game Studies*, and *Journal of Roleplaying Studies and STEAM*. Following these are academic journals that specialize in game studies more broadly, as well as those that cover the field of psychology.
+
+```{r}
+# ANALYSIS : Journal titles most frequently utilized for peer-reviewed articles
+
+# Assuming your data frame is named DF with a column Publication.Title
+DF <- subset1_ZOTEROLIB
+
+# Use table to count occurrences of each Publication.Title
+title_counts <- table(DF$Publication.Title)
+
+# Sort the counts in descending order and select the top 15
+top_titles <- head(sort(title_counts, decreasing = TRUE), 15)
+all_titles <- sort(title_counts, decreasing = TRUE)
+
+# Create a data frame for the top titles
+top_titles_df <- data.frame(Publication.Title = names(top_titles), Count = as.numeric(top_titles))
+all_titles_df <- data.frame(Publication.Title = names(all_titles), Count = as.numeric(all_titles))
+
+# Renaming two titles because they are too long or with Chinese characters
+top_titles_df$Publication.Title <- gsub(
+  pattern = ".*Convergence.*",
+  replacement = "Convergence",
+  x = top_titles_df$Publication.Title
+)
+top_titles_df$Publication.Title <- gsub(
+  pattern = ".*Japanese Journal of Analog.*",
+  replacement = "Japanese Journal of Analog Role-Playing Studies",
+  x = top_titles_df$Publication.Title
+)
+
+# Assuming top_titles_df is your data frame with columns 'Publication.Title' and 'Count'
+gg_plot <- ggplot(top_titles_df, aes(x = reorder(`Publication.Title`, Count), y = Count)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Top 15 Journals", x = "Journals", y = "Count") +
+  theme_minimal() +
+  coord_flip()
+
+print(gg_plot)
+```
+
+Although the research is international and the nationality of the publishers is significant, it is notable that most journals are based in the United States. Other countries stand out due to their specialized journals, such as the Netherlands for *IJRP*, Japan for *JJARPG*, and Mexico for *JRSSTEAM*.
+
+### Age of the Journals
+
+By subtracting the founding date of the journal from the publication date of the article in that journal, we observe that most articles are published in relatively young journals, specifically those less than fifteen years old. This is primarily due to the fact that the four specialized journals are relatively new. We also observe a long-tail phenomenon illustrating that articles on role-playing games can be published in older journals, even very old ones (with a maximum gap of 166 years for the oldest).
+
+```{r}
+# Read the reconciled Journal list with date of inception of the journals and countries
+journal_titles_reconciled <- read.csv("annexes/journals-reconciled.csv", 
+                                      header = TRUE, 
+                                      encoding = "UTF-8",
+                                      quote = "\"",  # Spécifie le caractère guillemet
+                                      fill = TRUE,   # Remplit les colonnes manquantes
+                                      check.names = FALSE)
+
+# Convertir les dates en format YYYY à partir de YYYY ou "YYYY-01-01T00:00:00Z" dans Inception
+journal_titles_reconciled$Year <- sapply(journal_titles_reconciled$Inception, function(x) {
+  # Vérifier si c'est juste une année (4 chiffres)
+  if (grepl("^\\d{4}$", x)) {
+    x
+  } else {
+    # Pour les autres formats, utiliser ymd_hms
+    year(ymd_hms(x))
+  }
+})
+
+# Add a new field in the data frame corresponding to the year the Journal was created (Publication.Inception)
+# and adding also a calculated field :
+# PubAfterInception = Publication Year of the article minus Publication.Inception of the journal
+# It is supposed to reflect if an article is published in a new journal or in an old traditional one
+
+# Initialize a new column 'Publication.Inception' in ZOTEROLIB with NAs
+ZOTEROLIB$Publication.Inception <- NA
+
+# Loop through each row in ZOTEROLIB
+for (i in 1:nrow(ZOTEROLIB)) {
+  # Get the Publication.Title for the current row in ZOTEROLIB
+  current_title <- ZOTEROLIB$Publication.Title[i]
+
+  # Check if there is a match in data$Publication.Title
+  match_row <- match(current_title, journal_titles_reconciled$Publication.Title)
+
+  # If there is a match, assign the corresponding Inception value
+  if (!is.na(match_row)) {
+    ZOTEROLIB$Publication.Inception[i] <- as.numeric(journal_titles_reconciled$Year[match_row])
+  }
+}
+
+# Create a new field 'PubAfterInception' in ZOTEROLIB
+ZOTEROLIB$PubAfterInception <- NA
+
+# Check if 'Publication.Inception' is not NA and calculate 'PubAfterInception'
+ZOTEROLIB$PubAfterInception[!is.na(ZOTEROLIB$Publication.Inception)] <-
+  ZOTEROLIB$Publication.Year[!is.na(ZOTEROLIB$Publication.Inception)] -
+  ZOTEROLIB$Publication.Inception[!is.na(ZOTEROLIB$Publication.Inception)]
+
+# Rebuilt a new subset1 (because we changed the ZOTEROLIB data frame)
+
+# Creating a subset of the dataframe to match certain documents only
+# Item.Type = "journalArticle"
+# and Tags contains "_peer reviewed"
+# and Tags contains "_TTRPG"
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                              grepl("_peer reviewed", Manual.Tags) &
+                              grepl("_TTRPG", Manual.Tags))
+
+# Remove incomplete cases and negative values
+subset1_ZOTEROLIB <- subset1_ZOTEROLIB[complete.cases(subset1_ZOTEROLIB$PubAfterInception) & subset1_ZOTEROLIB$PubAfterInception >= 0, ]
+
+# Create a ggplot bar plot for the distribution of PubAfterInception in the subset
+gg_plot <- ggplot(subset1_ZOTEROLIB, aes(x = factor(PubAfterInception))) +
+  geom_bar() +
+  labs(title = "Journal's Inception Dates Minus Article's Publication Dates",
+       x = "Difference in Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+## Languages of the Articles
+
+The primary and dominant language in role-playing game research is English. On one hand, English has become the *lingua franca* of science, which explains why researchers from minority language backgrounds often choose it to reach a broader audience. On the other hand, the majority of tabletop role-playing games are also published in English.
+
+```{r}
+# ANALYSIS : Language used in the journal articles
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+
+# Assuming your data frame is named DF with a column Language
+DF <- subset1_ZOTEROLIB
+
+# Use table to count occurrences of each language code
+language_counts <- table(DF$Language)
+
+# Convert language_counts to a data frame
+language_df <- data.frame(language = names(language_counts), count = as.numeric(language_counts))
+
+# Deprecated : Create the pie chart
+# gg_plot <- ggplot(language_df, aes(x = "", y = count, fill = language)) +
+#   geom_bar(stat = "identity", width = 1, color = "white") +
+#   coord_polar(theta = "y") +
+#   theme_void() +
+#   scale_fill_brewer(palette = "Set3") +  # You can choose a different color palette
+#   labs(title = "Distribution of Language Codes in Peer-reviewed Journal Articles", fill = "Language")
+
+# Install and load required packages if not already done
+if (!requireNamespace("treemapify", quietly = TRUE)) {
+  install.packages("treemapify")
+}
+library(treemapify)
+
+# Create the treemap
+gg_plot <- ggplot(language_df,
+                  aes(area = count,
+                      fill = language,
+                      label = paste(language, "\n", count))) +
+  geom_treemap() +
+  geom_treemap_text(colour = "black",
+                    place = "centre",
+                    size = 15) +
+  scale_fill_brewer(palette = "Set3") +
+  theme(legend.position = "none") +  # Remove legend since values are shown in boxes
+  labs(title = "Distribution of Language Codes")
+
+print(gg_plot)
+```
+
+### Francophonie
+
+It is interesting to note that the second language of research on role-playing games, after English, is French. This can be attributed to the dynamism of French-speaking researchers and the success of role-playing games in French since the 1980s, which has seen a prolific output and a large number of players in this language. Additionally, the number of French-language scientific journals may provide more publishing opportunities compared to languages with fewer specialized journals.
+
+This trend is confirmed when examining the authors of the articles and counting their publications: the presence of French-speaking researchers is notable, with 8 authors among the 30 most prolific.
+
+```{r}
+# ANALYSIS : Most mentioned authors in journal articles
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Authors
+DF <- subset1_ZOTEROLIB
+
+# Convert Authors column to character to ensure consistency
+DF$Author <- as.character(DF$Author)
+
+# Split authors into individual names (assuming names are separated by commas)
+individual_authors <- strsplit(DF$Author, ";")
+
+# Flatten the list of individual authors into a single vector
+all_authors <- unlist(individual_authors)
+
+# Remove leading and trailing whitespaces from author names
+all_authors <- trimws(all_authors)
+
+# Create a data frame with the authors and their counts
+authors_counts_df <- data.frame(Author = names(table(all_authors)), Count = as.numeric(table(all_authors)))
+
+# Sort the data frame by count in descending order
+authors_counts_df <- authors_counts_df[order(-authors_counts_df$Count), ]
+
+# Merge authors with the same name
+merged_authors_counts_df <- aggregate(Count ~ Author, data = authors_counts_df, sum)
+
+# Order the data frame by count in descending order and select the top 20 authors
+top_authors <- head(merged_authors_counts_df[order(-merged_authors_counts_df$Count), ], 30)
+
+# Assuming top_titles_df is your data frame with columns 'Author' and 'Count'
+gg_plot <- ggplot(top_authors, aes(x = reorder(`Author`, Count), y = Count)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Top 30 Authors", x = "Authors", y = "Count") +
+  theme_minimal() +
+  coord_flip()
+
+print(gg_plot)
+
+```
+
+### Other Languages
+
+It is noteworthy to observe two emerging languages: Spanish and Portuguese. This indicates an increasingly dynamic research landscape in South America.
+
+Japanese, German, Russian, and Polish have also been noted. As mentioned at the beginning of this study, I acknowledge a linguistic bias that likely invisibilizes some scholarly articles that I have not identified.
+
+## Research Topics
+
+Each reference added to the bibliographic corpus undergoes a dual process: validation and enhancement of the existing metadata (titles, authors, abstracts, etc.), but most importantly, the indexing of the document's subjects using a thesaurus. This thesaurus is a controlled list of keywords[^7]. It is organized into two levels: a generic level corresponding to a broad discipline or concept, and a specific level corresponding to a sub-topic, specialty, or angle.
+
+[^7]: see <https://github.com/pmartinolli/MyThesaurus>
+
+When a reference is indexed with a specific keyword, and that keyword is linked to a broader term in the thesaurus, the broader keyword is also added to the reference. As a result, a reference may receive multiple keywords of multiple levels. Peer-reviewed articles are given special attention compared to other types of references during processing. In Zotero, the document type "Journal Article" is insufficient, as some references of this type are not peer-reviewed. Therefore, a "*peer-reviewed*" keyword was created.
+
+### Broad Level Subject Headings
+
+With the distribution of broader keywords over the years, we can observe the stability or gradual growth of several disciplines over time: psychology, sociology, education, history, and so on.
+
+These four categories rank highest in the overall count of disciplines. They are followed by a set of categories related to communication and games (emotion, LARP, media, gameplay, design).
+
+```{r}
+# ANALYSIS : All your tags in journal articles
+
+# This analysis is assuming you have indexed all your references with tags starting by "_"
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Convert Tags column to character to ensure consistency
+DF$Manual.Tags <- as.character(DF$Manual.Tags)
+
+# Split tags into individual names (assuming tags are separated by commas)
+individual_tags <- strsplit(DF$Manual.Tags, ";")
+
+# Flatten the list of individual tags into a single vector
+all_tags <- unlist(individual_tags)
+
+# Remove leading and trailing whitespaces from tag names
+all_tags <- trimws(all_tags)
+
+# Create a data frame with the tags and their counts
+tags_counts_df <- data.frame(Tag = names(table(all_tags)), Count = as.numeric(table(all_tags)))
+
+# Sort the data frame by count in descending order
+tags_counts_df <- tags_counts_df[order(-tags_counts_df$Count), ]
+
+# Merge tags with the same name
+merged_tags_counts_df <- aggregate(Count ~ Tag, data = tags_counts_df, sum)
+
+# Order the data frame by count in descending order and select the top 150 tags
+top_tags <- head(merged_tags_counts_df[order(-merged_tags_counts_df$Count), ], 150)
+
+# Filter only the tags written in capital letters
+capital_top_tags <- top_tags[grep("^_[A-Z]+$", top_tags$Tag), ]
+
+# Remove the tag _TTRPG from the list (because it's the main tag so it appears everywhere)
+capital_top_tags <- capital_top_tags[capital_top_tags$Tag != "_TTRPG", ]
+
+# Filter tags with count 5 and higher
+filtered_cap_tags <- capital_top_tags[capital_top_tags$Count >= 5, ]
+
+# Assuming filtered_cap_tags is your data frame with columns 'Tag' and 'Count'
+gg_plot <- ggplot(filtered_cap_tags, aes(x = reorder(`Tag`, Count), y = Count)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Broad Level Subject Headings", x = "Subject Headings", y = "Count") +
+  theme_minimal() +
+  coord_flip()
+
+print(gg_plot)
+```
+
+```{r}
+# ANALYSIS : the distribution of the 1st rank tags per year
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Publication.Year
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(filtered_cap_tags$Tag)),
+    Tags = filtered_cap_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Broad Level Subject Headings Distribution",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+### Specific Levels Subject Headings
+
+The specific level allows for more precise identification of disciplines and topics. For disciplines, this level highlights that beyond the major fields in the humanities and social sciences, there are niche interests in areas such as law, music, philosophy, and neuroscience.
+
+Regarding research topics, several selections below reveal that certain themes are associated with specific periods, like moral panics, while others, such as psychotherapy, have garnered more recent interest.
+
+```{r}
+#ANALYSIS : Treemaping only the tags that are NOT capitalized (2nd rank subject-headings)
+
+# Filter tags with count 5 and higher
+filtered_tags <- top_tags[top_tags$Count >= 5, ]
+
+# Filter only the tags NOT written in capital letters
+filtered_tags <- filtered_tags[grep("^_[^A-Z]+$", filtered_tags$Tag), ]
+
+# Filter tags that start with "_"
+filtered_tags <- filtered_tags[grepl("^_", filtered_tags$Tag), ]
+
+# Remove the tag _ZOTEROLIB and _peer reviewed from the list
+filtered_tags <- filtered_tags[filtered_tags$Tag != "_TTRPG", ]
+filtered_tags <- filtered_tags[filtered_tags$Tag != "_peer reviewed", ]
+
+# Assuming you have already created the 'filtered_tags' data frame
+
+# Assuming filtered_tags is your data frame with columns 'Tag' and 'Count'
+gg_plot <- ggplot(head(filtered_tags[order(-filtered_tags$Count), ], 30), aes(x = reorder(Tag, Count), y = Count)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Top 30 Specific Subject Headings", x = "Subjet Headings", y = "Count") +
+  theme_minimal() +
+  coord_flip()
+
+print(gg_plot)
+```
+
+#### Cited Games
+
+This level also allows us to identify games mentioned in studies. For instance, *Dungeons & Dragons* is by far the most frequently cited game (appearing in over 200 studies). Other games lag significantly behind, with World of Darkness games (15 studies), *Call of Cthulhu* (8 studies), and others following.
+
+```{r}
+# ANALYSIS : most cited games
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                              grepl("_peer reviewed", Manual.Tags) &
+                              grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Extract game tags and count their frequencies
+game_citations <- table(unlist(strsplit(DF$Manual.Tags, ";")))
+game_citations <- game_citations[grep("_game$", names(game_citations))]
+
+# Create a data frame
+game_data <- data.frame(
+  name = sub("_game$", "", names(game_citations)),
+  count = as.numeric(game_citations)
+)
+
+# Trim spaces using trimws()
+game_data$name <- trimws(game_data$name)
+
+# Combine duplicate entries (sum counts for same game)
+game_data_combined <- aggregate(count ~ name, data = game_data, sum)
+
+# Sort by count
+game_data_combined <- game_data_combined[order(-game_data_combined$count), ]
+
+gg_plot <- ggplot(game_data_combined, aes(x=reorder(name, count), y=count)) +
+  geom_bar(stat="identity", fill="skyblue") +
+  coord_flip() +  # This makes it horizontal
+  theme_minimal() +
+  labs(title="TTRPG most mentionned in Articles",
+       x="TTRPG",  # Note: x and y labels are flipped too
+       y="Count") +
+  theme(axis.text.y = element_text(size=10))  # Adjust text size if needed
+
+print(gg_plot)
+```
+
+```{r}
+# ANALYSIS : most cited games
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Filter for tags ending with "_game"
+small_set_tags <- tags_counts_df %>%
+  filter(grepl("_game$", Tag))  # $ ensures it matches the end of the string
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Aggregate total counts by game and clean tag names
+game_distro <- DDFF %>%
+  mutate(Tags = gsub("_game$", "", Tags)) # Remove "_game" suffix
+
+# Plot the bar chart
+gg_plot <- ggplot(game_distro, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of TTRPG mentionned in Articles",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+#### Psychotherapy
+
+Research on the psychotherapeutic applications of tabletop role-playing games has been a rapidly growing field for several years.
+
+```{r}
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Create a small set of 4 tags
+small_set_tags <- tags_counts_df %>%
+  filter(Tag %in% c("_therapy", "_mental disorder", "_well-being", "_anxiety"))
+
+#small_set_tags <- tags_counts_df %>%
+#  filter(Tag %in% c("_moral panic"))
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of 4 Subject Headings in Psychotherapy",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+#### Moral Panics
+
+Early scientific publications aimed to explain the growing popularity of this hobby (in sociology) and respond to the moral panics that marked the 1980s and 1990s in the United States (in psychology). Although not visible in the following graph, the oldest articles are *debunking* works in psychology, aiming to demonstrate that role-playing games have no negative impact on mental health. In contrast, more recent publications belong to fields like history or sociology and analyze the phenomenon of moral panics surrounding role-playing games.
+
+```{r}
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Create a small set of 1 tag
+small_set_tags <- tags_counts_df %>%
+  filter(Tag %in% c("_moral panic"))
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of Moral Panic Subject Heading",
+       x = "Year",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+#### Selected Topics in Education
+
+Several research topics in education are of particular interest: the motivational effect of games on learners, the potential to develop a sense of self-efficacy (a positive perception of task accomplishment), second language acquisition, and the practice of social skills, such as communication, negotiation, and facilitation.
+
+```{r}
+# ANALYSIS : the distribution of 4 tags only
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Create a small set of 4 tags
+small_set_tags <- tags_counts_df %>%
+  filter(Tag %in% c("_motivation", "_soft skills", "_leadership", "_self-efficacy", "_information literacy", "_language learning"))
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of Subject Headins in Education",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+#### Gender, Minority, Inclusion
+
+Over the past decade, research has focused on issues of gender and minorities, emphasizing aspects of inclusion (hospitality, belonging, etc.) and exclusion (racism, stigmatization, etc.).
+
+```{r}
+# ANALYSIS : the distribution of 4 tags only
+
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Create a small set of 4 tags
+small_set_tags <- tags_counts_df %>%
+  filter(Tag %in% c("_gender", "_lgbtq", "_minority", "_belonging"))
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of Subject Headings on Genre and Minorities",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+#### Selected Topics on Immersion
+
+Finally, a selection of topics on immersion during gameplay also reveals research interests in escapism, distantiation, emotional bleed, and the embodiment of the gaming experience.
+
+```{r}
+# Create a first subset based on your criteria
+subset1_ZOTEROLIB <- subset(ZOTEROLIB,
+                            Item.Type == "journalArticle" &
+                            grepl("_peer reviewed", Manual.Tags) &
+                            grepl("_TTRPG", Manual.Tags))
+
+# Assuming your data frame is named DF with a column Tags
+DF <- subset1_ZOTEROLIB
+
+# Create an empty dataframe DDFF
+DDFF <- data.frame()
+
+# Create a small set of 4 tags
+small_set_tags <- tags_counts_df %>%
+  filter(Tag %in% c("_immersion", "_bleed", "_distantiation", "_embodiment", "_escapism"))
+
+# Iterate over unique Publication.Year values
+for (year in unique(DF$Publication.Year)) {
+  # Extract tags for the current year
+  year_tags <- unlist(strsplit(gsub(" ", "", DF$Manual.Tags[DF$Publication.Year == year]), ";"))
+
+  # Initialize a data frame for the current year
+  year_df <- data.frame(
+    Publication.Year = rep(year, length(small_set_tags$Tag)),
+    Tags = small_set_tags$Tag,
+    Count = 0
+  )
+
+  # Iterate over tags and update Count using regex
+  for (i in seq_along(year_df$Tags)) {
+    tag <- year_df$Tags[i]
+    regex_pattern <- paste0("\\b", tag, "\\b")  # Use word boundaries to match whole tags
+    year_df$Count[i] <- sum(grepl(regex_pattern, DF$Manual.Tags[DF$Publication.Year == year]))
+  }
+
+  # Bind the dataframe to DDFF
+  DDFF <- rbind(DDFF, year_df)
+}
+
+# Reset row names
+rownames(DDFF) <- NULL
+
+# Plot the bar chart
+gg_plot <- ggplot(DDFF, aes(x = Publication.Year, y = Count, fill = Tags)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of Subject Headings on Immersion",
+       x = "Years",
+       y = "Count") +
+  theme_minimal()
+
+print(gg_plot)
+```
+
+## Recent Publication Trends
+
+### Reproducibility
+
+Since the 2020s, some researchers on TTRPG have begun sharing preliminary results in preprint repositories (arXiv, PsyArXiv, OSF, etc.). They also make their datasets, methods, and source code available on platforms like GitHub, Kaggle, OSF, and Zenodo. This dissemination primarily occurs in psychology, sociology, and software engineering. Researchers using these platforms often aim to make their research results more robust and reproducible, encourage collaborations or additional reviews, or signal the focus of their research.
+
+### Literature Reviews
+
+Recently, several TTRPG studies have been syntheses of other studies, indicating a maturation in the field of role-playing game research. These syntheses employ various methodologies, depending on the objectives, studies, and resources involved. The traditional "literature review" refers to an informal study that surveys existing research in a general area to provide an overview. I identified two in psychology, three in education, and one in sociology. In addition, more structured syntheses were found, such as a rapid review in psychology[@henrich_let_2021] and two scoping reviews in psychology[@yuliawati_scoping_2024; @arenas_therapeutic_2022].
+
+Finally, there are very structured and ambitious syntheses (some even describe them as "prestigious") known as systematic reviews or meta-analyses. I identified one article in education that claims to be a systematic review but is merely a literature review.
+
+There is an interesting meta-analysis that discusses role-playing in education broadly (that is, "role-playing but not tabletop"). I retained it because I found one of its conclusions noteworthy: "role-playing was by far the best type of learning activity for promoting critical thinking" [@mao_effects_2022].
+
+### Researcher Identifiers
+
+Researchers are increasingly using persistent identifiers, whether autonomously and voluntarily (ORCID), collaboratively (Wikidata), or through cataloging institutions (VIAF). With a superficial attempt at reconciliation[^8], I noted that among the 643 researchers: 285 possibly had an ORCID identifier, 153 possibly had a Wikidata identifier, and 248 possibly had a VIAF identifier.
+
+[^8]: with an unknown proportion of false positives that may have slipped in after a single manual verification.
+
+### Citation Graph
+
+Articles and bibliographies on role-playing games are poorly indexed in citation graphs, or they are indexed very unevenly[^9]. Citation graphs allow us to see other influential articles on which the research has relied. For this to be possible with this tool, the article must have a persistent identifier called a DOI, then the journal that used this DOI must have entered the associated article's metadata, and it must have also entered all the DOIs of the cited articles in the bibliography. The latter entry is much less systematic than the entry of the descriptive metadata.
+
+[^9]: For example, using the tool Citationtree.org with the article <https://www.citationtree.org/tree?id=10.1016/j.tsc.2012.06.002>, one can see a fairly comprehensive citation graph.
+
+To attempt to highlight citations among role-playing game articles, I tried to reproduce the graph by inputting data into Wikidata and visualizing it in various ways.
+
+### Questionable Publishing Outlets
+
+The phenomenon of "Publish or perish" has also been associated since the 2010s with the emergence of a varied and graduated set of questionable publishing outlets. Some use the term "predatory."
+
+Based on exclusion or warning lists created by researchers or anonymous individuals, I noted that a handful of chapters have been published in books from publishers with questionable editorial practices. Similarly, following these lists, about ten articles appear to have been published claiming peer review but without a genuine peer review process involving fair selection and arbitration by an editor. This illustrates that the niche subject of tabletop role-playing games is not immune to these harmful behaviors present in other disciplines.
+
+### Retractions
+
+As of 2024, I have not identified any retractions, meaning articles that have been withdrawn[^10]. Generally, an article is retracted due to significant scientific misconduct or error: alteration of research data, mistakes in experimentation or analysis, plagiarism, double submission, etc.
+
+[^10]: Search conducted with *Retraction Watch*.
+
+However, it is possible that the first retraction may occur soon in a case I reported to the original authors. Specifically, the exact copy of an article has been published with different authors in a recent journal.
+
+# Para-Academic Discourse
+
+## Outside Traditional Scholarly Circuits
+
+This exploratory study focused on scientific conversation within its traditional channels of dissemination: peer-reviewed articles, theses, dissertations, monographs, conference presentations, etc. However, the reflection on tabletop role-playing games has always been an essential component of this hobby, even though it primarily occurs outside the classic dissemination channels of academic research [@torner_rpg_2018].
+
+Thus, typologies and theories quickly emerged in articles published in specialized periodicals on role-playing games, such as fanzines and magazines. For instance, in the first issue of *Alarums & Excursions* in 1975, an article by Lee Gold, founder and editor, presents an analysis of *Dungeons & Dragons*, describing it as a non-zero-sum game, in contrast to *Dungeons & Beaver*, a pastiche that she considers a zero-sum game [@gold_taintivy_1975]. Similarly, in 1979, several game designers shared their personal relationships with role-playing games in the first issue of *Different Worlds* [@kanterman_my_1979]. Other analytical articles would also be published in this magazine. Thus, well before 1981—when the first peer-reviewed article on role-playing games was published in the academic journal *Simulation & Gaming* by sociologist Gary Alan Fine [@fine_fantasy_1981]—the reflection on tabletop role-playing games was already widely disseminated in player community media.
+
+In the 1990s, this reflection intensified with the advent of the internet and online platforms: mailing lists, forums, blogs, wikis, podcasts, streaming video channels, etc. In 1994 and 1995, there was the brief publication of a hybrid periodical in four issues dedicated to in-depth reflections on role-playing games: *Interactive Fantasy: The Journal of Role-Playing and Story-Making Systems*[^11].
+
+[^11]: <https://rpggeek.com/rpgperiodical/8965/> and <https://en.wikipedia.org/wiki/Interactive_Fantasy>
+
+Finally, around the 2000s, we note the gradual and sustainable establishment of databases indexing role-playing game references (*The Acaeum*[^12], for example) and sometimes featuring complex ontologies that rival university library management tools (e.g., Le Grog[^13] and *RPGGeek*[^14]).
+
+[^12]: The Acaeum, since 1999 at <https://www.acaeum.com/frontdesk/intro.html>, provides scholarly references for collectors of early editions of *Dungeons & Dragons*.
+
+[^13]: Guide du Rôliste Galactique, since 2000 at <https://www.legrog.org/>.
+
+[^14]: RPGGeek, since 2000 at [https://rpggeek.com/](https://rpggeek.com/wiki/page/RPG_Geek).
+
+## Institutional Validation
+
+Sometimes, scholarly works published for the gaming community have been repurposed by prestigious university presses. For instance, Jon Peterson's monograph *Playing at the World*, initially published independently [@peterson_playing_2012], and Stu Horvath's anthology *Monsters, Aliens, and Holes in the Ground*, originally published episodically as blog articles[^15], have been transformed into academic book editions by The MIT Press [@peterson_playing_2024; @horvath_monsters_2023].
+
+[^15]: Blog *Unwinnable* <https://unwinnable.com/> (2010-)
+
+Many researchers are affiliated with university departments related to game studies or film and media studies. Conferences, colloquia, or study days organized by these researchers often receive institutional funding from their affiliated universities.
+
+Theoretical discussions, such as the GNS theory that began on the *The Forge* forum[^16], have been revisited and commented on in scientific publications [@beattie_voicing_2007; @white_tabletop_2020].
+
+[^16]: *The Forge*, from 1999 to 2012.
+
+Special collections containing a substantial volume of tabletop role-playing games are managed by university institutions. For example, there is the *Edwin and Terry Murray Collection of Role-Playing Games* [@murray_edwin_2011] at Duke University in the United States and the *Fonds patrimonial du jeu de société* at Sorbonne Paris Nord Université in France [@experice_fonds_2019].
+
+To my knowledge, there is currently no research chair specifically dedicated to tabletop role-playing games. Likewise, I do not believe there is a tenured professor position focused primarily on tabletop role-playing games at this time.
+
+## High-Level Reflections from Practitioners
+
+Perhaps due to the sociology of tabletop role-playing game players, their habitus, and their preferences for intellectualization, erudition, and theorization, we can observe high-level reflections. If "role-playing is a hobby about meta discourse," as Vivien Féasson puts it [@feasson_jeu_2017], then the study of role-playing could be considered an additional layer: the meta of the meta, so to speak[^17].
+
+[^17]: The study you are currently reading could thus be seen as "the meta of the meta of the meta of role-playing."
+
+Driven by the desire to enhance the gaming experience, reflections on design and gameplay have early on taken a central place in the analysis and theorization of role-playing practices. Schools of thought and movements, along with thinkers and their followers, have always accompanied and enriched this practice.
+
+For example, it is interesting to note that the historical recognition of gameplay innovation invented by David Wesely and Dave Arneson first emerged in forums [@fisher_dave_2004; @castiglione_evolution_2008], then in blog posts [@robbins_braunstein_2008], before being relayed in monographs [@peterson_playing_2012], independent documentaries [@graves_secrets_2019], and finally on Wikipedia [^18], ultimately achieving broader recognition. This amateur, scholarly, and documented acknowledgment has progressively allowed for the emergence of a historiography regarding the birth of role-playing games, which has nuanced a narrative that long centered solely on Gary Gygax.
+
+[^18]: [Wikipedia link](https://en.wikipedia.org/w/index.php?title=Braunstein_(game)&oldid=1248489284).
+
+More generally, the contributions of role-playing participants help to create a vast corpus of testimonies and analyses regarding gameplay, thus documenting and preserving an oral history of this hobby.
+
+## Alignment of Values with Science
+
+In addition to intellectualism and a penchant for abstraction and erudition, other values held by role-playing participants align closely with those of academic researchers.
+
+First of all, collegiality is an important point that highlights the fundamentally collaborative nature of role-playing games. Spaces for disseminating ideas often also serve as venues for debate. For example, forums (such as *The Forge* or *Les Courants alternatifs*) naturally encourage peer exchanges. In podcasts, guests frequently present their ideas in depth and with arguments, akin to researchers interacting with one another on university campuses. Additionally, designing and maintaining the databases mentioned earlier requires robust, sustainable teams collaborating on a technically complex object.
+
+Role-playing culture is characterized by a strong commitment to popularizing complex concepts. The GNS theory is an emblematic example: initially abstract, it has undergone numerous clarifications and reformulations across various communication channels, making it more accessible. This desire to make theoretical concepts practical encourages participants to adopt these theories and adapt them according to their needs.
+
+In this regard, Johan Scipion's work[^19] particularly illustrates the scientific approach to game design. His method for developing horror games, which involves repeated testing with various audiences—often more than fifty times—reflects a genuine experimental approach. His process, based on formulating and verifying design hypotheses, closely resembles the empirical methods used in the sciences.
+
+[^19]: <https://www.terresetranges.net/>
+
+Finally, another aspect similar to science is the commitment to open access, which translates into a willingness to share content while minimizing financial barriers for other participants. This approach aims to make knowledge and creations as accessible as possible.
+
+## Citation Practices in Tabletop Role-Playing Games
+
+In my view, the practice of citation illustrates the connection between scientific research and role-playing games. This reflection emerged after listening to the podcast *La Cellule*[@briand_podcast_2018-1], which highlighted the similarities between citations in the academic world and those in the realm of role-playing. This initial observation led me to undertake an amateur study of citation practices in tabletop role-playing games as an independent researcher. Although a comprehensive analysis is planned for publication in the coming years, developments from this research are already accessible through a blog[^20] and micro-publications of research data[^21].
+
+[^20]: <https://zotrpg.blogspot.com/>
+
+[^21]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
+
+### Some Preliminary Results
+
+In tabletop role-playing game manuals, the volume of citations can sometimes be remarkably high, exceeding what one might expect from a simple game. This abundance of references resembles the practices found in academic works, where every borrowing and influence is meticulously documented.
+
+Citation practices in role-playing games revolve around diverse and complex motivations. Ethically and professionally, they serve to acknowledge the work of others, pay tribute to significant innovations, and comply with legal frameworks like the OGL (Open Game License) or GSL (Game System License). Strategically, citations allow creators to demonstrate the multiplicity of their influences, thus avoiding association with a single source, or they may be subject to deliberate omissions or biased citations. They also serve as a means of forging connections with a community, affirming one's belonging or camaraderie with other creators in the field. Finally, citations fulfill stylistic and intellectual objectives. For example, they may take the form of carefully crafted epigraphs or reflect erudition through numerous selected references.
+
+As highlighted by the podcast *La Cellule*[@briand_podcast_2018-1], an essential function of citation in role-playing games is to identify the origin of reused game mechanics. This practice manifests at various levels of precision, from simply mentioning an author or a game to providing a detailed analysis that explains the borrowed mechanic, its adaptation, and its justification. This attribution practices of game mechanics show a particularly strong analogy with scientific citation practices. In both cases, the primary goal is to ensure traceability of ideas and innovations, allowing the reader to either deepen their understanding or verify the sources used.
+
+In my opinion, citation practices reflect the maturity and robustness of a culture. Beyond merely preserving historical ties, they play a crucial role in recognizing the social diversity that shapes this culture, particularly by highlighting the essential contributions of minority voices[@siew_one_2022]. This virtuous practice can be summarized by a simple exhortation I regularly address to my students: “Cite one another!”
+
+# Conclusion
+
+Tabletop role-playing games have attracted the interest of the academic world since their emergence, with a notable increase in research since 2010. The diversity of disciplines engaging with this subject testifies to its richness as an object of study, thus bestowing growing academic legitimacy on the medium. This institutional recognition resonates with a reflective culture already present within the role-playing community, expressed through various media and discussions. Is it not this thirst for knowledge and intellectual exploration—this *libido sciendi*—that allows for an extension of the gaming experience beyond the table and the gameplay itself, thereby enriching the practice of this hobby?

@@ -1537,17 +1537,19 @@ Tout d’abord, la collégialité est un point important rappelant la nature fon
 
 La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins.
 
-Dans cette perspective, le travail de Johan Scipion illustre particulièrement bien l'approche scientifique dans la conception de jeux. Sa méthode de développement de jeux d'horreur, qui implique des tests répétés auprès de différents publics -- souvent plus d'une cinquantaine de fois -- reflète une véritable démarche expérimentale. Son processus, fondé sur la formulation et la vérification d'hypothèses de design, s'apparente étroitement aux méthodes empiriques utilisées en sciences.
+Dans cette perspective, le travail de Johan Scipion[^19] illustre particulièrement bien l'approche scientifique dans la conception de jeux. Sa méthode de développement de jeux d'horreur, qui implique des tests répétés auprès de différents publics -- souvent plus d'une cinquantaine de fois -- reflète une véritable démarche expérimentale. Son processus, fondé sur la formulation et la vérification d'hypothèses de design, s'apparente étroitement aux méthodes empiriques utilisées en sciences.
+
+[^19]: <https://www.terresetranges.net/>
 
 Enfin, un autre aspect similaire avec la science est l'engagement envers l'accès libre, qui se traduit par une volonté de partager les contenus en minimisant les barrières financières pour les autres participants. Cette approche vise à rendre le savoir ou les créations aussi accessibles que possible.
 
 ## Pratiques de citation dans les jeux de rôle sur table
 
-Selon moi, la pratique des citations illustre bien la parenté entre la recherche scientifique et le jeu de rôle. Cette réflexion a émergé suite à mon écoute du podcast La Cellule[@briand_podcast_2018-1], qui mettait en lumière les similitudes entre les citations dans le monde académique et dans l'univers du jeu de rôle. Cette observation initiale m'a conduit à entreprendre une étude amateur des pratiques de citation dans les jeux de rôle sur table, en tant que chercheur indépendant. Bien qu'une analyse approfondie soit prévue pour publication dans les années à venir, les développements de cette recherche sont d'ores et déjà accessibles via un blogue[^19] et des micro-publications de données de recherche[^20].
+Selon moi, la pratique des citations illustre bien la parenté entre la recherche scientifique et le jeu de rôle. Cette réflexion a émergé suite à mon écoute du podcast La Cellule[@briand_podcast_2018-1], qui mettait en lumière les similitudes entre les citations dans le monde académique et dans l'univers du jeu de rôle. Cette observation initiale m'a conduit à entreprendre une étude amateur des pratiques de citation dans les jeux de rôle sur table, en tant que chercheur indépendant. Bien qu'une analyse approfondie soit prévue pour publication dans les années à venir, les développements de cette recherche sont d'ores et déjà accessibles via un blogue[^20] et des micro-publications de données de recherche[^21].
 
-[^19]: <https://jdr.hypotheses.org/>
+[^20]: <https://jdr.hypotheses.org/>
 
-[^20]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
+[^21]: <https://github.com/pmartinolli/OtSoCG> et [https://observablehq.com/\@pascaliensis/on-the-shoulders-of-cloud-giants](https://observablehq.com/@pascaliensis/on-the-shoulders-of-cloud-giants)
 
 ### Quelques résultats préliminaires
 
