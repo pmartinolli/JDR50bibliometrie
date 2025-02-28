@@ -1,0 +1,49 @@
+---
+title: "thesaurus"
+---
+
+Bar graph of the distribution of each unique individual tags
+
+```{r}
+
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+
+file_name <- "../My library.csv"
+ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
+
+df <- ZOTEROLIB
+
+# Load necessary library
+library(ggplot2)
+
+# Step 0: Clean up spaces around ";" and individual tags
+df$Manual.Tags <- gsub("\\s*;\\s*", ";", df$Manual.Tags)  # Remove spaces around ";"
+df$Manual.Tags <- trimws(df$Manual.Tags)                 # Trim leading/trailing spaces
+
+# Step 1: Split the tags into individual elements and unlist them
+all_tags <- unlist(strsplit(df$Manual.Tags, ";"))
+
+# Step 2: Filter tags that start with "_"
+filtered_tags <- all_tags[grep("^_", all_tags)]
+
+# Step 3: Create a data frame of tag frequencies
+tag_distribution <- as.data.frame(table(filtered_tags))
+
+# Step 4: Rename columns for clarity
+colnames(tag_distribution) <- c("Tag", "Frequency")
+
+# Step 5: Get the maximum frequency
+max_frequency <- max(tag_distribution$Frequency)
+
+# Step 6: Plot the bar graph with adjusted y-axis
+ggplot(tag_distribution, aes(x = reorder(Tag, Frequency), y = Frequency)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Distribution of Tags Starting with '_'", x = "Tags", y = "Frequency") +
+  coord_flip() +  # Flip the coordinates for vertical display
+  ylim(0, max_frequency) +  # Set y-axis limit based on max frequency
+  theme_minimal()
+
+```

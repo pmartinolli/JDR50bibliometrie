@@ -38,7 +38,7 @@ Since 2014, I have been gathering academic references related to the study of ta
 
 ## Key Highlights
 
-Among the indexed references, there are approximately 570 peer-reviewed articles, 180 monographs, 410 dissertations or theses, and various other types of documents: conference presentations, blog posts, datasets, and more.
+Among the indexed references, there are approximately 630 peer-reviewed articles, 190 monographs, 430 dissertations or theses, and various other types of documents: conference presentations, blog posts, datasets, and more.
 
 The core corpus was built from references obtained through bibliographic research in academic bibliographic databases, library catalogs, citation indexes, institutional repositories, and others. The references matched one or more search equations based on free or controlled terms[^1]. After building the initial corpus, alerts were set up in to automatically detect new references meeting the search criteria[^2].
 
@@ -86,6 +86,9 @@ library(lubridate)
 
 file_name <- "My library.csv"
 ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
+
+# Filter out rows where Publication.Year is below 2025
+ZOTEROLIB <- ZOTEROLIB %>% filter(Publication.Year < 2025)
 ```
 
 ```{r}
@@ -910,6 +913,10 @@ DF <- subset1_ZOTEROLIB
 # Convert Tags column to character to ensure consistency
 DF$Manual.Tags <- as.character(DF$Manual.Tags)
 
+# Clean up spaces around ";" and individual tags
+DF$Manual.Tags <- gsub("\\s*;\\s*", ";", DF$Manual.Tags)  # Remove spaces around ";"
+DF$Manual.Tags <- trimws(DF$Manual.Tags)                 # Trim leading/trailing spaces
+
 # Split tags into individual names (assuming tags are separated by commas)
 individual_tags <- strsplit(DF$Manual.Tags, ";")
 
@@ -1450,7 +1457,7 @@ Since the 2020s, some researchers on TTRPG have begun sharing preliminary result
 
 Recently, several TTRPG studies have been syntheses of other studies, indicating a maturation in the field of role-playing game research. These syntheses employ various methodologies, depending on the objectives, studies, and resources involved. The traditional "literature review" refers to an informal study that surveys existing research in a general area to provide an overview. I identified two in psychology, three in education, and one in sociology. In addition, more structured syntheses were found, such as a rapid review in psychology[@henrich_let_2021] and two scoping reviews in psychology[@yuliawati_scoping_2024; @arenas_therapeutic_2022].
 
-Finally, there are very structured and ambitious syntheses (some even describe them as "prestigious") known as systematic reviews or meta-analyses. I identified one article in education that claims to be a systematic review but is merely a literature review.
+Finally, there are very structured and ambitious syntheses (some even describe them as "prestigious") known as systematic reviews or meta-analyses. I identified one article in education and one in design that claim to be systematic reviews but are merely a literature review.
 
 There is an interesting meta-analysis that discusses role-playing in education broadly (that is, "role-playing but not tabletop"). I retained it because I found one of its conclusions noteworthy: "role-playing was by far the best type of learning activity for promoting critical thinking" [@mao_effects_2022].
 
@@ -1476,17 +1483,17 @@ Based on exclusion or warning lists created by researchers or anonymous individu
 
 ### Retractions
 
-As of 2024, I have not identified any retractions, meaning articles that have been withdrawn[^10]. Generally, an article is retracted due to significant scientific misconduct or error: alteration of research data, mistakes in experimentation or analysis, plagiarism, double submission, etc.
+To my knowledge, there has been only one retraction, meaning only one article was withdrawn. Generally, an article is withdrawn for a serious scientific fault or error: data manipulation, mistakes in experimentation or analysis, plagiarism, double submission, etc.
 
-[^10]: Search conducted with *Retraction Watch*.
+This withdrawn study was a complete plagiarism of a previous article’s text, with changes to the authors and replacement of bibliographic references. The study was published online on February 19, 2024. I reported it to the authors of the original article on April 5, 2024. The *retraction* occurred on April 17, 2024[^10]. It does not appear as a withdrawn study in the *Retraction Watch* database, but it can be identified on the journal's website and on Google Scholar.
 
-However, it is possible that the first retraction may occur soon in a case I reported to the original authors. Specifically, the exact copy of an article has been published with different authors in a recent journal.
+[^10]: <https://rpggeek.com/rpgperiodical/8965/> and <https://en.wikipedia.org/wiki/Interactive_Fantasy>
 
 # Para-Academic Discourse
 
 ## Outside Traditional Scholarly Circuits
 
-This exploratory study focused on scientific conversation within its traditional channels of dissemination: peer-reviewed articles, theses, dissertations, monographs, conference presentations, etc. However, the reflection on tabletop role-playing games has always been an essential component of this hobby, even though it primarily occurs outside the classic dissemination channels of academic research [@torner_rpg_2018].
+This exploratory study focused on scientific conversation within its traditional channels of dissemination: peer-reviewed articles, theses, dissertations, monographs, conference presentations, etc. However, the reflection on tabletop role-playing games has always been an essential component of this hobby, even though it primarily occurs outside the classic dissemination channels of academic research[@torner_rpg_2018].
 
 Thus, typologies and theories quickly emerged in articles published in specialized periodicals on role-playing games, such as fanzines and magazines. For instance, in the first issue of *Alarums & Excursions* in 1975, an article by Lee Gold, founder and editor, presents an analysis of *Dungeons & Dragons*, describing it as a non-zero-sum game, in contrast to *Dungeons & Beaver*, a pastiche that she considers a zero-sum game [@gold_taintivy_1975]. Similarly, in 1979, several game designers shared their personal relationships with role-playing games in the first issue of *Different Worlds* [@kanterman_my_1979]. Other analytical articles would also be published in this magazine. Thus, well before 1981—when the first peer-reviewed article on role-playing games was published in the academic journal *Simulation & Gaming* by sociologist Gary Alan Fine [@fine_fantasy_1981]—the reflection on tabletop role-playing games was already widely disseminated in player community media.
 
@@ -1506,7 +1513,7 @@ Finally, around the 2000s, we note the gradual and sustainable establishment of 
 
 Sometimes, scholarly works published for the gaming community have been repurposed by prestigious university presses. For instance, Jon Peterson's monograph *Playing at the World*, initially published independently [@peterson_playing_2012], and Stu Horvath's anthology *Monsters, Aliens, and Holes in the Ground*, originally published episodically as blog articles[^15], have been transformed into academic book editions by The MIT Press [@peterson_playing_2024; @horvath_monsters_2023].
 
-[^15]: Blog *Unwinnable* <https://unwinnable.com/> (2010-)
+[^15]: Blog *Unwinnable* <https://unwinnable.com/2019/01/30/73260/> (2010-)
 
 Many researchers are affiliated with university departments related to game studies or film and media studies. Conferences, colloquia, or study days organized by these researchers often receive institutional funding from their affiliated universities.
 
@@ -1538,7 +1545,7 @@ In addition to intellectualism and a penchant for abstraction and erudition, oth
 
 First of all, collegiality is an important point that highlights the fundamentally collaborative nature of role-playing games. Spaces for disseminating ideas often also serve as venues for debate. For example, forums (such as *The Forge* or *Les Courants alternatifs*) naturally encourage peer exchanges. In podcasts, guests frequently present their ideas in depth and with arguments, akin to researchers interacting with one another on university campuses. Additionally, designing and maintaining the databases mentioned earlier requires robust, sustainable teams collaborating on a technically complex object.
 
-Role-playing culture is characterized by a strong commitment to popularizing complex concepts. The GNS theory is an emblematic example: initially abstract, it has undergone numerous clarifications and reformulations across various communication channels, making it more accessible. This desire to make theoretical concepts practical encourages participants to adopt these theories and adapt them according to their needs.
+Role-playing culture is characterized by a strong commitment to popularizing complex concepts. The GNS theory is an emblematic example: initially abstract, it has undergone numerous clarifications and reformulations across various communication channels, making it more accessible[@torner_rpg_2018]. This desire to make theoretical concepts practical encourages participants to adopt these theories and adapt them according to their needs.
 
 In this regard, Johan Scipion's work[^19] particularly illustrates the scientific approach to game design. His method for developing horror games, which involves repeated testing with various audiences—often more than fifty times—reflects a genuine experimental approach. His process, based on formulating and verifying design hypotheses, closely resembles the empirical methods used in the sciences.
 

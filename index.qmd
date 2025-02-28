@@ -32,11 +32,11 @@ execute:
 
 # Introduction
 
-Depuis 2014, j'ai entrepris de rassembler des références universitaires se rapportant à l'étude du jeu de rôle sur table. Cette démarche a abouti à la création d'une base de données librement accessible via Zotero, comprenant plus de 3000 références issues d’études universitaires ou para-universitaires.
+Depuis 2014, j'ai entrepris de rassembler des références universitaires se rapportant à l'étude du jeu de rôle sur table. Cette démarche a abouti à la création d'une base de données librement accessible via Zotero, comprenant plus de 3400 références issues d’études universitaires ou para-universitaires.
 
 ## Quelques points saillants
 
-Parmi les références indexées, on dénombre environ 570 articles soumis à une évaluation par des pairs, 180 monographies, 410 mémoires ou thèses, et bien d'autres types de documents : présentations de conférence, billets de blogue, jeux de données, etc.
+Parmi les références indexées, on dénombre environ 630 articles soumis à une évaluation par des pairs, 190 monographies, 430 mémoires ou thèses, et bien d'autres types de documents : présentations de conférence, billets de blogue, jeux de données, etc.
 
 Le corpus de base a été constitué de références issues de recherches bibliographiques dans des bases de données bibliographiques universitaires, de catalogues de bibliothèques, d’index de citations, de dépôts institutionnels et autres. Les références correspondaient à une ou plusieurs équations de recherche selon des termes libres ou contrôlés[^1]. Après la constitution de ce corpus de base, des alertes ont été programmées dans les outils qui le permettaient pour repérer automatiquement les nouvelles références correspondantes aux critères de recherche[^2].
 
@@ -82,6 +82,9 @@ library(lubridate)
 
 file_name <- "My library.csv"
 ZOTEROLIB <- read.table(file_name, header = TRUE, sep = ",", encoding = "UTF-8")
+
+# Filter out rows where Publication.Year is below 2025
+ZOTEROLIB <- ZOTEROLIB %>% filter(Publication.Year < 2025)
 ```
 
 ```{r}
@@ -755,7 +758,7 @@ subset1_ZOTEROLIB <- subset1_ZOTEROLIB[complete.cases(subset1_ZOTEROLIB$PubAfter
 
 # Create a ggplot bar plot for the distribution of PubAfterInception in the subset
 gg_plot <- ggplot(subset1_ZOTEROLIB, aes(x = factor(PubAfterInception))) +
-  geom_bar() +
+  geom_bar(fill = "skyblue") +  # Use geom_bar() for count-based bars
   labs(title = "Différence année de publication (article) et date de création (revue)",
        x = "Années de différence",
        y = "Nombre") +
@@ -903,6 +906,10 @@ subset1_ZOTEROLIB <- subset(ZOTEROLIB,
 
 # Assuming your data frame is named DF with a column Tags
 DF <- subset1_ZOTEROLIB
+
+# Clean up spaces around ";" and individual tags
+DF$Manual.Tags <- gsub("\\s*;\\s*", ";", DF$Manual.Tags)  # Remove spaces around ";"
+DF$Manual.Tags <- trimws(DF$Manual.Tags)                 # Trim leading/trailing spaces
 
 # Convert Tags column to character to ensure consistency
 DF$Manual.Tags <- as.character(DF$Manual.Tags)
@@ -1445,9 +1452,9 @@ Depuis les années 2020, on peut remarquer quelques chercheurs qui diffusent leu
 
 ### Revues de littérature
 
-Récemment, plusieurs études sont des synthèses d’autres études. Ce phénomène de publication peut être considéré comme un signe de maturité du champ de recherche des jeux de rôle. Ces synthèses suivent des méthodes plus ou moins exigeantes selon les objectifs, les études et les moyens utilisés. Le terme classique de « revue de littérature » décrit une étude peu structurée sur un objet de recherche générique pour faire le point sur ce qui a été fait dans un domaine. J’en ai repéré deux en psychologie, trois en éducation et une en sociologie. Ensuite, j'ai repéré des synthèses plus structurées comme une étude rapide (*rapid review*)[@henrich_let_2021] en psychologie et deux études de la portée (*scoping review*) en psychologie[@yuliawati_scoping_2024; @arenas_therapeutic_2022].
+Récemment, plusieurs études sont des synthèses d’autres études. Ce phénomène de publication peut être considéré comme un signe de maturité du champ de recherche des jeux de rôle. Ces synthèses suivent des méthodes plus ou moins exigeantes selon les objectifs, les études et les moyens utilisés. Le terme classique de « revue de littérature » décrit une étude peu structurée sur un objet de recherche générique pour faire le point sur ce qui a été fait dans un domaine. J’en ai repéré deux en psychologie, trois en éducation et une en sociologie. Ensuite, j'ai repéré des synthèses plus structurées comme une étude rapide (*rapid review*)[@henrich_let_2021] en psychologie et deux études de la portée (*scoping review*) en psychologie[@yuliawati_scoping_2024; @arenas_therapeutic_2022].
 
-Enfin, il existe des synthèses très structurées et ambitieuses (certaines disent même « prestigieuses») qui se nomment les revues systématiques ou les méta-analyses. J’ai repéré un article en éducation qui se définit comme une revue systématique mais qui est une simple revue de littérature.
+Enfin, il existe des synthèses très structurées et ambitieuses (certaines disent même « prestigieuses ») qui se nomment les revues systématiques ou les méta-analyses. J’ai repéré un article en éducation et un en design qui se définissent comme des revues « systématiques » mais qui sont de simples revues de littérature.
 
 Il existe une méta-analyse intéressante qui discute du jeu de rôle en éducation de manière large (c’est-à-dire « de jeu de rôle mais pas sur table »). Je l’ai conservé car je trouvais qu’une de ses conclusions était intéressante, à savoir que « le jeu de rôle était de loin le meilleur type d'activité d'apprentissage pour promouvoir la pensée critique. » [@mao_effects_2022]
 
@@ -1473,11 +1480,11 @@ En me basant sur des listes d’exclusion ou d’avertissement créées par des 
 
 ### Rétractions
 
-En 2024, je n’ai pas repéré de rétraction, c’est-à-dire d’articles retirés[^10]. En règle générale, un article est retiré pour faute ou erreur scientifique grave : modification des données de recherche, erreur dans l’expérimentation ou l’analyse, plagiat, double soumission, etc.
+À ma connaissance, il n'y a eu qu'une seule *retraction*, c’est-à-dire un seul article retiré. En règle générale, un article est retiré pour faute ou erreur scientifique grave : modification des données de recherche, erreur dans l’expérimentation ou l’analyse, plagiat, double soumission, etc.
 
-[^10]: Recherche avec *Retraction Watch*.
+Cette étude retirée est un plagiat complet du texte d'un article précédent avec le changement des auteurs et des remplacements de références bibliographiques. L'étude a été diffusée en ligne le 19 février 2024. Je l'ai signalé aux auteurs de l'article original le 5 avril 2024. La *retraction* a eu lieu le 17 avril 2024[^10]. Elle n'apparaît pas comme étude retirée dans la base de données de Retraction Watch, mais on peut l'identifier sur le site de la revue et dans Google Scholar.
 
-Cependant, il est possible qu’une première rétraction survienne prochainement dans un cas que j’ai signalé aux auteurs originaux. En effet, la copie exacte d'un article a été publiée avec d’autres auteurs dans une revue récente.
+[^10]: Pour ne pas compromettre la liste bibliographique de l'étude présente, je ne mets pas la référence de cette *retraction* car cela pourrait lui ajouter du crédit. Pour la retrouver, chercher simplement le terme `RETRACTED` dans la [base de données Zotero](https://www.zotero.org/groups/446523/academicttrpg).
 
 # Discours para-universitaire
 
@@ -1521,7 +1528,7 @@ Sans doute en raison de la sociologie des joueurs de jeu de rôle sur table, de 
 
 [^17]: L'étude que vous êtes en train de lire serait alors « le méta du méta du méta du jeu de rôle ». Étonnant non ?
 
-Animée par le désir d’améliorer l’expérience de jeu, la réflexion sur le design et le gameplay a très tôt occupé une place centrale dans l’analyse et la théorisation de la pratique du jeu de rôle. Des courants de pensée, des écoles et des mouvements, des penseurs et leurs lecteurs ont toujours accompagné et enrichi cette pratique.
+Animée par le désir d’améliorer l’expérience de jeu, la réflexion sur le design et le *gameplay* a très tôt occupé une place centrale dans l’analyse et la théorisation de la pratique du jeu de rôle. Des courants de pensée, des écoles et des mouvements, des penseurs et leurs lecteurs ont toujours accompagné et enrichi cette pratique.
 
 Par exemple, il est intéressant de constater que la reconnaissance historique de l’innovation en matière de gameplay inventée par David Wesely et Dave Arneson a d’abord émergé dans des forums[@fisher_dave_2004; @castiglione_evolution_2008], puis des billets de blogue[@robbins_braunstein_2008], avant d'être relayée dans des monographies[@peterson_playing_2012], des documentaires indépendants[@graves_secrets_2019] et finalement sur Wikipédia[^18], pour finalement atteindre une reconnaissance plus large. Cette reconnaissance amateur, érudite et documentée a ainsi progressivement permis l'émergence d'une historiographie de la naissance du jeu de rôle, qui est venue nuancer un discours longtemps centré uniquement sur la figure de Gary Gygax.
 
@@ -1535,7 +1542,7 @@ En plus de l’intellectualisme et du goût pour l’abstraction et l’éruditi
 
 Tout d’abord, la collégialité est un point important rappelant la nature fondamentalement collaborative du jeu de rôle. Les espaces de diffusion des idées sont souvent aussi des lieux de débats. Par exemple, les forums (tels que *The Forge* ou Les Courants alternatifs) et les wikis favorisent naturellement les échanges entre pairs. Dans les podcasts, des invités présentent fréquemment leurs idées de manière approfondie et argumentée, à l'image des chercheurs qui interviennent les uns chez les autres sur les campus. Enfin, pour concevoir et maintenir les bases de donnéesmentionnées précédemment, il faut des équipes robustes, pérennes et collaborant sur un objet techniquement complexe.
 
-La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins.
+La culture du jeu de rôle se caractérise par un fort engagement envers la vulgarisation des concepts complexes. La théorie GNS en est un exemple emblématique : initialement abstraite, elle a fait l'objet de nombreuses clarifications et reformulations à travers divers canaux de communication, la rendant plus accessible[@torner_rpg_2018]. Cette volonté de rendre pratiques des concepts théoriques incite les participants à s'approprier ces théories et à les adapter selon leurs besoins.
 
 Dans cette perspective, le travail de Johan Scipion[^19] illustre particulièrement bien l'approche scientifique dans la conception de jeux. Sa méthode de développement de jeux d'horreur, qui implique des tests répétés auprès de différents publics -- souvent plus d'une cinquantaine de fois -- reflète une véritable démarche expérimentale. Son processus, fondé sur la formulation et la vérification d'hypothèses de design, s'apparente étroitement aux méthodes empiriques utilisées en sciences.
 

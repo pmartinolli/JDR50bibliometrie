@@ -6,9 +6,17 @@
 
 - Web of Science : ALL : Core collection + Current contents + Dissertations & Thesis + SciELO + MEDLINE  "tabletop role-playing game*" OR TTRPG  /@
 - PubMed /@
-- Scopus /@
+- Scopus, ScienceDirect /@
 - Platform EBSCOhost : "tabletop role-playing game*" OR TTRPG   /@
 - Platform ProQuest : "tabletop role-playing game*" OR TTRPG 
+- BASE Search
+- Matilda
+- CAIRN.info, Persee.fr, Erudit.org
+- Eric
+- PsychInfo
+- HeinOnline
+- PhilPapers
+- ArXiv, PsyArXiv, SocArXiv
 
 ## Catalogs
 
@@ -16,6 +24,9 @@
 - BAnQ 
 - BNF 
 - Library of Congress 
+- Theses.fr
+- TEL Archives
+- DiGRA
 
 ## Web engine
 
@@ -26,5 +37,9 @@
 
 - Various blogs subscribed through RSS /@ 
 - Social networks /@ 
+	- Facebook Role-play Theory Study Group  https://www.facebook.com/groups/roleplaytheorystudygroup/ 
+	- Facebook Initiative: groupe de discussion sur les jeux de rôle (fermé en 2024) https://www.facebook.com/groups/316125545245807/ 
+	- Twitter, Bluesky, Mastodon : following some key profiles (some)
+	- ResearchGate & Academia (few) 
 - Various national thesis databases 
-
+- McFarland Series Studies in Gaming https://www.amazon.ca/dp/B08L4GTRV6 
