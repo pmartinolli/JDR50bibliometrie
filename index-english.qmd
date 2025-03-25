@@ -1,6 +1,6 @@
 ---
-title: "Almost 50 Years of Academic Research on Tabletop Role-Playing Games"
-subtitle: "Historical Evolution and Bibliometric Analysis"
+title: "Academic Research on Tabletop Role-Playing Games:"
+subtitle: "A Short Historical and Bibliometric Analysis"
 lang: en
 author:
       - name: "Pascal Martinolli"
