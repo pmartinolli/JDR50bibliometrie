@@ -1,15 +1,14 @@
 ---
-title: "Academic Research on Tabletop Role-Playing Games:"
-subtitle: "A Short Historical and Bibliometric Analysis"
+title: "Trends & Tendencies: Academic Research on Tabletop Role-Playing Games Up to Today"
 lang: en
 author:
       - name: "Pascal Martinolli"
         orcid: "0000-0003-0122-5300"
         affiliation: "Independent researcher"
-date: "2024-10-29"
+date: "2025-03-25"
 license: "CC-BY 4.0"
 repo-url: https://github.com/pmartinolli/JDR50bibliometrie
-abstract: "This descriptive study offers an in-depth historical and bibliometric analysis of academic research on tabletop role-playing games. It examines the evolution of publications across various academic formats (conferences, monographs, theses, peer-reviewed articles) and explores new trends in scientific dissemination, including preprints and literature reviews. The analysis reveals a marked growth in scientific output since the origins of role-playing games, with a notable acceleration over the past decade. While research remains primarily based in North America and Europe, new hubs are emerging in Latin America and Asia. Several major themes are explored: the dominance of Dungeons & Dragons, the moral panics of the 1980s and 1990s, therapeutic applications, issues of diversity and representation, as well as the phenomenon of actual plays. The study also includes an analysis of theoretical reflections developed by the gaming community outside of traditional academic publications. It examines how these high-quality, para-academic contributions might be integrated and validated by scholarly institutions. Finally, it highlights the influence of academic practices and values, particularly in terms of citation, on role-playing game culture."
+abstract: "This descriptive study offers an in-depth historical and bibliometric analysis of academic research on tabletop role-playing games up to 2024. It examines the evolution of publications across various academic formats (conferences, monographs, theses, peer-reviewed articles) and explores new trends in scientific dissemination, including preprints and literature reviews. The analysis reveals a marked growth in scientific output since the origins of role-playing games, with a notable acceleration over the past decade. While research remains primarily based in North America and Europe, new hubs are emerging in Latin America and Asia. Several major themes are explored: the dominance of Dungeons & Dragons, the moral panics of the 1980s and 1990s, therapeutic applications, issues of diversity and representation, as well as the phenomenon of actual plays. The study also includes an analysis of theoretical reflections developed by the gaming community outside of traditional academic publications. It examines how these high-quality, para-academic contributions might be integrated and validated by scholarly institutions. Finally, it highlights the influence of academic practices and values, particularly in terms of citation, on role-playing game culture."
 keywords: "Tabletop role-playing games ; academic publications ; historical study ; bibliometrical analysis ; scholarly conversation"
 bibliography: academicTTRPG.bib
 csl: annexes/chicago-fullnote-bibliography.csl
